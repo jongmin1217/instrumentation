@@ -1,0 +1,59 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    compileSdk versions.compilesdk_version
+
+    defaultConfig {
+        minSdk versions.minsdk_version
+        targetSdk versions.targetsdk_version
+        versionCode versions.app_version_code
+        versionName versions.app_version_name
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "BASE_URL", "\"http://52.78.243.109:8080/\""
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "BASE_URL", "\"http://52.78.243.109:8080/\""
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation project(":data")
+    implementation project(":common")
+
+
+    api remote.hilt.hilt
+    kapt remote.hilt.compiler
+    kapt remote.hilt.hilt_compiler
+
+    api remote.retrofit.version
+    api remote.retrofit.adapter
+    api remote.retrofit.gson
+
+    api remote.okhttp.version
+    api remote.okhttp.logging
+}

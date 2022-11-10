@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">instrumentation</string>
+    <string name="app_name_text">자동화 계측 시스템</string>
+    <string name="id">ID</string>
+    <string name="password">PW</string>
+    <string name="login">로그인</string>
+    <string name="plz_write_login_info">아이디와 비밀번호를 입력해주세요.</string>
+    <string name="no_exist_user">아이디 또는 비밀번호가 틀렸습니다. 담당자에게 문의 바랍니다.</string>
+</resources>

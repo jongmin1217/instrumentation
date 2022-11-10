@@ -1,0 +1,66 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
+}
+
+android {
+    compileSdk versions.compilesdk_version
+
+    defaultConfig {
+        applicationId "com.bellminp.instrumentation"
+        minSdk versions.minsdk_version
+        targetSdk versions.targetsdk_version
+        versionCode versions.app_version_code
+        versionName versions.app_version_name
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        dataBinding true
+    }
+}
+
+dependencies {
+    implementation project(":remote")
+    implementation project(":data")
+    implementation project(":local")
+    implementation project(":domain")
+    implementation project(":common")
+
+    api deps.androidx.core_ktx
+    api deps.androidx.appcompat
+    api deps.androidx.material
+    api deps.androidx.constraintlayout
+    api deps.androidx.life_cycle_ktx
+    api deps.androidx.livedata_ktx
+    api deps.androidx.viewmodel_ktx
+
+    testApi deps.test.junit
+    androidTestApi deps.test.runner
+    androidTestApi deps.test.espresso_core
+
+    api deps.hilt.hilt
+    api deps.hilt.hilt_viewmodel
+    kapt deps.hilt.compiler
+    kapt deps.hilt.hilt_compiler
+
+    api deps.glide.glide
+    annotationProcessor deps.glide.annotation
+}
