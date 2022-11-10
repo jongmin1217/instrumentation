@@ -36,4 +36,5 @@ class FieldSelectDialog(
     private fun initAdapter(){
         binding.recyclerviewField.adapter = adapter
     }
+
 }
