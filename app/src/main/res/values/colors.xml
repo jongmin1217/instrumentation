@@ -10,5 +10,6 @@
 
 
     <color name="basic">#31373c</color>
+    <color name="unselect_menu">#535353</color>
     <color name="gray">#f3f3f3</color>
 </resources>

@@ -3,7 +3,7 @@
     <style name="Theme.Instrumentation" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/basic</item>
-        <item name="colorPrimaryVariant">@color/basic</item>
+        <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/basic</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/basic</item>

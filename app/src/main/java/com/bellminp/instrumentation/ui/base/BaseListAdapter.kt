@@ -21,4 +21,25 @@ abstract class BaseListAdapter<T> :
         holder.bind(currentList[position])
     }
 
+    fun removeAt(position: Int){
+        val tempList = currentList
+        if(position < currentList.size){
+            tempList.removeAt(position)
+        }
+        submitList(tempList)
+    }
+
+    fun addAll(items: List<T>) {
+        val tempList = currentList.toMutableList()
+        tempList.addAll(items)
+        submitList(tempList)
+    }
+
+    fun addAll(position: Int, items: List<T>) {
+        val tempList = currentList.toMutableList()
+        tempList.addAll(position, items)
+        submitList(tempList)
+    }
+
+
 }

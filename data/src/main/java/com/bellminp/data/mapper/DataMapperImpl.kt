@@ -1,11 +1,7 @@
 package com.bellminp.data.mapper
 
-import com.bellminp.data.model.DataAutoLogin
-import com.bellminp.data.model.DataFieldList
-import com.bellminp.data.model.DataLogin
-import com.bellminp.domain.model.DomainAutoLogin
-import com.bellminp.domain.model.DomainFieldList
-import com.bellminp.domain.model.DomainLogin
+import com.bellminp.data.model.*
+import com.bellminp.domain.model.*
 
 fun DomainAutoLogin.mapToData() : DataAutoLogin{
     return DataAutoLogin(this.username,this.password)
@@ -39,6 +35,182 @@ fun DataLogin.mapToDomain() : DomainLogin{
         this.token,
         this.fieldList?.map {
             DomainFieldList(it.num,it.name)
+        }
+    )
+}
+
+fun DomainSites.mapToData(): DataSites {
+    return DataSites(
+        this.code,
+        this.message,
+        this.list?.map {
+            DataSitesList(
+                it.num,
+                it.fieldNum,
+                it.fieldName,
+                it.name,
+                it.managenum
+            )
+        }
+    )
+}
+
+fun DomainSections.mapToData(): DataSections {
+    return DataSections(
+        this.code,
+        this.message,
+        this.list?.map {
+            DataSectionsList(
+                it.num,
+                it.siteNum,
+                it.name,
+                it.managenum
+            )
+        }
+    )
+}
+
+fun DomainGauges.mapToData(): DataGauges {
+    return DataGauges(
+        this.code,
+        this.message,
+        this.list?.map {
+            DataGaugesList(
+                it.type,
+                it.num,
+                it.sectionNum,
+                it.name,
+                it.managenum,
+                it.vpos,
+                it.position,
+                it.measurepos,
+                it.gaugetypeNum,
+                it.chcount
+            )
+        }
+    )
+}
+
+fun DomainGaugesGroup.mapToData(): DataGaugesGroup {
+    return DataGaugesGroup(
+        this.code,
+        this.message,
+        this.list?.map {
+            DataGaugesGroupList(
+                it.num,
+                it.sectionNum,
+                it.name,
+                it.managenum,
+                it.vpos,
+                it.position,
+                it.measurepos,
+                it.gaugetypeNum,
+                it.type
+            )
+        }
+    )
+}
+
+fun DomainGaugesType.mapToData(): DataGaugesType {
+    return DataGaugesType(
+        this.code,
+        this.message,
+        this.list?.map {
+            DataGaugesTypeList(
+                it.num,
+                it.name,
+                it.chartType,
+                it.outvaluecount,
+                it.settingcount
+            )
+        }
+    )
+}
+
+fun DataSites.mapToDomain(): DomainSites {
+    return DomainSites(
+        this.code,
+        this.message,
+        this.list?.map {
+            DomainSitesList(
+                it.num,
+                it.fieldNum,
+                it.fieldName,
+                it.name,
+                it.managenum
+            )
+        }
+    )
+}
+
+fun DataSections.mapToDomain(): DomainSections {
+    return DomainSections(
+        this.code,
+        this.message,
+        this.list?.map {
+            DomainSectionsList(
+                it.num,
+                it.siteNum,
+                it.name,
+                it.managenum
+            )
+        }
+    )
+}
+
+fun DataGauges.mapToDomain(): DomainGauges {
+    return DomainGauges(
+        this.code,
+        this.message,
+        this.list?.map {
+            DomainGaugesList(
+                it.type,
+                it.num,
+                it.sectionNum,
+                it.name,
+                it.managenum,
+                it.vpos,
+                it.position,
+                it.measurepos,
+                it.gaugetypeNum,
+                it.chcount
+            )
+        }
+    )
+}
+
+fun DataGaugesGroup.mapToDomain(): DomainGaugesGroup {
+    return DomainGaugesGroup(
+        this.code,
+        this.message,
+        this.list?.map {
+            DomainGaugesGroupList(
+                it.num,
+                it.sectionNum,
+                it.name,
+                it.managenum,
+                it.vpos,
+                it.position,
+                it.measurepos,
+                it.gaugetypeNum,
+                it.type
+            )
+        }
+    )
+}
+
+fun DataGaugesType.mapToDomain(): DomainGaugesType {
+    return DomainGaugesType(
+        this.code,
+        this.message,
+        this.list?.map {
+            DomainGaugesTypeList(
+                it.num,
+                it.name,
+                it.chartType,
+                it.outvaluecount,
+                it.settingcount
+            )
         }
     )
 }
