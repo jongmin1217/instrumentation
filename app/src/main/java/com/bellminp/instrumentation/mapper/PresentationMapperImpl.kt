@@ -46,66 +46,63 @@ fun AutoLogin.mapToDomain() : DomainAutoLogin{
     )
 }
 
-fun DomainSites.mapToPresentation() : List<TreeData>? {
+fun DomainSites.mapToPresentation() : List<SitesList>? {
     return this.list?.map {
-        TreeData(
-            sitesList = SitesList(
-                it.num,
-                it.fieldNum,
-                it.fieldName,
-                it.name,
-                it.managenum
-            )
+        SitesList(
+            it.num,
+            it.fieldNum,
+            it.fieldName,
+            it.name,
+            it.managenum,
+            false
         )
     }
 }
 
-fun DomainSections.mapToPresentation() : List<TreeData>? {
+fun DomainSections.mapToPresentation() : List<SectionsList>? {
     return this.list?.map {
-        TreeData(
-            sectionsList = SectionsList(
-                it.num,
-                it.siteNum,
-                it.name,
-                it.managenum
-            )
+        SectionsList(
+            it.num,
+            it.siteNum,
+            it.name,
+            it.managenum,
+            false
         )
     }
 }
 
-fun DomainGauges.mapToPresentation() : List<TreeData>? {
+fun DomainGauges.mapToPresentation() : List<GaugesList>? {
     return this.list?.map {
-        TreeData(
-            gaugesList = GaugesList(
-                it.type,
-                it.num,
-                it.sectionNum,
-                it.name,
-                it.managenum,
-                it.vpos,
-                it.position,
-                it.measurepos,
-                it.gaugetypeNum,
-                it.chcount
-            )
+        GaugesList(
+            it.type,
+            it.num,
+            it.sectionNum,
+            it.name,
+            it.managenum,
+            it.vpos,
+            it.position,
+            it.measurepos,
+            it.gaugetypeNum,
+            it.chcount,
+            false
         )
     }
 }
 
-fun DomainGaugesGroup.mapToPresentation() : List<TreeData>? {
+fun DomainGaugesGroup.mapToPresentation() : List<GaugesGroupList>? {
     return this.list?.map {
-        TreeData(
-            gaugesGroupList = GaugesGroupList(
-                it.num,
-                it.sectionNum,
-                it.name,
-                it.managenum,
-                it.vpos,
-                it.position,
-                it.measurepos,
-                it.gaugetypeNum,
-                it.type
-            )
+        GaugesGroupList(
+            it.num,
+            it.sectionNum,
+            it.name,
+            it.managenum,
+            it.vpos,
+            it.position,
+            it.measurepos,
+            it.gaugetypeNum,
+            it.type,
+            checked = false,
+            clicked = false
         )
     }
 }

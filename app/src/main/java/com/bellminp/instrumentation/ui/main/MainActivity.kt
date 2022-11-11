@@ -4,12 +4,17 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.fragment.app.Fragment
 import com.bellminp.common.timberMsg
 import com.bellminp.instrumentation.R
 import com.bellminp.instrumentation.databinding.ActivityMainBinding
 import com.bellminp.instrumentation.model.MenuData
 import com.bellminp.instrumentation.ui.base.BaseActivity
 import com.bellminp.instrumentation.ui.login.LoginActivity
+import com.bellminp.instrumentation.ui.main.graph.GraphFragment
+import com.bellminp.instrumentation.ui.main.record.RecordFragment
+import com.bellminp.instrumentation.ui.main.table.TableFragment
+import com.bellminp.instrumentation.ui.main.tree.TreeFragment
 import com.bellminp.instrumentation.ui.splash.SplashViewModel
 import com.bellminp.instrumentation.utils.TYPE
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,9 +23,39 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.activity_main) {
 
     override val viewModel: MainViewModel by viewModels()
+    private lateinit var treeFragment :TreeFragment
+    private var graphFragment : GraphFragment? = null
+    private var tableFragment : TableFragment? = null
+    private var recordFragment : RecordFragment? = null
 
     private val menuAdapter = MenuAdapter {
+        when(it.id){
+            0 -> changeFragment(treeFragment)
 
+            1 -> {
+                if(tableFragment != null) changeFragment(tableFragment!!)
+                else {
+                    tableFragment = TableFragment()
+                    addFragment(tableFragment!!)
+                }
+            }
+
+            2 -> {
+                if(graphFragment != null) changeFragment(graphFragment!!)
+                else {
+                    graphFragment = GraphFragment()
+                    addFragment(graphFragment!!)
+                }
+            }
+
+            3 -> {
+                if(recordFragment != null) changeFragment(recordFragment!!)
+                else {
+                    recordFragment = RecordFragment()
+                    addFragment(recordFragment!!)
+                }
+            }
+        }
     }
 
     override fun setupBinding() {
@@ -30,10 +65,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.getSites(intent.getIntExtra(TYPE, 0))
-
-        initListener()
+        initLayout(intent.getIntExtra(TYPE, 0))
         initAdapter()
+
     }
 
     private fun initAdapter() {
@@ -48,13 +82,32 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         )
     }
 
-    private fun initListener() {
-        binding.tvTest.setOnClickListener {
-            viewModel.clearLocalData()
+    private fun initLayout(fieldNum : Int){
+        treeFragment = TreeFragment(fieldNum)
+        supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, treeFragment).commit()
+    }
 
-            Intent(this@MainActivity, LoginActivity::class.java).apply {
-                startActivity(this)
-                finish()
+
+    private fun changeFragment(newFragment: Fragment) {
+        if (!newFragment.isVisible) {
+            hideFragment()
+            supportFragmentManager.beginTransaction().show(newFragment).commit()
+        }
+    }
+
+    private fun addFragment(newFragment: Fragment) {
+        for (fragment: Fragment in supportFragmentManager.fragments) {
+            if (fragment.isVisible) {
+                supportFragmentManager.beginTransaction().hide(fragment).commit()
+                supportFragmentManager.beginTransaction().add(binding.frameLayout.id, newFragment).commit()
+            }
+        }
+    }
+
+    private fun hideFragment() {
+        for (fragment: Fragment in supportFragmentManager.fragments) {
+            if (fragment.isVisible) {
+                supportFragmentManager.beginTransaction().hide(fragment).commit()
             }
         }
     }

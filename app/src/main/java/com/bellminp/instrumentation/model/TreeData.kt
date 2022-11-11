@@ -1,26 +1,29 @@
 package com.bellminp.instrumentation.model
 
-data class TreeData(
-    val sitesList : SitesList? = null,
-    val sectionsList: SectionsList? = null,
-    val gaugesList: GaugesList? = null,
-    val gaugesGroupList: GaugesGroupList? = null
-)
+
+
+data class Field(
+    val num : Int,
+    val name : String,
+    var checked : Boolean
+) : TreeModel
 
 data class SitesList(
     val num : Int,
     val fieldNum : Int,
     val fieldName : String,
     val name : String,
-    val managenum : String
-)
+    val managenum : String,
+    var checked : Boolean
+) : TreeModel
 
 data class SectionsList(
     val num : Int,
     val siteNum : Int,
     val name : String,
-    val managenum : String
-)
+    val managenum : String,
+    var checked : Boolean
+) : TreeModel
 
 data class GaugesList(
     val type : String,
@@ -32,8 +35,9 @@ data class GaugesList(
     val position : String?,
     val measurepos : String?,
     val gaugetypeNum : Int?,
-    val chcount : Int?
-)
+    val chcount : Int?,
+    var checked : Boolean
+) : TreeModel
 
 data class GaugesGroupList(
     val num : Int,
@@ -44,8 +48,10 @@ data class GaugesGroupList(
     val position : String,
     val measurepos : String,
     val gaugetypeNum : Int,
-    val type : String
-)
+    val type : String,
+    var checked : Boolean,
+    var clicked : Boolean
+) : TreeModel
 
 data class GaugesTypeList(
     val num : Int,
@@ -54,3 +60,5 @@ data class GaugesTypeList(
     val outvaluecount : Int,
     val settingcount : Int
 )
+
+interface TreeModel

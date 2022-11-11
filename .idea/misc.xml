@@ -13,8 +13,17 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.29030797101449274" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.29030797101449274" />
         <entry key="app/src/main/res/layout/dialog_field_select.xml" value="0.29030797101449274" />
+        <entry key="app/src/main/res/layout/fragment_graph.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/fragment_record.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/fragment_table.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/fragment_tree.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/item_field.xml" value="0.28396739130434784" />
         <entry key="app/src/main/res/layout/item_field_list.xml" value="0.29030797101449274" />
+        <entry key="app/src/main/res/layout/item_gauges.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/item_gauges_group.xml" value="0.28396739130434784" />
         <entry key="app/src/main/res/layout/item_menu.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/item_sections.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/item_sites.xml" value="0.28396739130434784" />
         <entry key="app/src/main/res/xml/network_security_config.xml" value="0.1703125" />
       </map>
     </option>
