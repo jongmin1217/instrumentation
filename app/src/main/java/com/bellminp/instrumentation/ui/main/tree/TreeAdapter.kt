@@ -19,6 +19,8 @@ class TreeAdapter(
     private val unSelectGauges: (() -> Unit)
 ) : BaseListAdapter<TreeModel>() {
 
+    private var selectNum : Int? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<TreeModel> {
         return when (viewType) {
             FIELD -> {
@@ -104,7 +106,10 @@ class TreeAdapter(
                             item.clicked = !item.clicked
                             notifyItemChanged(it.adapterPosition)
                             gaugesClick(item.num)
-                            if (item.clicked) selectGauges(currentList[it.adapterPosition])
+                            if (item.clicked) {
+                                selectNum = item.num
+                                selectGauges(currentList[it.adapterPosition])
+                            }
                             else unSelectGauges()
                         }
                     }
@@ -137,7 +142,10 @@ class TreeAdapter(
                             item.clicked = !item.clicked
                             notifyItemChanged(it.adapterPosition)
                             gaugesClick(item.num)
-                            if (item.clicked) selectGauges(currentList[it.adapterPosition])
+                            if (item.clicked){
+                                selectNum = item.num
+                                selectGauges(currentList[it.adapterPosition])
+                            }
                             else unSelectGauges()
                         }
                     }
@@ -224,6 +232,10 @@ class TreeAdapter(
     fun addGauges(items: List<GaugesList>) {
         val index = currentList.indexOfFirst { it is SectionsList && it.num == items[0].sectionNum }
         if (index != -1) addAll(index + 1, items.apply {
+            selectNum?.let { num ->
+                val selectIndex = this.indexOfFirst { it.num == num }
+                if(selectIndex != -1) this[selectIndex].clicked = true
+            }
             this[this.size - 1].bottomViewVisible = false
             this.forEach {
                 it.sitesLineVisible = (currentList[index] as SectionsList).sitesLineVisible
@@ -240,6 +252,10 @@ class TreeAdapter(
     fun addGaugesGroup(items: List<GaugesGroupList>) {
         val index = currentList.indexOfFirst { it is GaugesList && it.num == items[0].gaugegroupNum }
         if (index != -1) addAll(index + 1, items.apply {
+            selectNum?.let { num ->
+                val selectIndex = this.indexOfFirst { it.num == num }
+                if(selectIndex != -1) this[selectIndex].clicked = true
+            }
             this[this.size - 1].bottomViewVisible = false
             this.forEach {
                 it.sitesLineVisible = (currentList[index] as GaugesList).sitesLineVisible
