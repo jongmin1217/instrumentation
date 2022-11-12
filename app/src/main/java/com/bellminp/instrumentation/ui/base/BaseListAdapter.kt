@@ -3,6 +3,7 @@ package com.bellminp.instrumentation.ui.base
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.bellminp.instrumentation.ui.main.tree.TreeAdapter
 
 
 abstract class BaseListAdapter<T> :

@@ -99,6 +99,7 @@ fun DomainGaugesGroup.mapToData(): DataGaugesGroup {
             DataGaugesGroupList(
                 it.num,
                 it.sectionNum,
+                it.gaugegroupNum,
                 it.name,
                 it.managenum,
                 it.vpos,
@@ -187,6 +188,7 @@ fun DataGaugesGroup.mapToDomain(): DomainGaugesGroup {
             DomainGaugesGroupList(
                 it.num,
                 it.sectionNum,
+                it.gaugegroupNum,
                 it.name,
                 it.managenum,
                 it.vpos,

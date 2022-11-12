@@ -9,6 +9,7 @@ data class DomainGaugesGroup(
 data class DomainGaugesGroupList(
     val num : Int,
     val sectionNum : Int,
+    val gaugegroupNum : Int,
     val name : String,
     val managenum : String,
     val vpos : Double,

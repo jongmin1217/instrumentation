@@ -80,6 +80,7 @@ fun GaugesGroupResponse.gaugesGroupToData(): DataGaugesGroup {
             DataGaugesGroupList(
                 it.num,
                 it.sectionNum,
+                it.gaugegroupNum,
                 it.name,
                 it.managenum,
                 it.vpos,

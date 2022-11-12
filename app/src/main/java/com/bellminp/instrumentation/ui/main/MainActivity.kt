@@ -74,10 +74,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         binding.recyclerviewMenu.adapter = menuAdapter
         menuAdapter.submitList(
             listOf(
-                MenuData(0, "트리", R.drawable.ic_launcher_background, true),
-                MenuData(1, "표", R.drawable.ic_launcher_background, false),
-                MenuData(2, "그래프", R.drawable.ic_launcher_background, false),
-                MenuData(3, "검사기록", R.drawable.ic_launcher_background, false)
+                MenuData(0, "트리", R.drawable.tree_icon, true),
+                MenuData(1, "표", R.drawable.table_icon, false),
+                MenuData(2, "그래프", R.drawable.graph_icon, false),
+                MenuData(3, "검사기록", R.drawable.record_icon, false)
             )
         )
     }

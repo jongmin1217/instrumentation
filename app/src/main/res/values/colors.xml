@@ -12,4 +12,6 @@
     <color name="basic">#31373c</color>
     <color name="unselect_menu">#535353</color>
     <color name="gray">#f3f3f3</color>
+    <color name="select_menu">#BDBDBD</color>
+    <color name="gauges_click">#031953</color>
 </resources>

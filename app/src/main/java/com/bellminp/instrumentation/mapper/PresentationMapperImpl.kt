@@ -46,8 +46,8 @@ fun AutoLogin.mapToDomain() : DomainAutoLogin{
     )
 }
 
-fun DomainSites.mapToPresentation() : List<SitesList>? {
-    return this.list?.map {
+fun List<DomainSitesList>.mapToPresentation() : List<SitesList> {
+    return this.map {
         SitesList(
             it.num,
             it.fieldNum,
@@ -59,8 +59,9 @@ fun DomainSites.mapToPresentation() : List<SitesList>? {
     }
 }
 
-fun DomainSections.mapToPresentation() : List<SectionsList>? {
-    return this.list?.map {
+@JvmName("mapToPresentationDomainSectionsList")
+fun List<DomainSectionsList>.mapToPresentation() : List<SectionsList> {
+    return this.map {
         SectionsList(
             it.num,
             it.siteNum,
@@ -71,8 +72,9 @@ fun DomainSections.mapToPresentation() : List<SectionsList>? {
     }
 }
 
-fun DomainGauges.mapToPresentation() : List<GaugesList>? {
-    return this.list?.map {
+@JvmName("mapToPresentationDomainGaugesList")
+fun List<DomainGaugesList>.mapToPresentation() : List<GaugesList> {
+    return this.map {
         GaugesList(
             it.type,
             it.num,
@@ -84,16 +86,19 @@ fun DomainGauges.mapToPresentation() : List<GaugesList>? {
             it.measurepos,
             it.gaugetypeNum,
             it.chcount,
-            false
+            checked = false,
+            clicked = false
         )
     }
 }
 
-fun DomainGaugesGroup.mapToPresentation() : List<GaugesGroupList>? {
-    return this.list?.map {
+@JvmName("mapToPresentationDomainGaugesGroupList")
+fun List<DomainGaugesGroupList>.mapToPresentation() : List<GaugesGroupList> {
+    return this.map {
         GaugesGroupList(
             it.num,
             it.sectionNum,
+            it.gaugegroupNum,
             it.name,
             it.managenum,
             it.vpos,
@@ -101,7 +106,6 @@ fun DomainGaugesGroup.mapToPresentation() : List<GaugesGroupList>? {
             it.measurepos,
             it.gaugetypeNum,
             it.type,
-            checked = false,
             clicked = false
         )
     }
