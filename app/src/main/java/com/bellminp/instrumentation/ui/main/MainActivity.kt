@@ -73,6 +73,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         initLayout(num)
         initAdapter()
 
+
         with(viewModel){
             fieldNum = num
             getProcessLog()
