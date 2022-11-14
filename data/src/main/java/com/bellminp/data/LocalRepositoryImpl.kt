@@ -28,6 +28,12 @@ class LocalRepositoryImpl@Inject constructor(
         return localDataSource.getToken()
     }
 
+    override fun setAdmin(admin: Boolean) {
+        localDataSource.setAdmin(admin)
+    }
+
+    override fun getAdmin() = localDataSource.getAdmin()
+
     override fun clear() {
         localDataSource.clear()
     }

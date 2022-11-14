@@ -2,6 +2,7 @@ package com.bellminp.remote.mapper
 
 import com.bellminp.data.model.*
 import com.bellminp.remote.model.login.LoginResponse
+import com.bellminp.remote.model.record.RecordResponse
 import com.bellminp.remote.model.tree.*
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -104,6 +105,27 @@ fun GaugesTypeResponse.gaugesTypeToData(): DataGaugesType {
                 it.chartType,
                 it.outvaluecount,
                 it.settingcount
+            )
+        }
+    )
+}
+
+fun RecordResponse.recordToData(): DataRecord {
+    return DataRecord(
+        this.code,
+        this.message,
+        this.list?.map {
+            DataRecordList(
+                it.time,
+                it.msg,
+                it.gaugeNum,
+                it.groupNum,
+                it.sectionNum,
+                it.fieldNum,
+                it.fieldName,
+                it.gaugeName,
+                it.sectionName,
+                it.groupName
             )
         }
     )

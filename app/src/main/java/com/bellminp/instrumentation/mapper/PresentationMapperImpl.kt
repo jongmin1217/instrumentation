@@ -110,3 +110,21 @@ fun List<DomainGaugesGroupList>.mapToPresentation() : List<GaugesGroupList> {
         )
     }
 }
+
+@JvmName("mapToPresentationDomainRecordList")
+fun List<DomainRecordList>.mapToPresentation() : List<RecordData>{
+    return this.map {
+        RecordData(
+            it.time,
+            it.msg,
+            it.gaugeNum?:0,
+            it.groupNum?:0,
+            it.sectionNum?:0,
+            it.fieldNum?:0,
+            it.fieldName?:"",
+            it.gaugeName?:"",
+            it.sectionName?:"",
+            it.groupName
+        )
+    }
+}

@@ -6,4 +6,11 @@
     <string name="login">로그인</string>
     <string name="plz_write_login_info">아이디와 비밀번호를 입력해주세요.</string>
     <string name="no_exist_user">아이디 또는 비밀번호가 틀렸습니다. 담당자에게 문의 바랍니다.</string>
+
+    <string name="from">From:</string>
+    <string name="days">Days:</string>
+    <string name="to">To:</string>
+
+    <string name="test_no_list">test_no_list</string>
+    <string name="test_list">test_list</string>
 </resources>

@@ -12,5 +12,9 @@ interface LocalDataSource {
 
     fun getToken() : String
 
+    fun setAdmin(admin : Boolean)
+
+    fun getAdmin() : Boolean
+
     fun clear()
 }

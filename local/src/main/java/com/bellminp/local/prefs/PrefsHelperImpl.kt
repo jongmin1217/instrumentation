@@ -2,11 +2,8 @@ package com.bellminp.local.prefs
 
 import android.content.Context
 import androidx.core.content.edit
-import com.bellminp.local.utils.AUTO_LOGIN_ID
-import com.bellminp.local.utils.AUTO_LOGIN_PW
-import com.bellminp.local.utils.PREFS_APP_NAME
 import com.bellminp.data.model.DataAutoLogin
-import com.bellminp.local.utils.TOKEN
+import com.bellminp.local.utils.*
 import javax.inject.Inject
 
 class PrefsHelperImpl @Inject constructor(applicationContext: Context) : PrefsHelper {
@@ -32,6 +29,14 @@ class PrefsHelperImpl @Inject constructor(applicationContext: Context) : PrefsHe
         set(value) {
             prefs.edit {
                 putString(TOKEN, value)
+            }
+        }
+
+    override var admin: Boolean
+        get() = prefs.getBoolean(ADMIN, false)
+        set(value) {
+            prefs.edit {
+                putBoolean(ADMIN, value)
             }
         }
 

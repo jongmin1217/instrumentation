@@ -9,6 +9,8 @@ import com.bellminp.common.timberMsg
 import com.bellminp.instrumentation.R
 import com.bellminp.instrumentation.databinding.ActivityMainBinding
 import com.bellminp.instrumentation.model.MenuData
+import com.bellminp.instrumentation.model.RecordData
+import com.bellminp.instrumentation.model.SelectData
 import com.bellminp.instrumentation.ui.base.BaseActivity
 import com.bellminp.instrumentation.ui.login.LoginActivity
 import com.bellminp.instrumentation.ui.main.graph.GraphFragment
@@ -28,6 +30,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
     private var tableFragment : TableFragment? = null
     private var recordFragment : RecordFragment? = null
 
+    private var recordList : List<RecordData>? = null
+
     private val menuAdapter = MenuAdapter {
         when(it.id){
             0 -> changeFragment(treeFragment)
@@ -35,7 +39,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
             1 -> {
                 if(tableFragment != null) changeFragment(tableFragment!!)
                 else {
-                    tableFragment = TableFragment()
+                    tableFragment = TableFragment(viewModel.selectData){ data -> editDateSelectData(data) }
                     addFragment(tableFragment!!)
                 }
             }
@@ -43,7 +47,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
             2 -> {
                 if(graphFragment != null) changeFragment(graphFragment!!)
                 else {
-                    graphFragment = GraphFragment()
+                    graphFragment = GraphFragment(viewModel.selectData){ data -> editDateSelectData(data) }
                     addFragment(graphFragment!!)
                 }
             }
@@ -51,7 +55,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
             3 -> {
                 if(recordFragment != null) changeFragment(recordFragment!!)
                 else {
-                    recordFragment = RecordFragment()
+                    recordFragment = RecordFragment(viewModel.selectData,recordList){ data -> editDateSelectData(data) }
                     addFragment(recordFragment!!)
                 }
             }
@@ -65,9 +69,25 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initLayout(intent.getIntExtra(TYPE, 0))
+        val num = intent.getIntExtra(TYPE, 0)
+        initLayout(num)
         initAdapter()
 
+        with(viewModel){
+            fieldNum = num
+            getProcessLog()
+        }
+    }
+
+    override fun setupObserver() {
+        super.setupObserver()
+
+        with(viewModel){
+            setRecordList.observe(this@MainActivity,{
+                recordList = it
+                recordFragment?.settingRecordList(it)
+            })
+        }
     }
 
     private fun initAdapter() {
@@ -83,8 +103,37 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
     }
 
     private fun initLayout(fieldNum : Int){
-        treeFragment = TreeFragment(fieldNum)
+        treeFragment = TreeFragment(fieldNum){ item: SelectData, num: Int, type: String ->
+            editGaugesSelectData(item)
+        }
         supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, treeFragment).commit()
+    }
+
+    private fun editGaugesSelectData(data : SelectData){
+        with(viewModel){
+            selectData.selectSections = data.selectSections
+            selectData.selectGauges = data.selectGauges
+        }
+        settingSelectData()
+    }
+
+    private fun editDateSelectData(data : SelectData){
+        with(viewModel){
+            selectData.toDay = data.toDay
+            selectData.fromDay = data.fromDay
+            selectData.days = data.days
+            selectData.startUnixTime = data.startUnixTime
+            selectData.endUnixTime = data.endUnixTime
+
+            getProcessLog()
+        }
+        settingSelectData()
+    }
+
+    private fun settingSelectData(){
+        tableFragment?.setSelectData(viewModel.selectData)
+        graphFragment?.setSelectData(viewModel.selectData)
+        recordFragment?.setSelectData(viewModel.selectData)
     }
 
 

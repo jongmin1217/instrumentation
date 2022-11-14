@@ -105,7 +105,7 @@ fun setGaugesIcon(iv: ImageView, type : String, gaugesType : Int,num : Int) {
                 else -> R.drawable.icon_29
             }
         }else{
-            when(num){
+            when(gaugesType){
                 5 -> R.drawable.icon_5stm_inclinometergroup
                 6 -> R.drawable.icon_6sta_inclinometergroup
                 33 -> R.drawable.icon_33sta_railgroup1

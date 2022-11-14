@@ -6,7 +6,12 @@ data class Field(
     val num : Int,
     val name : String,
     var checked : Boolean
-) : TreeModel
+) : TreeModel{
+    override fun getSectionsNum() = 0
+    override fun getGaugesName() = ""
+    override fun getGaugesNum() = 0
+    override fun getGaugesType() = ""
+}
 
 data class SitesList(
     val num : Int,
@@ -16,7 +21,12 @@ data class SitesList(
     val managenum : String,
     var checked : Boolean,
     var bottomViewVisible : Boolean = true
-) : TreeModel
+) : TreeModel{
+    override fun getSectionsNum() = 0
+    override fun getGaugesName() = ""
+    override fun getGaugesNum() = 0
+    override fun getGaugesType() = ""
+}
 
 data class SectionsList(
     val num : Int,
@@ -26,7 +36,12 @@ data class SectionsList(
     var checked : Boolean,
     var bottomViewVisible : Boolean = true,
     var sitesLineVisible : Boolean = true
-) : TreeModel
+) : TreeModel{
+    override fun getSectionsNum() = 0
+    override fun getGaugesName() = ""
+    override fun getGaugesNum() = 0
+    override fun getGaugesType() = ""
+}
 
 data class GaugesList(
     val type : String,
@@ -47,6 +62,13 @@ data class GaugesList(
     var siteNum : Int = 0
 ) : TreeModel{
     fun getGroup() = type == "group"
+    override fun getSectionsNum() = sectionNum
+    override fun getGaugesName() : String {
+        val managenumText = if(managenum.isEmpty()) "" else "[$managenum]"
+        return "$name $managenumText"
+    }
+    override fun getGaugesNum() = num
+    override fun getGaugesType() = type
 }
 
 data class GaugesGroupList(
@@ -66,7 +88,15 @@ data class GaugesGroupList(
     var sitesLineVisible : Boolean = true,
     var sectionsLineVisible : Boolean = true,
     var gaugesLineVisible : Boolean = true
-) : TreeModel
+) : TreeModel{
+    override fun getSectionsNum() = sectionNum
+    override fun getGaugesName() : String {
+        val managenumText = if(managenum.isEmpty()) "" else "[$managenum]"
+        return "$name $managenumText"
+    }
+    override fun getGaugesNum() = num
+    override fun getGaugesType() = type
+}
 
 data class GaugesTypeList(
     val num : Int,
@@ -76,4 +106,9 @@ data class GaugesTypeList(
     val settingcount : Int
 )
 
-interface TreeModel
+interface TreeModel{
+    fun getSectionsNum() : Int
+    fun getGaugesName() : String
+    fun getGaugesNum() : Int
+    fun getGaugesType() : String
+}

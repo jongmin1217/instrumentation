@@ -12,5 +12,9 @@ interface LocalRepository {
 
     fun getToken() : String
 
+    fun setAdmin(admin : Boolean)
+
+    fun getAdmin() : Boolean
+
     fun clear()
 }

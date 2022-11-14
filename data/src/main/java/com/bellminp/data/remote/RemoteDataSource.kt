@@ -2,6 +2,7 @@ package com.bellminp.data.remote
 
 import com.bellminp.data.model.*
 import retrofit2.Response
+import retrofit2.http.Query
 
 interface RemoteDataSource {
 
@@ -16,4 +17,6 @@ interface RemoteDataSource {
     suspend fun getGaugesGroup(token : String,gaugegroupNum: Int): Response<DataGaugesGroup>
 
     suspend fun getGaugesType(token : String): Response<DataGaugesType>
+
+    suspend fun getProcessLog(token : String, fieldNum: Int?, startUnixTime: Long, endUnixTime: Long): Response<DataRecord>
 }

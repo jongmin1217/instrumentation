@@ -272,6 +272,15 @@ class TreeAdapter(
         })
     }
 
+    fun getSectionsName(num : Int) : String{
+        val index = currentList.indexOfFirst { it is SectionsList && it.num == num }
+        return if(index != -1){
+            val item = currentList[index] as SectionsList
+            val managenumText = if(item.managenum.isEmpty()) "" else "[${item.managenum}]"
+            "${item.name} $managenumText"
+        }else ""
+    }
+
 
     class FieldHolder(
         private val binding: ItemFieldBinding

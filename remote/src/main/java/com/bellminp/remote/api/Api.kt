@@ -2,6 +2,7 @@ package com.bellminp.remote.api
 
 import com.bellminp.data.model.DataAutoLogin
 import com.bellminp.remote.model.login.LoginResponse
+import com.bellminp.remote.model.record.RecordResponse
 import com.bellminp.remote.model.tree.*
 import io.reactivex.Single
 import retrofit2.Response
@@ -41,6 +42,14 @@ interface Api {
 
     @GET("/gauges/types")
     suspend fun getGaugesType(
-        @Header("Authorization") Authorization: String,
+        @Header("Authorization") Authorization: String
     ): Response<GaugesTypeResponse>
+
+    @GET("/processlog")
+    suspend fun getProcessLog(
+        @Header("Authorization") Authorization: String,
+        @Query("fieldNum") fieldNum: Int?,
+        @Query("startUnixTime") startUnixTime: Long,
+        @Query("endUnixTime") endUnixTime: Long
+    ): Response<RecordResponse>
 }

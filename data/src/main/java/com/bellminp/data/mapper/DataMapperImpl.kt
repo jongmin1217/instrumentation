@@ -217,3 +217,46 @@ fun DataGaugesType.mapToDomain(): DomainGaugesType {
     )
 }
 
+
+fun DataRecord.mapToDomain(): DomainRecord {
+    return DomainRecord(
+        this.code,
+        this.message,
+        this.list?.map {
+            DomainRecordList(
+                it.time,
+                it.msg,
+                it.gaugeNum,
+                it.groupNum,
+                it.sectionNum,
+                it.fieldNum,
+                it.fieldName,
+                it.gaugeName,
+                it.sectionName,
+                it.groupName
+            )
+        }
+    )
+}
+
+fun DomainRecord.mapToData(): DataRecord {
+    return DataRecord(
+        this.code,
+        this.message,
+        this.list?.map {
+            DataRecordList(
+                it.time,
+                it.msg,
+                it.gaugeNum,
+                it.groupNum,
+                it.sectionNum,
+                it.fieldNum,
+                it.fieldName,
+                it.gaugeName,
+                it.sectionName,
+                it.groupName
+            )
+        }
+    )
+}
+

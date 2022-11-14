@@ -76,6 +76,20 @@ class RemoteDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun getProcessLog(
+        token: String,
+        fieldNum: Int?,
+        startUnixTime: Long,
+        endUnixTime: Long
+    ): Response<DataRecord> {
+        val response = api.getProcessLog(token,fieldNum,startUnixTime,endUnixTime)
+        return when(getResponse(response)){
+            SUCCESS -> Response.success(response.code(),response.body()?.recordToData())
+            FAIL -> Response.error(response.code(), response.errorBody() ?: "error".toResponseBody(null))
+            else -> Response.error(500, response.errorBody() ?: "error".toResponseBody(null))
+        }
+    }
+
     private fun <T> getResponse(response: Response<T>): Int {
         return try {
             if (response.isSuccessful) SUCCESS

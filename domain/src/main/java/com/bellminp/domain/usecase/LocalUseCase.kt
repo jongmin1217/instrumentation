@@ -22,6 +22,12 @@ class LocalUseCase @Inject constructor(private val localRepository: LocalReposit
         return localRepository.getToken()
     }
 
+    fun setAdmin(admin: Boolean) {
+        localRepository.setAdmin(admin)
+    }
+
+    fun getAdmin() = localRepository.getAdmin()
+
     fun clear(){
         localRepository.clear()
     }

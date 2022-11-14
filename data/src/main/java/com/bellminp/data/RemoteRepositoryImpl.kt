@@ -69,4 +69,18 @@ class RemoteRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getProcessLog(
+        token: String,
+        fieldNum: Int?,
+        startUnixTime: Long,
+        endUnixTime: Long
+    ): Response<DomainRecord> {
+        val response = remoteDataSource.getProcessLog(token,fieldNum, startUnixTime, endUnixTime)
+        return if(response.isSuccessful){
+            Response.success(response.code(),response.body()?.mapToDomain())
+        }else{
+            Response.error(response.code(), response.errorBody() ?: ResponseBody.create(null,"error"))
+        }
+    }
+
 }
