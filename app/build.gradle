@@ -63,4 +63,6 @@ dependencies {
 
     api deps.glide.glide
     annotationProcessor deps.glide.annotation
+
+    //api deps.adaptivetablelayout
 }

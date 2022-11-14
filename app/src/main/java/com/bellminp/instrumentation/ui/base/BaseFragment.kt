@@ -77,7 +77,6 @@ abstract class BaseFragment<VDB : ViewDataBinding, VM : BaseViewModel>(
                     false
                 ) / 1000
             ).apply {
-                timberMsg(this)
                 selectedDate(this)
             }
         }

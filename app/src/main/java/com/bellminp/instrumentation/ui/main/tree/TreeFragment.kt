@@ -61,25 +61,25 @@ class TreeFragment(
         super.setupObserver()
 
         with(viewModel) {
-            addField.observe(viewLifecycleOwner, {
+            addField.observe(viewLifecycleOwner) {
                 treeAdapter.submitList(listOf(it))
-            })
+            }
 
-            addSites.observe(viewLifecycleOwner, {
+            addSites.observe(viewLifecycleOwner) {
                 treeAdapter.addSites(it)
-            })
+            }
 
-            addSections.observe(viewLifecycleOwner, {
+            addSections.observe(viewLifecycleOwner) {
                 treeAdapter.addSections(it)
-            })
+            }
 
-            addGauges.observe(viewLifecycleOwner, {
+            addGauges.observe(viewLifecycleOwner) {
                 treeAdapter.addGauges(it)
-            })
+            }
 
-            addGaugesGroup.observe(viewLifecycleOwner, {
+            addGaugesGroup.observe(viewLifecycleOwner) {
                 treeAdapter.addGaugesGroup(it)
-            })
+            }
         }
     }
 

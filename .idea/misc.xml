@@ -10,6 +10,8 @@
         <entry key="app/src/main/res/drawable/shape_login_edit_text.xml" value="0.3277777777777778" />
         <entry key="app/src/main/res/drawable/shape_menu_select.xml" value="0.32314814814814813" />
         <entry key="app/src/main/res/drawable/shape_menu_unselect.xml" value="0.32314814814814813" />
+        <entry key="app/src/main/res/drawable/shape_table.xml" value="0.39814814814814814" />
+        <entry key="app/src/main/res/drawable/shape_table_title.xml" value="0.39814814814814814" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.29030797101449274" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.29030797101449274" />
@@ -18,13 +20,18 @@
         <entry key="app/src/main/res/layout/fragment_record.xml" value="0.28396739130434784" />
         <entry key="app/src/main/res/layout/fragment_table.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_tree.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/item_cell.xml" value="0.3836050724637681" />
         <entry key="app/src/main/res/layout/item_field.xml" value="0.5380359612724758" />
         <entry key="app/src/main/res/layout/item_field_list.xml" value="0.29030797101449274" />
         <entry key="app/src/main/res/layout/item_gauges.xml" value="0.48084054388133496" />
         <entry key="app/src/main/res/layout/item_gauges_group.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/item_header.xml" value="0.3836050724637681" />
+        <entry key="app/src/main/res/layout/item_horizontal_table.xml" value="0.67" />
         <entry key="app/src/main/res/layout/item_menu.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/item_record_list.xml" value="0.3836050724637681" />
         <entry key="app/src/main/res/layout/item_sections.xml" value="0.28396739130434784" />
         <entry key="app/src/main/res/layout/item_sites.xml" value="0.28396739130434784" />
+        <entry key="app/src/main/res/layout/item_vertical_table.xml" value="0.3836050724637681" />
         <entry key="app/src/main/res/xml/network_security_config.xml" value="0.1703125" />
       </map>
     </option>

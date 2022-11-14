@@ -10,5 +10,20 @@ data class RecordData(
     val fieldName : String,
     val gaugeName : String,
     val sectionName : String,
-    val groupName : String?
+    val groupName : String?,
+    val admin : Boolean,
+    val title : Boolean = false,
+    val maxData : MaxRecordData
+)
+
+data class MaxRecordData(
+    val maxField : String?,
+    val maxTime : String,
+    val maxGauges : String,
+    val maxMsg : String
+)
+
+data class CellData(
+    val realText : String,
+    val maxWidthText : String
 )

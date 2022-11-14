@@ -30,6 +30,9 @@ fun getUnixTime() = System.currentTimeMillis()
 fun convertTimestampToDateTerm(timestamp: Long): String = SimpleDateFormat("yyyy.MM.dd").format(timestamp)
 
 @SuppressLint("SimpleDateFormat")
+fun convertTimestampToDateRecord(timestamp: Long): String = SimpleDateFormat("yyyy-MM-dd HH:mm").format(timestamp)
+
+@SuppressLint("SimpleDateFormat")
 fun convertTimestampToDateText(timestamp: Long): String = SimpleDateFormat("MM / dd").format(timestamp)
 
 @SuppressLint("SimpleDateFormat")
@@ -39,4 +42,11 @@ fun getUnixTime(date : String, fromDay : Boolean) : Long{
     val timestamp = formatter.parse(fullDate) as Date
 
     return timestamp.time
+}
+
+fun String.isTitle() : Boolean{
+    return when(this){
+        "현장이름", "측정일시", "계측기명", "내용" -> true
+        else -> false
+    }
 }
