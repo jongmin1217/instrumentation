@@ -84,10 +84,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         super.setupObserver()
 
         with(viewModel){
-            setRecordList.observe(this@MainActivity,{
+            setRecordList.observe(this@MainActivity) {
                 recordList = it
                 recordFragment?.settingRecordList(it)
-            })
+            }
         }
     }
 
