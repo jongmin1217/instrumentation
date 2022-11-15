@@ -50,7 +50,6 @@ class LoginViewModel @Inject constructor(
                                 showShortToast(InstrumentationApplication.mInstance.resources.getString(R.string.no_exist_user))
                             }
                         }
-
                         else -> {
                             showShortToast(InstrumentationApplication.mInstance.resources.getString(R.string.no_exist_user))
                         }
