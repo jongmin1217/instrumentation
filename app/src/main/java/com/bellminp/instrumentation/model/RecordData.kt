@@ -25,5 +25,6 @@ data class MaxRecordData(
 
 data class CellData(
     val realText : String,
-    val maxWidthText : String
+    val maxWidthText : String,
+    var title : Boolean = false
 )

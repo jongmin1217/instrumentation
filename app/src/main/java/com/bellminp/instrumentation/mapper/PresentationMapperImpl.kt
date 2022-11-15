@@ -191,15 +191,16 @@ fun List<DomainRecordList>.maxText(admin: Boolean): MaxRecordData {
 fun RecordData.mapToCellData(maxRecordData: MaxRecordData): List<CellData> {
     val list = ArrayList<CellData>()
 
-    if (this.admin) list.add(CellData(this.fieldName, maxRecordData.maxField ?: ""))
+    if (this.admin) list.add(CellData(this.fieldName, maxRecordData.maxField ?: "",this.title))
     list.add(
         CellData(
             if (this.title) "측정일시" else convertTimestampToDateRecord(this.time),
-            maxRecordData.maxTime
+            maxRecordData.maxTime,
+            this.title
         )
     )
-    list.add(CellData(this.gaugeName, maxRecordData.maxGauges))
-    list.add(CellData(this.msg, maxRecordData.maxMsg))
+    list.add(CellData(this.gaugeName, maxRecordData.maxGauges,this.title))
+    list.add(CellData(this.msg, maxRecordData.maxMsg,this.title))
 
     return list
 }

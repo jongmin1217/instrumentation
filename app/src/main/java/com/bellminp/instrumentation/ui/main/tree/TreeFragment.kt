@@ -33,7 +33,7 @@ class TreeFragment(
                 clickGauges(it)
             },
             {
-
+                unSelectGauges()
             }
         )
     }
@@ -86,12 +86,23 @@ class TreeFragment(
     private fun clickGauges(item: TreeModel) {
         gaugesClick(
             SelectData(
-                selectSections = treeAdapter.getSectionsName(item.getSectionsNum()),
+                selectSections = if (item is GaugesList) treeAdapter.getSectionsName(item.getSectionsNum())
+                else treeAdapter.getGroupName(item.getGroupNum()),
                 selectGauges = item.getGaugesName()
             ),
             item.getGaugesNum(),
             item.getGaugesType()
         )
+    }
 
+    private fun unSelectGauges(){
+        gaugesClick(
+            SelectData(
+                selectSections = "",
+                selectGauges = ""
+            ),
+            0,
+            ""
+        )
     }
 }

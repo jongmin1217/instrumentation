@@ -250,7 +250,7 @@ class TreeAdapter(
     }
 
     fun addGaugesGroup(items: List<GaugesGroupList>) {
-        val index = currentList.indexOfFirst { it is GaugesList && it.num == items[0].gaugegroupNum }
+        val index = currentList.indexOfFirst { it is GaugesList && it.type == "group" && it.num == items[0].gaugegroupNum }
         if (index != -1) addAll(index + 1, items.apply {
             selectNum?.let { num ->
                 val selectIndex = this.indexOfFirst { it.num == num }
@@ -276,6 +276,15 @@ class TreeAdapter(
         val index = currentList.indexOfFirst { it is SectionsList && it.num == num }
         return if(index != -1){
             val item = currentList[index] as SectionsList
+            val managenumText = if(item.managenum.isEmpty()) "" else "[${item.managenum}]"
+            "${item.name} $managenumText"
+        }else ""
+    }
+
+    fun getGroupName(num : Int) : String{
+        val index = currentList.indexOfFirst { it is GaugesList && it.num == num }
+        return if(index != -1){
+            val item = currentList[index] as GaugesList
             val managenumText = if(item.managenum.isEmpty()) "" else "[${item.managenum}]"
             "${item.name} $managenumText"
         }else ""

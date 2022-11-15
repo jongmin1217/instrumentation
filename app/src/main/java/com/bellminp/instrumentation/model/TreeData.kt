@@ -11,6 +11,7 @@ data class Field(
     override fun getGaugesName() = ""
     override fun getGaugesNum() = 0
     override fun getGaugesType() = ""
+    override fun getGroupNum() = num
 }
 
 data class SitesList(
@@ -26,6 +27,7 @@ data class SitesList(
     override fun getGaugesName() = ""
     override fun getGaugesNum() = 0
     override fun getGaugesType() = ""
+    override fun getGroupNum() = num
 }
 
 data class SectionsList(
@@ -41,6 +43,7 @@ data class SectionsList(
     override fun getGaugesName() = ""
     override fun getGaugesNum() = 0
     override fun getGaugesType() = ""
+    override fun getGroupNum() = num
 }
 
 data class GaugesList(
@@ -69,6 +72,7 @@ data class GaugesList(
     }
     override fun getGaugesNum() = num
     override fun getGaugesType() = type
+    override fun getGroupNum() = num
 }
 
 data class GaugesGroupList(
@@ -96,6 +100,7 @@ data class GaugesGroupList(
     }
     override fun getGaugesNum() = num
     override fun getGaugesType() = type
+    override fun getGroupNum() = gaugegroupNum
 }
 
 data class GaugesTypeList(
@@ -111,4 +116,5 @@ interface TreeModel{
     fun getGaugesName() : String
     fun getGaugesNum() : Int
     fun getGaugesType() : String
+    fun getGroupNum() : Int
 }

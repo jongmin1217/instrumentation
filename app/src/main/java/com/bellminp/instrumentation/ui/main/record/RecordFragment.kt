@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.bellminp.common.timberMsg
 import com.bellminp.instrumentation.R
 import com.bellminp.instrumentation.databinding.FragmentGraphBinding
@@ -49,11 +50,17 @@ class RecordFragment(
 
     private fun initAdapter(){
         binding.recyclerviewRecord.adapter = adapter
+        val animator = binding.recyclerviewRecord.itemAnimator
+        if (animator is SimpleItemAnimator) {
+            animator.supportsChangeAnimations = false
+        }
     }
 
     fun settingRecordList(list : List<RecordData>?){
         viewModel.list.value = list
         adapter.submitList(list)
+        binding.recyclerviewRecord.scrollToPosition(0)
+        binding.scrollView.scrollTo(0,0)
     }
 
     private fun initLayout(){
