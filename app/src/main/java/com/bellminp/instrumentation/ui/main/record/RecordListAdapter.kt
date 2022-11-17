@@ -2,20 +2,16 @@ package com.bellminp.instrumentation.ui.main.record
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.bellminp.common.timberMsg
-import com.bellminp.instrumentation.databinding.ItemFieldListBinding
 import com.bellminp.instrumentation.databinding.ItemRecordListBinding
-import com.bellminp.instrumentation.model.FieldList
 import com.bellminp.instrumentation.model.RecordData
+import com.bellminp.instrumentation.model.RecordListData
 import com.bellminp.instrumentation.ui.base.BaseListAdapter
 import com.bellminp.instrumentation.ui.base.BaseViewHolder
-import com.bellminp.instrumentation.ui.publicadapter.HorizontalAdapter
 
-class RecordListAdapter : BaseListAdapter<RecordData>() {
+class RecordListAdapter : BaseListAdapter<RecordListData>() {
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<RecordData> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<RecordListData> {
         return RecordListHolder(
             ItemRecordListBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -29,9 +25,9 @@ class RecordListAdapter : BaseListAdapter<RecordData>() {
 
     class RecordListHolder(
         val binding : ItemRecordListBinding
-    ) : BaseViewHolder<RecordData>(binding){
+    ) : BaseViewHolder<RecordListData>(binding){
 
-        override fun bind(item: RecordData) {
+        override fun bind(item: RecordListData) {
             binding.item = item
             binding.executePendingBindings()
 

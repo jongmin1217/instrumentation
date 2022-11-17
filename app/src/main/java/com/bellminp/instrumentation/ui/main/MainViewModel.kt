@@ -9,7 +9,6 @@ import com.bellminp.domain.model.ApiResult
 import com.bellminp.domain.usecase.LocalUseCase
 import com.bellminp.domain.usecase.RemoteUseCase
 import com.bellminp.instrumentation.mapper.mapToPresentation
-import com.bellminp.instrumentation.mapper.maxText
 import com.bellminp.instrumentation.model.GaugesData
 import com.bellminp.instrumentation.model.RecordData
 import com.bellminp.instrumentation.model.SelectData
@@ -27,8 +26,8 @@ class MainViewModel @Inject constructor(
     private val remoteUseCase: RemoteUseCase
 ) : BaseViewModel() {
 
-    private val _setRecordList = SingleLiveEvent<List<RecordData>>()
-    val setRecordList: LiveData<List<RecordData>> get() = _setRecordList
+    private val _setRecordList = SingleLiveEvent<List<RecordData>?>()
+    val setRecordList: LiveData<List<RecordData>?> get() = _setRecordList
 
     private val _setGaugesData = SingleLiveEvent<GaugesData?>()
     val setGaugesData: LiveData<GaugesData?> get() = _setGaugesData
@@ -48,13 +47,12 @@ class MainViewModel @Inject constructor(
                     when (it.data?.code) {
                         0 -> {
                             it.data?.list?.let { list ->
-                                val maxData = list.maxText(localUseCase.getAdmin())
-                                _setRecordList.value = list.mapToPresentation(localUseCase.getAdmin(),maxData)
+                                _setRecordList.value = list.mapToPresentation(localUseCase.getAdmin())
                             }
                         }
 
                         -2 -> {
-                            _setRecordList.value = listOf()
+                            _setRecordList.value = null
                         }
                     }
 
@@ -90,7 +88,15 @@ class MainViewModel @Inject constructor(
                         -2 ->{
                             _setGaugesData.value = null
                         }
+
+                        else -> {
+                            _setGaugesData.value = null
+                            showShortToast(it.data?.message?:"")
+                        }
                     }
+                }else{
+                    _setGaugesData.value = null
+                    showShortToast("서버 오류")
                 }
             }
         }
@@ -104,7 +110,9 @@ class MainViewModel @Inject constructor(
                 selectData.startUnixTime,
                 selectData.endUnixTime
             ).collect {
+
                 if (it.status == ApiResult.Status.SUCCESS){
+
                     when (it.data?.code){
                         0 -> {
                             it.data?.let{ data ->
@@ -115,7 +123,15 @@ class MainViewModel @Inject constructor(
                         -2 ->{
                             _setGaugesData.value = null
                         }
+
+                        else -> {
+                            _setGaugesData.value = null
+                            showShortToast(it.data?.message?:"")
+                        }
                     }
+                }else{
+                    _setGaugesData.value = null
+                    showShortToast("서버 오류")
                 }
             }
         }

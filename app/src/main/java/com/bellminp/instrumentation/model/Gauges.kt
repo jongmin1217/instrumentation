@@ -57,9 +57,7 @@ data class GaugesGroupDetail(
     val chartList : List<GaugesGroupDetailChart>?,
     val constantList : List<GaugesGroupDetailConstantList>?
 ) : GaugesData{
-    override fun getTableData() : List<TableData>{
-        return ArrayList<TableData>()
-    }
+    override fun getTableData() = this.dataToTableData()
 }
 
 data class GaugesGroupDetailList(
@@ -94,8 +92,8 @@ data class GaugesGroupDetailChart(
 data class GaugesGroupDetailChartList(
     val gaugeNum : Int?,
     val vpos : Double?,
-    val empM1 : Double?,
-    val empM2 : Double?,
+    val expM1 : Double?,
+    val expM2 : Double?,
     val measurepos : String?,
     val x : Double?,
     val y : Double?

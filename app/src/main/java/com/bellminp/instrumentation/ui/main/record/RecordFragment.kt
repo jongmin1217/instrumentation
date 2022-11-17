@@ -3,18 +3,13 @@ package com.bellminp.instrumentation.ui.main.record
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.bellminp.common.timberMsg
 import com.bellminp.instrumentation.R
-import com.bellminp.instrumentation.databinding.FragmentGraphBinding
 import com.bellminp.instrumentation.databinding.FragmentRecordBinding
+import com.bellminp.instrumentation.mapper.mapToCellData
 import com.bellminp.instrumentation.model.RecordData
 import com.bellminp.instrumentation.model.SelectData
 import com.bellminp.instrumentation.ui.base.BaseFragment
-import com.bellminp.instrumentation.ui.main.graph.GraphViewModel
-import com.bellminp.instrumentation.ui.publicadapter.HorizontalAdapter
-import com.bellminp.instrumentation.utils.convertTimestampToDateRecord
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -58,9 +53,11 @@ class RecordFragment(
 
     fun settingRecordList(list : List<RecordData>?){
         viewModel.list.value = list
-        adapter.submitList(list)
-        binding.recyclerviewRecord.scrollToPosition(0)
-        binding.scrollView.scrollTo(0,0)
+        list?.let {
+            adapter.submitList(it.mapToCellData())
+            binding.recyclerviewRecord.scrollToPosition(0)
+            binding.scrollView.scrollTo(0,0)
+        }
     }
 
     private fun initLayout(){

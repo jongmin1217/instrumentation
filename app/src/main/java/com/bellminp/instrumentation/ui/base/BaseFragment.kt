@@ -1,5 +1,6 @@
 package com.bellminp.instrumentation.ui.base
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.bellminp.common.timberMsg
 import com.bellminp.instrumentation.R
 import com.bellminp.instrumentation.model.SelectData
 import com.bellminp.instrumentation.model.TreeModel
+import com.bellminp.instrumentation.ui.login.LoginActivity
 import com.bellminp.instrumentation.utils.ONE_DAY
 import com.bellminp.instrumentation.utils.convertTimestampToDateTerm
 import com.bellminp.instrumentation.utils.convertTimestampToDateText
@@ -43,7 +45,18 @@ abstract class BaseFragment<VDB : ViewDataBinding, VM : BaseViewModel>(
         setupObserver()
     }
 
-    open fun setupObserver() {}
+    open fun setupObserver() {
+        with(viewModel){
+            goLogin.observe(viewLifecycleOwner){
+                activity?.let {
+                    Intent(it, LoginActivity::class.java).apply {
+                        startActivity(this)
+                        it.finish()
+                    }
+                }
+            }
+        }
+    }
 
     fun showDateSelect() {
         val builder = MaterialDatePicker.Builder.dateRangePicker()

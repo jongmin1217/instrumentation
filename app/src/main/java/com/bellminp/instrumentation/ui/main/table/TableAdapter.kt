@@ -30,7 +30,6 @@ class TableAdapter : BaseListAdapter<TableData>() {
             binding.item = item
             binding.executePendingBindings()
 
-            timberMsg("asdgasdfasefdasdfxc")
         }
 
         override fun recycle() {}

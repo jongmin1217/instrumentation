@@ -41,8 +41,8 @@ data class DomainGaugesGroupDetailChart(
 data class DomainGaugesGroupDetailChartList(
     val gaugeNum : Int?,
     val vpos : Double?,
-    val empM1 : Double?,
-    val empM2 : Double?,
+    val expM1 : Double?,
+    val expM2 : Double?,
     val measurepos : String?,
     val x : Double?,
     val y : Double?

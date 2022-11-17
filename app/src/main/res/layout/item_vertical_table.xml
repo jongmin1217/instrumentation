@@ -12,16 +12,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@{item.title ? @drawable/shape_table_title : @drawable/shape_table}"
         >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             setTextColor="@{item}"
             android:textSize="@{item.title ? @dimen/sp_16 : @dimen/sp_14}"
             android:gravity="@{item.title ? Gravity.CENTER : Gravity.START}"

@@ -215,8 +215,8 @@ fun GaugesGroupDetailResponse.gaugesGroupDetailToData() : DataGaugesGroupDetail{
                     DataGaugesGroupDetailChartList(
                         list.gaugeNum,
                         list.vpos,
-                        list.empM1,
-                        list.empM2,
+                        list.expM1,
+                        list.expM2,
                         list.measurepos,
                         list.x,
                         list.y

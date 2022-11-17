@@ -28,6 +28,7 @@ class LoginViewModel @Inject constructor(
 
     var id = String()
     var password = String()
+    var checkAutoLogin = false
 
     fun login(){
         viewModelScope.launch {
@@ -37,7 +38,7 @@ class LoginViewModel @Inject constructor(
                         ApiResult.Status.SUCCESS -> {
                             if(it.data?.code == 0){
                                 it.data?.let{ data->
-                                    localUseCase.setAutoLogin(DomainAutoLogin(id,password))
+                                    if(checkAutoLogin) localUseCase.setAutoLogin(DomainAutoLogin(id,password))
                                     localUseCase.setToken("Bearer "+data.token)
 
                                     val items = data.mapToPresentation()

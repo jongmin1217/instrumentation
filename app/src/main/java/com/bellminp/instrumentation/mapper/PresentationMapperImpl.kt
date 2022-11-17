@@ -77,7 +77,7 @@ fun List<DomainSectionsList>.mapToPresentation(): List<SectionsList> {
 }
 
 @JvmName("mapToPresentationDomainGaugesList")
-fun List<DomainGaugesList>.mapToPresentation(sectionsNum : Int): List<GaugesList> {
+fun List<DomainGaugesList>.mapToPresentation(sectionsNum: Int): List<GaugesList> {
     return this.map {
         GaugesList(
             it.type,
@@ -116,8 +116,7 @@ fun DomainGaugesGroup.mapToPresentation(): List<GaugesGroupList> {
 
 @JvmName("mapToPresentationDomainRecordList")
 fun List<DomainRecordList>.mapToPresentation(
-    admin: Boolean,
-    maxData: MaxRecordData
+    admin: Boolean
 ): List<RecordData> {
     val list = this.map {
         RecordData(
@@ -131,8 +130,7 @@ fun List<DomainRecordList>.mapToPresentation(
             it.gaugeName ?: "",
             it.sectionName ?: "",
             it.groupName,
-            admin,
-            maxData = maxData
+            admin
         )
     }.toMutableList()
 
@@ -148,8 +146,7 @@ fun List<DomainRecordList>.mapToPresentation(
         "",
         "",
         admin,
-        true,
-        maxData = maxData
+        true
     )
 
     list.add(0, titleData)
@@ -157,51 +154,28 @@ fun List<DomainRecordList>.mapToPresentation(
     return list
 }
 
-fun List<DomainRecordList>.maxText(admin: Boolean): MaxRecordData {
-    var maxFieldIndex = 0
-    var maxTimeIndex = 0
-    var maxGaugesIndex = 0
-    var maxMsgIndex = 0
+fun List<RecordData>.mapToCellData(): List<RecordListData> {
+    val list = ArrayList<RecordListData>()
 
-    for (i in this.indices) {
-        if (i != 0) {
-
-            if (admin) {
-                if (this[maxFieldIndex].fieldName?.length ?: 0 < this[i].fieldName?.length ?: 0) maxFieldIndex =
-                    i
-            }
-            if (convertTimestampToDateRecord(this[maxTimeIndex].time).length < convertTimestampToDateRecord(
-                    this[i].time
-                ).length
-            ) maxTimeIndex = i
-            if (this[maxGaugesIndex].gaugeName?.length ?: 0 < this[i].gaugeName?.length ?: 0) maxGaugesIndex = i
-            if (this[maxMsgIndex].msg.length < this[i].msg.length) {
-                maxMsgIndex = i
-            }
+    if (this.isNotEmpty()) {
+        if (this[0].admin) {
+            val fieldItem = this.map { CellData(it.fieldName, it.title) }
+            list.add(RecordListData(fieldItem))
         }
+        val timeItem = this.map {
+            CellData(
+                if (it.title) "측정일시" else convertTimestampToDateRecord(it.time),
+                it.title
+            )
+        }
+        list.add(RecordListData(timeItem))
+
+        val gaugesNameItem = this.map { CellData(it.gaugeName, it.title) }
+        list.add(RecordListData(gaugesNameItem))
+
+        val msgItem = this.map { CellData(it.msg, it.title) }
+        list.add(RecordListData(msgItem))
     }
-
-    return MaxRecordData(
-        if (admin) this[maxFieldIndex].fieldName else null,
-        convertTimestampToDateRecord(this[maxTimeIndex].time),
-        this[maxGaugesIndex].gaugeName ?: "",
-        this[maxMsgIndex].msg
-    )
-}
-
-fun RecordData.mapToCellData(maxRecordData: MaxRecordData): List<CellData> {
-    val list = ArrayList<CellData>()
-
-    if (this.admin) list.add(CellData(this.fieldName, maxRecordData.maxField ?: "",this.title))
-    list.add(
-        CellData(
-            if (this.title) "측정일시" else convertTimestampToDateRecord(this.time),
-            maxRecordData.maxTime,
-            this.title
-        )
-    )
-    list.add(CellData(this.gaugeName, maxRecordData.maxGauges,this.title))
-    list.add(CellData(this.msg, maxRecordData.maxMsg,this.title))
 
     return list
 }
@@ -251,7 +225,7 @@ fun DomainGaugesDetail.mapToPresentation(): GaugesDetail {
     )
 }
 
-fun DomainGaugesGroupDetail.mapToPresentation() : GaugesGroupDetail {
+fun DomainGaugesGroupDetail.mapToPresentation(): GaugesGroupDetail {
     return GaugesGroupDetail(
         this.code,
         this.message,
@@ -288,8 +262,8 @@ fun DomainGaugesGroupDetail.mapToPresentation() : GaugesGroupDetail {
                     GaugesGroupDetailChartList(
                         list.gaugeNum,
                         list.vpos,
-                        list.empM1,
-                        list.empM2,
+                        list.expM1,
+                        list.expM2,
                         list.measurepos,
                         list.x,
                         list.y
@@ -307,45 +281,130 @@ fun DomainGaugesGroupDetail.mapToPresentation() : GaugesGroupDetail {
     )
 }
 
-fun GaugesDetail.dataToTableData() : List<TableData>{
+fun GaugesDetail.dataToTableData(): List<TableData> {
     val list = ArrayList<TableData>()
 
-    val titleList = ArrayList<CellData>()
-    titleList.add(CellData("측정일시","측정일시",true))
     this.list?.let { gaugesDetailList ->
-        for(i in gaugesDetailList.indices){
-            titleList.add(CellData(gaugesDetailList[i].reunit,gaugesDetailList[i].reunit,true))
-        }
-        list.add(TableData(titleList))
+        val timeList = ArrayList<CellData>()
+        timeList.add(CellData("측정일시", true))
 
         this.chartList?.let {
-            for(i in it.indices){
-                val cellList = ArrayList<CellData>()
-                cellList.add(CellData(convertTimestampToDateRecord(it[i].time),convertTimestampToDateRecord(it[i].time),false))
-
-                if(list[i].list[0].maxWidthText.length < convertTimestampToDateRecord(it[i].time).length){
-                    for(j in 0..i){
-                        list[j].list[0].maxWidthText = convertTimestampToDateRecord(it[i].time)
-                    }
-                }
-
-                val valueList = listOf(it[i].expM1,it[i].expM2,it[i].expM3,it[i].expM4,it[i].expT)
-
-                for(j in 0 until titleList.size - 1){
-                    cellList.add(CellData(valueList[j]?.toString()?:"",valueList[j]?.toString()?:"",false,
-                        getColorType(valueList[j],gaugesDetailList[j])))
-
-                    if(list[i].list[j+1].maxWidthText.length < valueList[j]?.toString()?.length?:0){
-                        for(k in 0..i){
-                            list[k].list[j+1].maxWidthText = valueList[j]?.toString()?:""
-                        }
-                    }
-                }
-
-
-                list.add(TableData(cellList))
+            it.forEach { chartList ->
+                timeList.add(
+                    CellData(
+                        convertTimestampToDateRecord(chartList.time),
+                        false
+                    )
+                )
             }
         }
+
+        list.add(TableData(timeList))
+
+        for (i in gaugesDetailList.indices) {
+            val gaugesList = ArrayList<CellData>()
+            gaugesList.add(CellData(gaugesDetailList[i].reunit, true))
+
+            this.chartList?.let { chartList ->
+                chartList.forEach {
+                    val value = when(i){
+                        0 -> it.expM1
+                        1 -> it.expM2
+                        2 -> it.expM3
+                        3 -> it.expM4
+                        else -> it.expT
+                    }
+
+                    gaugesList.add(
+                        CellData(
+                            value?.toString() ?: "", false,
+                            getColorType(value, gaugesDetailList[i])
+                        )
+                    )
+                }
+            }
+
+            list.add(TableData(gaugesList))
+        }
+    }
+
+    return list
+}
+
+fun GaugesGroupDetail.dataToTableData() : List<TableData> {
+    val list = ArrayList<TableData>()
+
+    this.list?.let { gaugesDetailList ->
+        val timeList = ArrayList<CellData>()
+        timeList.add(CellData("측정일시", true))
+
+        this.chartList?.let {
+            it.forEach { chartList ->
+                timeList.add(
+                    CellData(
+                        convertTimestampToDateRecord(chartList.time),
+                        false
+                    )
+                )
+            }
+        }
+
+        list.add(TableData(timeList))
+
+        val titleList = ArrayList<String>()
+
+
+        this.chartList?.let { chartList ->
+            chartList[0].list.forEach { detailChartList ->
+                if (detailChartList.measurepos != null) {
+                    if (detailChartList.y != null) {
+                        titleList.add("${detailChartList.measurepos} - X")
+                        titleList.add("${detailChartList.measurepos} - Y")
+                    } else {
+                        titleList.add(detailChartList.measurepos)
+                    }
+                }
+
+                if (detailChartList.vpos != null) {
+                    if (detailChartList.expM2 != null) {
+                        titleList.add("${detailChartList.vpos} - expM1")
+                        titleList.add("${detailChartList.vpos} - expM2")
+                    } else {
+                        titleList.add(detailChartList.vpos.toString())
+                    }
+                }
+            }
+        }
+
+        for(i in titleList.indices){
+
+            val cellData = ArrayList<CellData>()
+            cellData.add(CellData(titleList[i],true))
+            this.chartList?.let {
+                it.forEach { detailChart->
+                    val data = detailChart.list[i/gaugesDetailList.size]
+
+                    if(gaugesDetailList.size==2){
+
+                        if(i%2 == 0){
+                            cellData.add(CellData(data.x?.toString()?:data.expM1?.toString()?:"",false,
+                                getColorType(data.x?:data.expM1,gaugesDetailList[0])))
+                        }else{
+                            cellData.add(CellData(data.y?.toString()?:data.expM2?.toString()?:"",false,
+                                getColorType(data.y?:data.expM2,gaugesDetailList[1])))
+                        }
+                    }else{
+                        cellData.add(CellData(data.x?.toString()?:data.expM1?.toString()?:"",false,
+                            getColorType(data.x?:data.expM1,gaugesDetailList[0])))
+                    }
+
+                }
+            }
+
+            list.add(TableData(cellData))
+        }
+
+
     }
 
     return list

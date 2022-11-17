@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import com.bellminp.common.timberMsg
 import com.bellminp.instrumentation.model.GaugesDetailList
+import com.bellminp.instrumentation.model.GaugesGroupDetailList
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
@@ -49,6 +50,35 @@ fun getUnixTime(date: String, fromDay: Boolean): Long {
 }
 
 fun getColorType(value: Double?, gaugesDetailList: GaugesDetailList) : Int {
+    if(value == null) return 0
+    else{
+        var type = 0
+        if(gaugesDetailList.hi1enable){
+            if(value >= gaugesDetailList.hi1) type = 1
+        }
+        if(gaugesDetailList.low1enable){
+            if(value <= gaugesDetailList.low1) type = 1
+        }
+
+        if(gaugesDetailList.hi2enable){
+            if(value >= gaugesDetailList.hi2) type = 2
+        }
+        if(gaugesDetailList.low2enable){
+            if(value <= gaugesDetailList.low2) type = 2
+        }
+
+        if(gaugesDetailList.hi3enable){
+            if(value >= gaugesDetailList.hi3) type = 3
+        }
+        if(gaugesDetailList.low3enable){
+            if(value <= gaugesDetailList.low3) type = 3
+        }
+
+        return type
+    }
+}
+
+fun getColorType(value: Double?, gaugesDetailList: GaugesGroupDetailList) : Int {
     if(value == null) return 0
     else{
         var type = 0

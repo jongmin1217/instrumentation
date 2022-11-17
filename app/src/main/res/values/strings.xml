@@ -14,4 +14,6 @@
     <string name="no_data">데이터가 없습니다.</string>
     <string name="test_no_list">test_no_list</string>
     <string name="test_list">test_list</string>
+    <string name="logout">로그아웃</string>
+    <string name="auto_login">자동 로그인</string>
 </resources>

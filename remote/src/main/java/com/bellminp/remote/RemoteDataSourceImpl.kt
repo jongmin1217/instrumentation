@@ -114,7 +114,7 @@ class RemoteDataSourceImpl @Inject constructor(
         return when(getResponse(response)){
             SUCCESS -> Response.success(response.code(),response.body()?.gaugesGroupDetailToData())
             FAIL -> Response.error(response.code(), response.errorBody() ?: "error".toResponseBody(null))
-            else -> Response.error(500, response.errorBody() ?: "error".toResponseBody(null))
+            else -> Response.error(200, response.errorBody() ?: "error".toResponseBody(null))
         }
     }
 

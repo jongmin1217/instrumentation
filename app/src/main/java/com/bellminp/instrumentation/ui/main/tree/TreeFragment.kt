@@ -47,7 +47,14 @@ class TreeFragment(
         super.onViewCreated(view, savedInstanceState)
 
         initAdapter()
+        initListener()
         viewModel.getSites(fieldNum, true)
+    }
+
+    private fun initListener() {
+        binding.btnLogout.setOnClickListener {
+            viewModel.logout()
+        }
     }
 
     private fun initAdapter() {
@@ -96,7 +103,7 @@ class TreeFragment(
         )
     }
 
-    private fun unSelectGauges(){
+    private fun unSelectGauges() {
         gaugesClick(
             SelectData(
                 selectSections = "",

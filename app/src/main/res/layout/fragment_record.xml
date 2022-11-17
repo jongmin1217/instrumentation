@@ -244,12 +244,11 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <HorizontalScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_view"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:fillViewport="true"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:scrollbars="none"
             app:layout_constraintTop_toBottomOf="@id/layout_date">
@@ -262,15 +261,15 @@
                     android:id="@+id/recyclerview_record"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="@{vm.list.size() == 0 ? View.GONE : View.VISIBLE}"
+                    android:orientation="horizontal"
+                    android:visibility="@{vm.list == null ? View.GONE : View.VISIBLE}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:orientation="vertical"
                     tools:listitem="@layout/item_record_list" />
 
             </RelativeLayout>
 
 
-        </HorizontalScrollView>
+        </androidx.core.widget.NestedScrollView>
 
 
         <TextView
@@ -280,7 +279,7 @@
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:visibility="@{vm.list.size() == 0 ? View.VISIBLE : View.GONE}"
+            android:visibility="@{vm.list == null ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
