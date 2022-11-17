@@ -397,14 +397,10 @@ fun GaugesGroupDetail.dataToTableData() : List<TableData> {
                         cellData.add(CellData(data.x?.toString()?:data.expM1?.toString()?:"",false,
                             getColorType(data.x?:data.expM1,gaugesDetailList[0])))
                     }
-
                 }
             }
-
             list.add(TableData(cellData))
         }
-
-
     }
 
     return list
