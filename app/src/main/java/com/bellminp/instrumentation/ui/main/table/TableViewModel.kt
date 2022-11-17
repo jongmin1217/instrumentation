@@ -2,6 +2,7 @@ package com.bellminp.instrumentation.ui.main.table
 
 import androidx.lifecycle.MutableLiveData
 import com.bellminp.common.timberMsg
+import com.bellminp.instrumentation.model.GaugesData
 import com.bellminp.instrumentation.ui.base.BaseViewModel
 import com.bellminp.instrumentation.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,4 +17,5 @@ class TableViewModel @Inject constructor() : BaseViewModel() {
     val selectSections = MutableLiveData<String>().default("")
     val selectGauges = MutableLiveData<String>().default("")
 
+    val gaugesData = MutableLiveData<GaugesData>().default(null)
 }

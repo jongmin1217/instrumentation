@@ -1,9 +1,11 @@
 package com.bellminp.instrumentation.mapper
 
 import com.bellminp.common.timberMsg
+import com.bellminp.data.model.*
 import com.bellminp.domain.model.*
 import com.bellminp.instrumentation.model.*
 import com.bellminp.instrumentation.utils.convertTimestampToDateRecord
+import com.bellminp.instrumentation.utils.getColorType
 
 fun DomainLogin.mapToPresentation(): Login {
     return Login(
@@ -75,12 +77,12 @@ fun List<DomainSectionsList>.mapToPresentation(): List<SectionsList> {
 }
 
 @JvmName("mapToPresentationDomainGaugesList")
-fun List<DomainGaugesList>.mapToPresentation(): List<GaugesList> {
+fun List<DomainGaugesList>.mapToPresentation(sectionsNum : Int): List<GaugesList> {
     return this.map {
         GaugesList(
             it.type,
             it.num,
-            it.sectionNum,
+            sectionsNum,
             it.name,
             it.managenum,
             it.vpos,
@@ -95,18 +97,17 @@ fun List<DomainGaugesList>.mapToPresentation(): List<GaugesList> {
 }
 
 @JvmName("mapToPresentationDomainGaugesGroupList")
-fun List<DomainGaugesGroupList>.mapToPresentation(): List<GaugesGroupList> {
-    return this.map {
+fun DomainGaugesGroup.mapToPresentation(): List<GaugesGroupList> {
+    return this.list!!.map {
         GaugesGroupList(
             it.num,
-            it.sectionNum,
-            it.gaugegroupNum,
+            this.sectionNum,
+            this.gaugegroupNum,
             it.name,
             it.managenum,
             it.vpos,
-            it.position,
             it.measurepos,
-            it.gaugetypeNum,
+            this.gaugetypeNum,
             it.type,
             clicked = false
         )
@@ -201,6 +202,151 @@ fun RecordData.mapToCellData(maxRecordData: MaxRecordData): List<CellData> {
     )
     list.add(CellData(this.gaugeName, maxRecordData.maxGauges,this.title))
     list.add(CellData(this.msg, maxRecordData.maxMsg,this.title))
+
+    return list
+}
+
+fun DomainGaugesDetail.mapToPresentation(): GaugesDetail {
+    return GaugesDetail(
+        this.code,
+        this.message,
+        this.chartType,
+        this.multichart,
+        this.list?.map {
+            GaugesDetailList(
+                it.chartType,
+                it.datasettingName,
+                it.managenum,
+                it.gaugeNum,
+                it.gaugeName,
+                it.reunit,
+                it.autorange,
+                it.minrange,
+                it.maxrange,
+                it.ystep,
+                it.hi1enable,
+                it.hi2enable,
+                it.hi3enable,
+                it.low1enable,
+                it.low2enable,
+                it.low3enable,
+                it.hi1,
+                it.hi2,
+                it.hi3,
+                it.low1,
+                it.low2,
+                it.low3
+            )
+        },
+        this.chartList?.map {
+            GaugesDetailChartList(
+                it.time,
+                it.expM1,
+                it.expM2,
+                it.expM3,
+                it.expM4,
+                it.expT
+            )
+        }
+    )
+}
+
+fun DomainGaugesGroupDetail.mapToPresentation() : GaugesGroupDetail {
+    return GaugesGroupDetail(
+        this.code,
+        this.message,
+        this.chartType,
+        this.list?.map {
+            GaugesGroupDetailList(
+                it.chartType,
+                it.managenum,
+                it.groupNum,
+                it.groupName,
+                it.reunit,
+                it.autorange,
+                it.minrange,
+                it.maxrange,
+                it.ystep,
+                it.hi1enable,
+                it.hi2enable,
+                it.hi3enable,
+                it.low1enable,
+                it.low2enable,
+                it.low3enable,
+                it.hi1,
+                it.hi2,
+                it.hi3,
+                it.low1,
+                it.low2,
+                it.low3
+            )
+        },
+        this.chartList?.map {
+            GaugesGroupDetailChart(
+                it.time,
+                it.list.map { list ->
+                    GaugesGroupDetailChartList(
+                        list.gaugeNum,
+                        list.vpos,
+                        list.empM1,
+                        list.empM2,
+                        list.measurepos,
+                        list.x,
+                        list.y
+                    )
+                }
+            )
+        },
+        this.constantList?.map {
+            GaugesGroupDetailConstantList(
+                it.num,
+                it.gaugeNum,
+                it.value
+            )
+        }
+    )
+}
+
+fun GaugesDetail.dataToTableData() : List<TableData>{
+    val list = ArrayList<TableData>()
+
+    val titleList = ArrayList<CellData>()
+    titleList.add(CellData("측정일시","측정일시",true))
+    this.list?.let { gaugesDetailList ->
+        for(i in gaugesDetailList.indices){
+            titleList.add(CellData(gaugesDetailList[i].reunit,gaugesDetailList[i].reunit,true))
+        }
+        list.add(TableData(titleList))
+
+        this.chartList?.let {
+            for(i in it.indices){
+                val cellList = ArrayList<CellData>()
+                cellList.add(CellData(convertTimestampToDateRecord(it[i].time),convertTimestampToDateRecord(it[i].time),false))
+
+                if(list[i].list[0].maxWidthText.length < convertTimestampToDateRecord(it[i].time).length){
+                    for(j in 0..i){
+                        list[j].list[0].maxWidthText = convertTimestampToDateRecord(it[i].time)
+                    }
+                }
+
+                val valueList = listOf(it[i].expM1,it[i].expM2,it[i].expM3,it[i].expM4,it[i].expT)
+
+                for(j in 0 until titleList.size - 1){
+                    cellList.add(CellData(valueList[j]?.toString()?:"",valueList[j]?.toString()?:"",false,
+                        getColorType(valueList[j],gaugesDetailList[j])))
+
+                    if(list[i].list[j+1].maxWidthText.length < valueList[j]?.toString()?.length?:0){
+                        for(k in 0..i){
+                            list[k].list[j+1].maxWidthText = valueList[j]?.toString()?:""
+                        }
+                    }
+                }
+
+
+                list.add(TableData(cellList))
+            }
+        }
+    }
 
     return list
 }

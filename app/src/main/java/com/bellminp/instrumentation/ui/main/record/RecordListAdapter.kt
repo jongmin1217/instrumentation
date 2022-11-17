@@ -14,7 +14,6 @@ import com.bellminp.instrumentation.ui.publicadapter.HorizontalAdapter
 
 class RecordListAdapter : BaseListAdapter<RecordData>() {
 
-    val list = ArrayList<RecordListHolder>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<RecordData> {
         return RecordListHolder(
@@ -28,13 +27,14 @@ class RecordListAdapter : BaseListAdapter<RecordData>() {
 
 
 
-    inner class RecordListHolder(
+    class RecordListHolder(
         val binding : ItemRecordListBinding
     ) : BaseViewHolder<RecordData>(binding){
 
         override fun bind(item: RecordData) {
             binding.item = item
             binding.executePendingBindings()
+
         }
 
         override fun recycle() {}

@@ -78,7 +78,7 @@ class TreeViewModel @Inject constructor(
                 if(it.status == ApiResult.Status.SUCCESS){
                     it.data?.list?.let { data ->
                         if(data.isNotEmpty()){
-                            _addGauges.value = data.mapToPresentation()
+                            _addGauges.value = data.mapToPresentation(sectionsNum)
                         }
                     }
                 }
@@ -92,7 +92,7 @@ class TreeViewModel @Inject constructor(
                 if(it.status == ApiResult.Status.SUCCESS){
                     it.data?.list?.let { data ->
                         if(data.isNotEmpty()){
-                            _addGaugesGroup.value = data.mapToPresentation()
+                            _addGaugesGroup.value = it.data!!.mapToPresentation()
                         }
                     }
                 }

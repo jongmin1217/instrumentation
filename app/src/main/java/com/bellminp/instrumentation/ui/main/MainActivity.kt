@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.bellminp.common.timberMsg
 import com.bellminp.instrumentation.R
 import com.bellminp.instrumentation.databinding.ActivityMainBinding
+import com.bellminp.instrumentation.model.GaugesData
 import com.bellminp.instrumentation.model.MenuData
 import com.bellminp.instrumentation.model.RecordData
 import com.bellminp.instrumentation.model.SelectData
@@ -31,6 +32,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
     private var recordFragment : RecordFragment? = null
 
     private var recordList : List<RecordData>? = null
+    private var gaugesData : GaugesData? = null
 
     private val menuAdapter = MenuAdapter {
         when(it.id){
@@ -39,7 +41,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
             1 -> {
                 if(tableFragment != null) changeFragment(tableFragment!!)
                 else {
-                    tableFragment = TableFragment(viewModel.selectData){ data -> editDateSelectData(data) }
+                    tableFragment = TableFragment(viewModel.selectData,gaugesData){ data -> editDateSelectData(data) }
                     addFragment(tableFragment!!)
                 }
             }
@@ -47,7 +49,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
             2 -> {
                 if(graphFragment != null) changeFragment(graphFragment!!)
                 else {
-                    graphFragment = GraphFragment(viewModel.selectData){ data -> editDateSelectData(data) }
+                    graphFragment = GraphFragment(viewModel.selectData,gaugesData){ data -> editDateSelectData(data) }
                     addFragment(graphFragment!!)
                 }
             }
@@ -88,6 +90,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
                 recordList = it
                 recordFragment?.settingRecordList(it)
             }
+
+            setGaugesData.observe(this@MainActivity){
+                gaugesData = it
+                tableFragment?.settingTableData(it)
+                graphFragment?.settingGraphData(it)
+            }
         }
     }
 
@@ -104,7 +112,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
     }
 
     private fun initLayout(fieldNum : Int){
-        treeFragment = TreeFragment(fieldNum){ item: SelectData, num: Int, type: String ->
+        treeFragment = TreeFragment(fieldNum){ item ->
             editGaugesSelectData(item)
         }
         supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, treeFragment).commit()
@@ -114,6 +122,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         with(viewModel){
             selectData.selectSections = data.selectSections
             selectData.selectGauges = data.selectGauges
+            selectData.gaugesNum = data.gaugesNum
+            selectData.type = data.type
+
         }
         settingSelectData()
     }
@@ -135,6 +146,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         tableFragment?.setSelectData(viewModel.selectData)
         graphFragment?.setSelectData(viewModel.selectData)
         recordFragment?.setSelectData(viewModel.selectData)
+
+        viewModel.getGaugesData()
     }
 
 

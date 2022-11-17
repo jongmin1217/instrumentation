@@ -11,35 +11,26 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@{item.title ? @drawable/shape_table_title : @drawable/shape_table}"
         >
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:textColor="@color/basic"
-            android:textSize="@{item.title ? @dimen/sp_16 : @dimen/sp_14}"
-            android:gravity="@{item.title ? Gravity.CENTER : Gravity.START}"
-            android:text="@{item.realText}"
-            android:padding="5dp"
-            />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:textColor="@color/basic"
-            android:textSize="14sp"
-            android:text="@{item.maxWidthText}"
+            setTextColor="@{item}"
+            android:textSize="@{item.title ? @dimen/sp_16 : @dimen/sp_14}"
+            android:gravity="@{item.title ? Gravity.CENTER : Gravity.START}"
+            android:text="@{item.realText}"
             android:padding="5dp"
-            android:visibility="invisible"
+            android:maxLines="1"
             />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

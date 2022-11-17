@@ -83,4 +83,32 @@ class RemoteRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getGaugesDetail(
+        token: String,
+        gaugeId: Int,
+        startUnixTime: Long,
+        endUnixTime: Long
+    ): Response<DomainGaugesDetail> {
+        val response = remoteDataSource.getGaugesDetail(token,gaugeId, startUnixTime, endUnixTime)
+        return if(response.isSuccessful){
+            Response.success(response.code(),response.body()?.mapToDomain())
+        }else{
+            Response.error(response.code(), response.errorBody() ?: ResponseBody.create(null,"error"))
+        }
+    }
+
+    override suspend fun getGaugesGroupDetail(
+        token: String,
+        gaugegroupId: Int,
+        startUnixTime: Long,
+        endUnixTime: Long
+    ): Response<DomainGaugesGroupDetail> {
+        val response = remoteDataSource.getGaugesGroupDetail(token,gaugegroupId, startUnixTime, endUnixTime)
+        return if(response.isSuccessful){
+            Response.success(response.code(),response.body()?.mapToDomain())
+        }else{
+            Response.error(response.code(), response.errorBody() ?: ResponseBody.create(null,"error"))
+        }
+    }
+
 }

@@ -20,4 +20,8 @@ interface RemoteRepository {
     suspend fun getGaugesType(token : String): Response<DomainGaugesType>
 
     suspend fun getProcessLog(token : String, fieldNum: Int?, startUnixTime: Long, endUnixTime: Long): Response<DomainRecord>
+
+    suspend fun getGaugesDetail(token : String, gaugeId: Int, startUnixTime: Long, endUnixTime: Long): Response<DomainGaugesDetail>
+
+    suspend fun getGaugesGroupDetail(token : String, gaugegroupId: Int, startUnixTime: Long, endUnixTime: Long): Response<DomainGaugesGroupDetail>
 }

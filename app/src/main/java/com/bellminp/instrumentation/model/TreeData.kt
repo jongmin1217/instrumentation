@@ -49,7 +49,7 @@ data class SectionsList(
 data class GaugesList(
     val type : String,
     val num : Int,
-    val sectionNum : Int,
+    var sectionNum : Int,
     val name : String,
     val managenum : String,
     val vpos : Double?,
@@ -77,12 +77,11 @@ data class GaugesList(
 
 data class GaugesGroupList(
     val num : Int,
-    val sectionNum : Int,
+    var sectionNum : Int,
     val gaugegroupNum : Int,
     val name : String,
     val managenum : String,
     val vpos : Double,
-    val position : String,
     val measurepos : String,
     val gaugetypeNum : Int,
     val type : String,

@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import com.bellminp.instrumentation.R
 import com.bellminp.instrumentation.databinding.FragmentGraphBinding
+import com.bellminp.instrumentation.model.GaugesData
 import com.bellminp.instrumentation.model.SelectData
 import com.bellminp.instrumentation.ui.base.BaseFragment
 import com.bellminp.instrumentation.ui.main.tree.TreeViewModel
@@ -13,6 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class GraphFragment(
     private val selectData : SelectData,
+    private val gaugesData: GaugesData?,
     private val selectedData : ((date : SelectData) -> Unit)
 ) : BaseFragment<FragmentGraphBinding,GraphViewModel>(R.layout.fragment_graph) {
     override val viewModel by activityViewModels<GraphViewModel>()
@@ -26,6 +28,11 @@ class GraphFragment(
 
         initLayout()
         initListener()
+        settingGraphData(gaugesData)
+    }
+
+    fun settingGraphData(data : GaugesData?){
+        viewModel.gaugesData.value = data
     }
 
     fun setSelectData(selectData : SelectData){

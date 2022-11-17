@@ -1,6 +1,8 @@
 package com.bellminp.remote.api
 
 import com.bellminp.data.model.DataAutoLogin
+import com.bellminp.remote.model.detail.GaugesDetailResponse
+import com.bellminp.remote.model.detail.GaugesGroupDetailResponse
 import com.bellminp.remote.model.login.LoginResponse
 import com.bellminp.remote.model.record.RecordResponse
 import com.bellminp.remote.model.tree.*
@@ -52,4 +54,20 @@ interface Api {
         @Query("startUnixTime") startUnixTime: Long,
         @Query("endUnixTime") endUnixTime: Long
     ): Response<RecordResponse>
+
+    @GET("/gauges/detail/{id}")
+    suspend fun getGaugesDetail(
+        @Header("Authorization") Authorization: String,
+        @Path("id") gaugeId: Int,
+        @Query("startUnixTime") startUnixTime: Long,
+        @Query("endUnixTime") endUnixTime: Long
+    ): Response<GaugesDetailResponse>
+
+    @GET("/gauges/group/detail/{id}")
+    suspend fun getGaugesGroupDetail(
+        @Header("Authorization") Authorization: String,
+        @Path("id") gaugegroupId: Int,
+        @Query("startUnixTime") startUnixTime: Long,
+        @Query("endUnixTime") endUnixTime: Long
+    ): Response<GaugesGroupDetailResponse>
 }

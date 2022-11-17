@@ -67,4 +67,28 @@ class RemoteUseCase @Inject constructor(private val remoteRepository: RemoteRepo
             emit(result)
         }
     }
+
+    suspend fun getGaugesDetail(
+        token: String,
+        gaugeId: Int,
+        startUnixTime: Long,
+        endUnixTime: Long
+    ): Flow<ApiResult<DomainGaugesDetail>> {
+        return flow {
+            val result = getResponse(remoteRepository.getGaugesDetail(token,gaugeId, startUnixTime, endUnixTime))
+            emit(result)
+        }
+    }
+
+    suspend fun getGaugesGroupDetail(
+        token: String,
+        gaugegroupId: Int,
+        startUnixTime: Long,
+        endUnixTime: Long
+    ): Flow<ApiResult<DomainGaugesGroupDetail>> {
+        return flow {
+            val result = getResponse(remoteRepository.getGaugesGroupDetail(token,gaugegroupId, startUnixTime, endUnixTime))
+            emit(result)
+        }
+    }
 }

@@ -19,4 +19,8 @@ interface RemoteDataSource {
     suspend fun getGaugesType(token : String): Response<DataGaugesType>
 
     suspend fun getProcessLog(token : String, fieldNum: Int?, startUnixTime: Long, endUnixTime: Long): Response<DataRecord>
+
+    suspend fun getGaugesDetail(token : String, gaugeId: Int, startUnixTime: Long, endUnixTime: Long): Response<DataGaugesDetail>
+
+    suspend fun getGaugesGroupDetail(token : String, gaugegroupId: Int, startUnixTime: Long, endUnixTime: Long): Response<DataGaugesGroupDetail>
 }

@@ -1,5 +1,7 @@
 package com.bellminp.instrumentation.model
 
+import com.bellminp.instrumentation.ui.publicadapter.HorizontalAdapter
+
 data class RecordData(
     val time : Long,
     val msg : String,
@@ -23,8 +25,3 @@ data class MaxRecordData(
     val maxMsg : String
 )
 
-data class CellData(
-    val realText : String,
-    val maxWidthText : String,
-    var title : Boolean = false
-)

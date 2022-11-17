@@ -95,17 +95,16 @@ fun DomainGaugesGroup.mapToData(): DataGaugesGroup {
     return DataGaugesGroup(
         this.code,
         this.message,
+        this.sectionNum,
+        this.gaugegroupNum,
+        this.gaugetypeNum,
         this.list?.map {
             DataGaugesGroupList(
                 it.num,
-                it.sectionNum,
-                it.gaugegroupNum,
                 it.name,
                 it.managenum,
                 it.vpos,
-                it.position,
                 it.measurepos,
-                it.gaugetypeNum,
                 it.type
             )
         }
@@ -184,17 +183,16 @@ fun DataGaugesGroup.mapToDomain(): DomainGaugesGroup {
     return DomainGaugesGroup(
         this.code,
         this.message,
+        this.sectionNum,
+        this.gaugegroupNum,
+        this.gaugetypeNum,
         this.list?.map {
             DomainGaugesGroupList(
                 it.num,
-                it.sectionNum,
-                it.gaugegroupNum,
                 it.name,
                 it.managenum,
                 it.vpos,
-                it.position,
                 it.measurepos,
-                it.gaugetypeNum,
                 it.type
             )
         }
@@ -255,6 +253,209 @@ fun DomainRecord.mapToData(): DataRecord {
                 it.gaugeName,
                 it.sectionName,
                 it.groupName
+            )
+        }
+    )
+}
+
+fun DomainGaugesDetail.mapToData(): DataGaugesDetail {
+    return DataGaugesDetail(
+        this.code,
+        this.message,
+        this.chartType,
+        this.multichart,
+        this.list?.map {
+            DataGaugesDetailList(
+                it.chartType,
+                it.datasettingName,
+                it.managenum,
+                it.gaugeNum,
+                it.gaugeName,
+                it.reunit,
+                it.autorange,
+                it.minrange,
+                it.maxrange,
+                it.ystep,
+                it.hi1enable,
+                it.hi2enable,
+                it.hi3enable,
+                it.low1enable,
+                it.low2enable,
+                it.low3enable,
+                it.hi1,
+                it.hi2,
+                it.hi3,
+                it.low1,
+                it.low2,
+                it.low3
+            )
+        },
+        this.chartList?.map {
+            DataGaugesDetailChartList(
+                it.time,
+                it.expM1,
+                it.expM2,
+                it.expM3,
+                it.expM4,
+                it.expT
+            )
+        }
+    )
+}
+
+fun DomainGaugesGroupDetail.mapToData() : DataGaugesGroupDetail{
+    return DataGaugesGroupDetail(
+        this.code,
+        this.message,
+        this.chartType,
+        this.list?.map {
+            DataGaugesGroupDetailList(
+                it.chartType,
+                it.managenum,
+                it.groupNum,
+                it.groupName,
+                it.reunit,
+                it.autorange,
+                it.minrange,
+                it.maxrange,
+                it.ystep,
+                it.hi1enable,
+                it.hi2enable,
+                it.hi3enable,
+                it.low1enable,
+                it.low2enable,
+                it.low3enable,
+                it.hi1,
+                it.hi2,
+                it.hi3,
+                it.low1,
+                it.low2,
+                it.low3
+            )
+        },
+        this.chartList?.map {
+            DataGaugesGroupDetailChart(
+                it.time,
+                it.list.map { list ->
+                    DataGaugesGroupDetailChartList(
+                        list.gaugeNum,
+                        list.vpos,
+                        list.empM1,
+                        list.empM2,
+                        list.measurepos,
+                        list.x,
+                        list.y
+                    )
+                }
+            )
+        },
+        this.constantList?.map {
+            DataGaugesGroupDetailConstantList(
+                it.num,
+                it.gaugeNum,
+                it.value
+            )
+        }
+    )
+}
+
+
+fun DataGaugesDetail.mapToDomain(): DomainGaugesDetail {
+    return DomainGaugesDetail(
+        this.code,
+        this.message,
+        this.chartType,
+        this.multichart,
+        this.list?.map {
+            DomainGaugesDetailList(
+                it.chartType,
+                it.datasettingName,
+                it.managenum,
+                it.gaugeNum,
+                it.gaugeName,
+                it.reunit,
+                it.autorange,
+                it.minrange,
+                it.maxrange,
+                it.ystep,
+                it.hi1enable,
+                it.hi2enable,
+                it.hi3enable,
+                it.low1enable,
+                it.low2enable,
+                it.low3enable,
+                it.hi1,
+                it.hi2,
+                it.hi3,
+                it.low1,
+                it.low2,
+                it.low3
+            )
+        },
+        this.chartList?.map {
+            DomainGaugesDetailChartList(
+                it.time,
+                it.expM1,
+                it.expM2,
+                it.expM3,
+                it.expM4,
+                it.expT
+            )
+        }
+    )
+}
+
+fun DataGaugesGroupDetail.mapToDomain() : DomainGaugesGroupDetail{
+    return DomainGaugesGroupDetail(
+        this.code,
+        this.message,
+        this.chartType,
+        this.list?.map {
+            DomainGaugesGroupDetailList(
+                it.chartType,
+                it.managenum,
+                it.groupNum,
+                it.groupName,
+                it.reunit,
+                it.autorange,
+                it.minrange,
+                it.maxrange,
+                it.ystep,
+                it.hi1enable,
+                it.hi2enable,
+                it.hi3enable,
+                it.low1enable,
+                it.low2enable,
+                it.low3enable,
+                it.hi1,
+                it.hi2,
+                it.hi3,
+                it.low1,
+                it.low2,
+                it.low3
+            )
+        },
+        this.chartList?.map {
+            DomainGaugesGroupDetailChart(
+                it.time,
+                it.list.map { list ->
+                    DomainGaugesGroupDetailChartList(
+                        list.gaugeNum,
+                        list.vpos,
+                        list.empM1,
+                        list.empM2,
+                        list.measurepos,
+                        list.x,
+                        list.y
+                    )
+                }
+            )
+        },
+        this.constantList?.map {
+            DomainGaugesGroupDetailConstantList(
+                it.num,
+                it.gaugeNum,
+                it.value
             )
         }
     )

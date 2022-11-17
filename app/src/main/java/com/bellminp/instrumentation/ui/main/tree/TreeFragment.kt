@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.bellminp.common.timberMsg
 import com.bellminp.instrumentation.R
 import com.bellminp.instrumentation.databinding.FragmentTreeBinding
 import com.bellminp.instrumentation.model.*
@@ -15,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class TreeFragment(
     private val fieldNum: Int,
-    private val gaugesClick: ((item: SelectData, num: Int, type: String) -> Unit)
+    private val gaugesClick: ((item: SelectData) -> Unit)
 ) : BaseFragment<FragmentTreeBinding, TreeViewModel>(R.layout.fragment_tree) {
     override val viewModel by activityViewModels<TreeViewModel>()
 
@@ -88,10 +89,10 @@ class TreeFragment(
             SelectData(
                 selectSections = if (item is GaugesList) treeAdapter.getSectionsName(item.getSectionsNum())
                 else treeAdapter.getGroupName(item.getGroupNum()),
-                selectGauges = item.getGaugesName()
-            ),
-            item.getGaugesNum(),
-            item.getGaugesType()
+                selectGauges = item.getGaugesName(),
+                gaugesNum = item.getGaugesNum(),
+                type = item.getGaugesType()
+            )
         )
     }
 
@@ -99,10 +100,10 @@ class TreeFragment(
         gaugesClick(
             SelectData(
                 selectSections = "",
-                selectGauges = ""
-            ),
-            0,
-            ""
+                selectGauges = "",
+                gaugesNum = 0,
+                type = ""
+            )
         )
     }
 }

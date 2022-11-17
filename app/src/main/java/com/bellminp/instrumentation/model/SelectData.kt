@@ -28,5 +28,7 @@ data class SelectData(
     var endUnixTime : Long = getUnixTime(
         convertTimestampToDateTerm(getUnixTime()),
         false
-    )/1000
+    )/1000,
+    var gaugesNum : Int = 0,
+    var type : String = ""
 )

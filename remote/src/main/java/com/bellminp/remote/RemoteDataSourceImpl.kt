@@ -90,6 +90,34 @@ class RemoteDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun getGaugesDetail(
+        token: String,
+        gaugeId: Int,
+        startUnixTime: Long,
+        endUnixTime: Long
+    ): Response<DataGaugesDetail> {
+        val response = api.getGaugesDetail(token,gaugeId,startUnixTime,endUnixTime)
+        return when(getResponse(response)){
+            SUCCESS -> Response.success(response.code(),response.body()?.gaugesDetailToData())
+            FAIL -> Response.error(response.code(), response.errorBody() ?: "error".toResponseBody(null))
+            else -> Response.error(500, response.errorBody() ?: "error".toResponseBody(null))
+        }
+    }
+
+    override suspend fun getGaugesGroupDetail(
+        token: String,
+        gaugegroupId: Int,
+        startUnixTime: Long,
+        endUnixTime: Long
+    ): Response<DataGaugesGroupDetail> {
+        val response = api.getGaugesGroupDetail(token,gaugegroupId,startUnixTime,endUnixTime)
+        return when(getResponse(response)){
+            SUCCESS -> Response.success(response.code(),response.body()?.gaugesGroupDetailToData())
+            FAIL -> Response.error(response.code(), response.errorBody() ?: "error".toResponseBody(null))
+            else -> Response.error(500, response.errorBody() ?: "error".toResponseBody(null))
+        }
+    }
+
     private fun <T> getResponse(response: Response<T>): Int {
         return try {
             if (response.isSuccessful) SUCCESS

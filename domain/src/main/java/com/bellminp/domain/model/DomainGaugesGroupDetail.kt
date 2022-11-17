@@ -1,15 +1,15 @@
-package com.bellminp.remote.model.detail
+package com.bellminp.domain.model
 
-data class GaugesGroupDetailResponse(
+data class DomainGaugesGroupDetail(
     val code : Int,
     val message : String,
     val chartType : Int?,
-    val list : List<GaugesGroupDetailListResponse>?,
-    val chartList : List<GaugesGroupDetailChartResponse>?,
-    val constantList : List<GaugesGroupDetailConstantListResponse>?
+    val list : List<DomainGaugesGroupDetailList>?,
+    val chartList : List<DomainGaugesGroupDetailChart>?,
+    val constantList : List<DomainGaugesGroupDetailConstantList>?
 )
 
-data class GaugesGroupDetailListResponse(
+data class DomainGaugesGroupDetailList(
     val chartType: Int,
     val managenum: String,
     val groupNum: Int,
@@ -33,12 +33,12 @@ data class GaugesGroupDetailListResponse(
     val low3: Double
 )
 
-data class GaugesGroupDetailChartResponse(
+data class DomainGaugesGroupDetailChart(
     val time : Long,
-    val list : List<GaugesGroupDetailChartListResponse>
+    val list : List<DomainGaugesGroupDetailChartList>
 )
 
-data class GaugesGroupDetailChartListResponse(
+data class DomainGaugesGroupDetailChartList(
     val gaugeNum : Int?,
     val vpos : Double?,
     val empM1 : Double?,
@@ -48,7 +48,7 @@ data class GaugesGroupDetailChartListResponse(
     val y : Double?
 )
 
-data class GaugesGroupDetailConstantListResponse(
+data class DomainGaugesGroupDetailConstantList(
     val num : Int,
     val gaugeNum : Int,
     val value : Double
