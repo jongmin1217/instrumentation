@@ -355,6 +355,8 @@ fun GaugesGroupDetail.dataToTableData() : List<TableData> {
 
 
         this.chartList?.let { chartList ->
+            chartList[0].list.size
+
             chartList[0].list.forEach { detailChartList ->
                 if (detailChartList.measurepos != null) {
                     if (detailChartList.y != null) {
@@ -401,6 +403,12 @@ fun GaugesGroupDetail.dataToTableData() : List<TableData> {
             }
             list.add(TableData(cellData))
         }
+    }
+
+    val expM2List = list.filter { it.list[0].realText.contains("expM2") }
+    if(expM2List.isNotEmpty()){
+        list.removeAll(expM2List.toSet())
+        list.addAll(expM2List)
     }
 
     return list
