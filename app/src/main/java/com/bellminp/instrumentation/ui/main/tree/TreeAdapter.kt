@@ -19,7 +19,8 @@ class TreeAdapter(
     private val unSelectGauges: (() -> Unit)
 ) : BaseListAdapter<TreeModel>() {
 
-    private var selectNum : Int? = null
+    var init = true
+    private var selectNum: Int? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<TreeModel> {
         return when (viewType) {
@@ -58,6 +59,7 @@ class TreeAdapter(
                         val item = currentList[it.adapterPosition]
                         if (item is SitesList) {
                             item.checked = !item.checked
+                            item.textGray = item.checked
                             notifyItemChanged(it.adapterPosition)
 
                             if (item.checked) onItemClick(currentList[it.adapterPosition])
@@ -65,6 +67,13 @@ class TreeAdapter(
                         }
                     }
 
+                    if (init) {
+                        it.itemView.run {
+                            postDelayed({
+                                this.callOnClick()
+                            }, 100)
+                        }
+                    }
                 }
             }
 
@@ -81,6 +90,7 @@ class TreeAdapter(
                         val item = currentList[it.adapterPosition]
                         if (item is SectionsList) {
                             item.checked = !item.checked
+                            item.textGray = item.checked
                             notifyItemChanged(it.adapterPosition)
 
                             if (item.checked) onItemClick(currentList[it.adapterPosition])
@@ -88,6 +98,13 @@ class TreeAdapter(
                         }
                     }
 
+                    if (init) {
+                        it.itemView.run {
+                            postDelayed({
+                                this.callOnClick()
+                            }, 100)
+                        }
+                    }
                 }
             }
 
@@ -109,15 +126,15 @@ class TreeAdapter(
                             if (item.clicked) {
                                 selectNum = item.num
                                 selectGauges(currentList[it.adapterPosition])
-                            }
-                            else unSelectGauges()
+                            } else unSelectGauges()
                         }
                     }
 
-                    it.binding.ivMore.setOnClickListener{_ ->
+                    it.binding.ivMore.setOnClickListener { _ ->
                         val item = currentList[it.adapterPosition]
                         if (item is GaugesList) {
                             item.checked = !item.checked
+                            item.textGray = item.checked
                             notifyItemChanged(it.adapterPosition)
 
                             if (item.checked) onItemClick(currentList[it.adapterPosition])
@@ -142,11 +159,10 @@ class TreeAdapter(
                             item.clicked = !item.clicked
                             notifyItemChanged(it.adapterPosition)
                             gaugesClick(item.num)
-                            if (item.clicked){
+                            if (item.clicked) {
                                 selectNum = item.num
                                 selectGauges(currentList[it.adapterPosition])
-                            }
-                            else unSelectGauges()
+                            } else unSelectGauges()
                         }
                     }
                 }
@@ -154,11 +170,13 @@ class TreeAdapter(
         }
     }
 
-    private fun gaugesClick(num : Int){
-        val index = currentList.indexOfFirst { (it is GaugesList && it.clicked && it.num != num) ||  (it is GaugesGroupList && it.clicked && it.num != num)}
-        if(index != -1){
-            if(currentList[index] is GaugesList) (currentList[index] as GaugesList).clicked = false
-            if(currentList[index] is GaugesGroupList) (currentList[index] as GaugesGroupList).clicked = false
+    private fun gaugesClick(num: Int) {
+        val index =
+            currentList.indexOfFirst { (it is GaugesList && it.clicked && it.num != num) || (it is GaugesGroupList && it.clicked && it.num != num) }
+        if (index != -1) {
+            if (currentList[index] is GaugesList) (currentList[index] as GaugesList).clicked = false
+            if (currentList[index] is GaugesGroupList) (currentList[index] as GaugesGroupList).clicked =
+                false
             notifyItemChanged(index)
             submitList(currentList)
         }
@@ -221,73 +239,91 @@ class TreeAdapter(
 
     fun addSections(items: List<SectionsList>) {
         val index = currentList.indexOfFirst { it is SitesList && it.num == items[0].siteNum }
-        if (index != -1) addAll(index + 1, items.apply {
-            this[this.size - 1].bottomViewVisible = false
-            this.forEach {
-                it.sitesLineVisible = (currentList[index] as SitesList).bottomViewVisible
-            }
-        })
+        if (index != -1) {
+            currentList[index].haveItems()
+            notifyItemChanged(index)
+
+            addAll(index + 1, items.apply {
+                this[this.size - 1].bottomViewVisible = false
+                this.forEach {
+                    it.sitesLineVisible = (currentList[index] as SitesList).bottomViewVisible
+                }
+            })
+        }
     }
 
     fun addGauges(items: List<GaugesList>) {
+        init = false
+
         val index = currentList.indexOfFirst { it is SectionsList && it.num == items[0].sectionNum }
-        if (index != -1) addAll(index + 1, items.apply {
-            selectNum?.let { num ->
-                val selectIndex = this.indexOfFirst { it.num == num }
-                if(selectIndex != -1) this[selectIndex].clicked = true
-            }
-            this[this.size - 1].bottomViewVisible = false
-            this.forEach {
-                it.sitesLineVisible = (currentList[index] as SectionsList).sitesLineVisible
-            }
-            this.forEach {
-                it.sectionsLineVisible = (currentList[index] as SectionsList).bottomViewVisible
-            }
-            this.forEach {
-                it.siteNum = (currentList[index] as SectionsList).siteNum
-            }
-        })
+        if (index != -1) {
+            currentList[index].haveItems()
+            notifyItemChanged(index)
+
+            addAll(index + 1, items.apply {
+                selectNum?.let { num ->
+                    val selectIndex = this.indexOfFirst { it.num == num }
+                    if (selectIndex != -1) this[selectIndex].clicked = true
+                }
+                this[this.size - 1].bottomViewVisible = false
+                this.forEach {
+                    it.sitesLineVisible = (currentList[index] as SectionsList).sitesLineVisible
+                }
+                this.forEach {
+                    it.sectionsLineVisible = (currentList[index] as SectionsList).bottomViewVisible
+                }
+                this.forEach {
+                    it.siteNum = (currentList[index] as SectionsList).siteNum
+                }
+            })
+        }
     }
 
     fun addGaugesGroup(items: List<GaugesGroupList>) {
-        val index = currentList.indexOfFirst { it is GaugesList && it.type == "group" && it.num == items[0].gaugegroupNum }
-        if (index != -1) addAll(index + 1, items.apply {
-            selectNum?.let { num ->
-                val selectIndex = this.indexOfFirst { it.num == num }
-                if(selectIndex != -1) this[selectIndex].clicked = true
-            }
-            this[this.size - 1].bottomViewVisible = false
-            this.forEach {
-                it.sitesLineVisible = (currentList[index] as GaugesList).sitesLineVisible
-            }
-            this.forEach {
-                it.sectionsLineVisible = (currentList[index] as GaugesList).sectionsLineVisible
-            }
-            this.forEach {
-                it.gaugesLineVisible = (currentList[index] as GaugesList).bottomViewVisible
-            }
-            this.forEach {
-                it.siteNum = (currentList[index] as GaugesList).siteNum
-            }
-        })
+        val index =
+            currentList.indexOfFirst { it is GaugesList && it.type == "group" && it.num == items[0].gaugegroupNum }
+        if (index != -1) {
+            currentList[index].haveItems()
+            notifyItemChanged(index)
+
+            addAll(index + 1, items.apply {
+                selectNum?.let { num ->
+                    val selectIndex = this.indexOfFirst { it.num == num }
+                    if (selectIndex != -1) this[selectIndex].clicked = true
+                }
+                this[this.size - 1].bottomViewVisible = false
+                this.forEach {
+                    it.sitesLineVisible = (currentList[index] as GaugesList).sitesLineVisible
+                }
+                this.forEach {
+                    it.sectionsLineVisible = (currentList[index] as GaugesList).sectionsLineVisible
+                }
+                this.forEach {
+                    it.gaugesLineVisible = (currentList[index] as GaugesList).bottomViewVisible
+                }
+                this.forEach {
+                    it.siteNum = (currentList[index] as GaugesList).siteNum
+                }
+            })
+        }
     }
 
-    fun getSectionsName(num : Int) : String{
+    fun getSectionsName(num: Int): String {
         val index = currentList.indexOfFirst { it is SectionsList && it.num == num }
-        return if(index != -1){
+        return if (index != -1) {
             val item = currentList[index] as SectionsList
-            val managenumText = if(item.managenum.isEmpty()) "" else "[${item.managenum}]"
+            val managenumText = if (item.managenum.isEmpty()) "" else "[${item.managenum}]"
             "${item.name} $managenumText"
-        }else ""
+        } else ""
     }
 
-    fun getGroupName(num : Int) : String{
+    fun getGroupName(num: Int): String {
         val index = currentList.indexOfFirst { it is GaugesList && it.num == num }
-        return if(index != -1){
+        return if (index != -1) {
             val item = currentList[index] as GaugesList
-            val managenumText = if(item.managenum.isEmpty()) "" else "[${item.managenum}]"
+            val managenumText = if (item.managenum.isEmpty()) "" else "[${item.managenum}]"
             "${item.name} $managenumText"
-        }else ""
+        } else ""
     }
 
 

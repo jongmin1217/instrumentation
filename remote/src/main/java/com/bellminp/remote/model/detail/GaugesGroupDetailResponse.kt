@@ -6,7 +6,8 @@ data class GaugesGroupDetailResponse(
     val chartType : Int?,
     val list : List<GaugesGroupDetailListResponse>?,
     val chartList : List<GaugesGroupDetailChartResponse>?,
-    val constantList : List<GaugesGroupDetailConstantListResponse>?
+    val constantList : List<GaugesGroupDetailConstantListResponse>?,
+    val vposList : List<Double>?
 )
 
 data class GaugesGroupDetailListResponse(
@@ -18,7 +19,7 @@ data class GaugesGroupDetailListResponse(
     val autorange: Boolean,
     val minrange: Double,
     val maxrange: Double,
-    val ystep: Int,
+    val ystep: Double,
     val hi1enable: Boolean,
     val hi2enable: Boolean,
     val hi3enable: Boolean,
@@ -39,17 +40,14 @@ data class GaugesGroupDetailChartResponse(
 )
 
 data class GaugesGroupDetailChartListResponse(
-    val gaugeNum : Int?,
-    val vpos : Double?,
     val expM1 : Double?,
     val expM2 : Double?,
-    val measurepos : String?,
     val x : Double?,
     val y : Double?
 )
 
 data class GaugesGroupDetailConstantListResponse(
-    val num : Int,
-    val gaugeNum : Int,
-    val value : Double
+    val measurepos : String,
+    val x : Double,
+    val y : Double
 )

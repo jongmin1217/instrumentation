@@ -3,9 +3,13 @@ package com.bellminp.instrumentation.ui.main.graph
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import com.bellminp.common.timberMsg
 import com.bellminp.instrumentation.R
 import com.bellminp.instrumentation.databinding.FragmentGraphBinding
+import com.bellminp.instrumentation.mapper.dataToGraph
 import com.bellminp.instrumentation.model.GaugesData
+import com.bellminp.instrumentation.model.GaugesDetail
+import com.bellminp.instrumentation.model.GraphType1
 import com.bellminp.instrumentation.model.SelectData
 import com.bellminp.instrumentation.ui.base.BaseFragment
 import com.bellminp.instrumentation.ui.main.tree.TreeViewModel
@@ -19,6 +23,8 @@ class GraphFragment(
 ) : BaseFragment<FragmentGraphBinding,GraphViewModel>(R.layout.fragment_graph) {
     override val viewModel by activityViewModels<GraphViewModel>()
 
+    val adapter = GraphAdapter()
+
     override fun setupBinding() {
         binding.vm = viewModel
     }
@@ -28,11 +34,22 @@ class GraphFragment(
 
         initLayout()
         initListener()
+        initAdapter()
         settingGraphData(gaugesData)
     }
 
     fun settingGraphData(data : GaugesData?){
         viewModel.gaugesData.value = data
+
+        if(data is GaugesDetail){
+            val graphData = data.dataToGraph()
+
+            if(graphData.isNotEmpty()){
+                val titleData = graphData[0]
+                if(titleData is GraphType1) binding.tvName.text = String.format("%s [%s]",titleData.managenum,titleData.name)
+            }
+            adapter.submitList(graphData)
+        }
     }
 
     fun setSelectData(selectData : SelectData){
@@ -43,6 +60,10 @@ class GraphFragment(
             selectSections.value = selectData.selectSections
             selectGauges.value = selectData.selectGauges
         }
+    }
+
+    private fun initAdapter(){
+        binding.recyclerviewGraph.adapter = adapter
     }
 
     private fun initLayout(){

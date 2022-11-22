@@ -338,11 +338,8 @@ fun DomainGaugesGroupDetail.mapToData() : DataGaugesGroupDetail{
                 it.time,
                 it.list.map { list ->
                     DataGaugesGroupDetailChartList(
-                        list.gaugeNum,
-                        list.vpos,
                         list.expM1,
                         list.expM2,
-                        list.measurepos,
                         list.x,
                         list.y
                     )
@@ -351,11 +348,12 @@ fun DomainGaugesGroupDetail.mapToData() : DataGaugesGroupDetail{
         },
         this.constantList?.map {
             DataGaugesGroupDetailConstantList(
-                it.num,
-                it.gaugeNum,
-                it.value
+                it.measurepos,
+                it.x,
+                it.y
             )
-        }
+        },
+        this.vposList
     )
 }
 
@@ -440,11 +438,8 @@ fun DataGaugesGroupDetail.mapToDomain() : DomainGaugesGroupDetail{
                 it.time,
                 it.list.map { list ->
                     DomainGaugesGroupDetailChartList(
-                        list.gaugeNum,
-                        list.vpos,
                         list.expM1,
                         list.expM2,
-                        list.measurepos,
                         list.x,
                         list.y
                     )
@@ -453,11 +448,12 @@ fun DataGaugesGroupDetail.mapToDomain() : DomainGaugesGroupDetail{
         },
         this.constantList?.map {
             DomainGaugesGroupDetailConstantList(
-                it.num,
-                it.gaugeNum,
-                it.value
+                it.measurepos,
+                it.x,
+                it.y
             )
-        }
+        },
+        this.vposList
     )
 }
 

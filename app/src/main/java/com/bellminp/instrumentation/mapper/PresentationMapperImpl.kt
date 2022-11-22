@@ -260,11 +260,8 @@ fun DomainGaugesGroupDetail.mapToPresentation(): GaugesGroupDetail {
                 it.time,
                 it.list.map { list ->
                     GaugesGroupDetailChartList(
-                        list.gaugeNum,
-                        list.vpos,
                         list.expM1,
                         list.expM2,
-                        list.measurepos,
                         list.x,
                         list.y
                     )
@@ -273,11 +270,12 @@ fun DomainGaugesGroupDetail.mapToPresentation(): GaugesGroupDetail {
         },
         this.constantList?.map {
             GaugesGroupDetailConstantList(
-                it.num,
-                it.gaugeNum,
-                it.value
+                it.measurepos,
+                it.x,
+                it.y
             )
-        }
+        },
+        this.vposList
     )
 }
 
@@ -307,7 +305,7 @@ fun GaugesDetail.dataToTableData(): List<TableData> {
 
             this.chartList?.let { chartList ->
                 chartList.forEach {
-                    val value = when(i){
+                    val value = when (i) {
                         0 -> it.expM1
                         1 -> it.expM2
                         2 -> it.expM3
@@ -331,7 +329,7 @@ fun GaugesDetail.dataToTableData(): List<TableData> {
     return list
 }
 
-fun GaugesGroupDetail.dataToTableData() : List<TableData> {
+fun GaugesGroupDetail.dataToTableData(): List<TableData> {
     val list = ArrayList<TableData>()
 
     this.list?.let { gaugesDetailList ->
@@ -357,47 +355,63 @@ fun GaugesGroupDetail.dataToTableData() : List<TableData> {
         this.chartList?.let { chartList ->
             chartList[0].list.size
 
+            var index = 0
             chartList[0].list.forEach { detailChartList ->
-                if (detailChartList.measurepos != null) {
+                if (detailChartList.x != null) {
                     if (detailChartList.y != null) {
-                        titleList.add("${detailChartList.measurepos} - X")
-                        titleList.add("${detailChartList.measurepos} - Y")
+                        titleList.add("${this.constantList?.get(index)?.measurepos}(X)")
+                        titleList.add("${this.constantList?.get(index)?.measurepos}(Y)")
                     } else {
-                        titleList.add(detailChartList.measurepos)
+                        titleList.add(this.constantList?.get(index)?.measurepos.toString())
                     }
                 }
 
-                if (detailChartList.vpos != null) {
+                if (detailChartList.expM1 != null) {
                     if (detailChartList.expM2 != null) {
-                        titleList.add("${detailChartList.vpos} - expM1")
-                        titleList.add("${detailChartList.vpos} - expM2")
+                        titleList.add("${this.vposList?.get(index)}(m)")
+                        titleList.add("${this.vposList?.get(index)}(m)")
                     } else {
-                        titleList.add(detailChartList.vpos.toString())
+                        titleList.add("${this.vposList?.get(index)}(m)")
                     }
                 }
+                index++
             }
         }
 
-        for(i in titleList.indices){
+        for (i in titleList.indices) {
 
             val cellData = ArrayList<CellData>()
-            cellData.add(CellData(titleList[i],true))
+            cellData.add(CellData(titleList[i], true))
             this.chartList?.let {
-                it.forEach { detailChart->
-                    val data = detailChart.list[i/gaugesDetailList.size]
+                it.forEach { detailChart ->
+                    val data = detailChart.list[i / gaugesDetailList.size]
 
-                    if(gaugesDetailList.size==2){
+                    if (gaugesDetailList.size == 2) {
 
-                        if(i%2 == 0){
-                            cellData.add(CellData(data.x?.toString()?:data.expM1?.toString()?:"",false,
-                                getColorType(data.x?:data.expM1,gaugesDetailList[0])))
-                        }else{
-                            cellData.add(CellData(data.y?.toString()?:data.expM2?.toString()?:"",false,
-                                getColorType(data.y?:data.expM2,gaugesDetailList[1])))
+                        if (i % 2 == 0) {
+                            cellData.add(
+                                CellData(
+                                    data.x?.toString() ?: data.expM1?.toString() ?: "", false,
+                                    getColorType(data.x ?: data.expM1, gaugesDetailList[0])
+                                )
+                            )
+                        } else {
+                            cellData.add(
+                                CellData(
+                                    data.y?.toString() ?: data.expM2?.toString() ?: "",
+                                    false,
+                                    getColorType(data.y ?: data.expM2, gaugesDetailList[1]),
+                                    data.expM2 != null
+                                )
+                            )
                         }
-                    }else{
-                        cellData.add(CellData(data.x?.toString()?:data.expM1?.toString()?:"",false,
-                            getColorType(data.x?:data.expM1,gaugesDetailList[0])))
+                    } else {
+                        cellData.add(
+                            CellData(
+                                data.x?.toString() ?: data.expM1?.toString() ?: "", false,
+                                getColorType(data.x ?: data.expM1, gaugesDetailList[0])
+                            )
+                        )
                     }
                 }
             }
@@ -405,10 +419,125 @@ fun GaugesGroupDetail.dataToTableData() : List<TableData> {
         }
     }
 
-    val expM2List = list.filter { it.list[0].realText.contains("expM2") }
-    if(expM2List.isNotEmpty()){
+    val expM2List = list.filter { it.list[1].expM2 }
+    if (expM2List.isNotEmpty()) {
         list.removeAll(expM2List.toSet())
         list.addAll(expM2List)
+    }
+
+    return list
+}
+
+fun GaugesDetail.dataToGraph(): List<GraphData> {
+    val list = ArrayList<GraphType1>()
+
+    val size = this.list?.size ?: 0
+    val items = ArrayList<GraphGroupPointType1>()
+
+    if (this.multichart == true) {
+        val data = this.list?.get(0)
+
+        for (i in 0 until size) {
+            val groupItems = ArrayList<GraphPointType1>()
+
+            this.chartList?.sortedBy { it.time }?.forEach {
+                groupItems.add(
+                    GraphPointType1(
+                        it.time,
+                        when (i) {
+                            0 -> it.expM1
+                            1 -> it.expM2
+                            2 -> it.expM3
+                            3 -> it.expM4
+                            else -> it.expT
+                        }
+                    )
+                )
+            }
+
+
+            items.add(GraphGroupPointType1(this.list?.get(i)?.reunit?:"",groupItems))
+        }
+
+
+
+        data?.let {
+            list.add(
+                GraphType1(
+                    it.managenum,
+                    this.list?.get(0)?.reunit?:"",
+                    it.hi1enable,
+                    it.hi2enable,
+                    it.hi3enable,
+                    it.low1enable,
+                    it.low2enable,
+                    it.low3enable,
+                    it.hi1,
+                    it.hi2,
+                    it.hi3,
+                    it.low1,
+                    it.low2,
+                    it.low3,
+                    it.ystep,
+                    it.reunit,
+                    it.autorange,
+                    it.minrange,
+                    it.maxrange,
+                    items
+                )
+            )
+        }
+
+    } else {
+        for (i in 0 until size) {
+            this.list?.get(i)?.let {
+                val multiItems = ArrayList<GraphPointType1>()
+                val multiSize = this.chartList?.size ?: 0
+
+                for (j in 0 until multiSize) {
+                    this.chartList?.sortedBy {chart -> chart.time }?.get(j)?.let { multiData ->
+                        multiItems.add(
+                            GraphPointType1(
+                                multiData.time,
+                                when (i) {
+                                    0 -> multiData.expM1
+                                    1 -> multiData.expM2
+                                    2 -> multiData.expM3
+                                    3 -> multiData.expM4
+                                    else -> multiData.expT
+                                }
+                            )
+                        )
+                    }
+
+                }
+
+                list.add(
+                    GraphType1(
+                        it.managenum,
+                        it.reunit,
+                        it.hi1enable,
+                        it.hi2enable,
+                        it.hi3enable,
+                        it.low1enable,
+                        it.low2enable,
+                        it.low3enable,
+                        it.hi1,
+                        it.hi2,
+                        it.hi3,
+                        it.low1,
+                        it.low2,
+                        it.low3,
+                        it.ystep,
+                        it.reunit,
+                        it.autorange,
+                        it.minrange,
+                        it.maxrange,
+                        listOf(GraphGroupPointType1(it.reunit,multiItems))
+                    )
+                )
+            }
+        }
     }
 
     return list

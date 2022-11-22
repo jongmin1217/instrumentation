@@ -111,7 +111,6 @@
             android:textColor="@{item.clicked ? @color/white : @color/basic}"
             android:layout_marginTop="5dp"
             android:textSize="14sp"
-            android:textStyle="bold"
             android:layout_marginStart="8dp"
             setGaugesGroupName="@{item}"
             android:background="@{item.clicked ? @color/gauges_click : @android:color/transparent}"

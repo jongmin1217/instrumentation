@@ -25,7 +25,7 @@ data class GaugesDetailList(
     val autorange: Boolean,
     val minrange: Double,
     val maxrange: Double,
-    val ystep: Int,
+    val ystep: Double,
     val hi1enable: Boolean,
     val hi2enable: Boolean,
     val hi3enable: Boolean,
@@ -55,7 +55,8 @@ data class GaugesGroupDetail(
     val chartType : Int?,
     val list : List<GaugesGroupDetailList>?,
     val chartList : List<GaugesGroupDetailChart>?,
-    val constantList : List<GaugesGroupDetailConstantList>?
+    val constantList : List<GaugesGroupDetailConstantList>?,
+    val vposList : List<Double>?
 ) : GaugesData{
     override fun getTableData() = this.dataToTableData()
 }
@@ -69,7 +70,7 @@ data class GaugesGroupDetailList(
     val autorange: Boolean,
     val minrange: Double,
     val maxrange: Double,
-    val ystep: Int,
+    val ystep: Double,
     val hi1enable: Boolean,
     val hi2enable: Boolean,
     val hi3enable: Boolean,
@@ -90,19 +91,16 @@ data class GaugesGroupDetailChart(
 )
 
 data class GaugesGroupDetailChartList(
-    val gaugeNum : Int?,
-    val vpos : Double?,
     val expM1 : Double?,
     val expM2 : Double?,
-    val measurepos : String?,
     val x : Double?,
     val y : Double?
 )
 
 data class GaugesGroupDetailConstantList(
-    val num : Int,
-    val gaugeNum : Int,
-    val value : Double
+    val measurepos : String,
+    val x : Double,
+    val y : Double
 )
 
 interface GaugesData{

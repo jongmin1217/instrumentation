@@ -16,4 +16,6 @@
     <string name="test_list">test_list</string>
     <string name="logout">로그아웃</string>
     <string name="auto_login">자동 로그인</string>
+
+    <string formatted="false" name="graph_name">%d [%s]</string>
 </resources>

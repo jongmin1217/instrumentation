@@ -14,15 +14,15 @@ data class SelectData(
     ),
     var fromDay : String = convertTimestampToDateText(
         getUnixTime(
-            convertTimestampToDateTerm(getUnixTime() - (ONE_DAY * 3)),
+            convertTimestampToDateTerm(getUnixTime() - (ONE_DAY * 24)),
             true
         )
     ),
-    var days : String = "3",
+    var days : String = "24",
     var selectSections : String  = "",
     var selectGauges : String  = "",
     var startUnixTime : Long = getUnixTime(
-        convertTimestampToDateTerm(getUnixTime() - (ONE_DAY * 3)),
+        convertTimestampToDateTerm(getUnixTime() - (ONE_DAY * 24)),
         true
     )/1000,
     var endUnixTime : Long = getUnixTime(

@@ -1,10 +1,14 @@
 package com.bellminp.instrumentation.utils
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import androidx.lifecycle.MutableLiveData
 import com.bellminp.common.timberMsg
 import com.bellminp.instrumentation.model.GaugesDetailList
 import com.bellminp.instrumentation.model.GaugesGroupDetailList
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineDataSet
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
@@ -47,6 +51,11 @@ fun getUnixTime(date: String, fromDay: Boolean): Long {
     val timestamp = formatter.parse(fullDate) as Date
 
     return timestamp.time
+}
+
+@SuppressLint("SimpleDateFormat")
+fun graphXValue(value: Float): String {
+    return SimpleDateFormat("yyyy/MM/dd HH:mm").format(value)
 }
 
 fun getColorType(value: Double?, gaugesDetailList: GaugesDetailList) : Int {
@@ -104,5 +113,20 @@ fun getColorType(value: Double?, gaugesDetailList: GaugesGroupDetailList) : Int 
         }
 
         return type
+    }
+}
+
+fun getGraphColor(index : Int) : Int {
+    return when(index){
+        0 -> Color.BLACK
+        1 -> Color.BLUE
+        2 -> Color.CYAN
+        3 -> Color.GRAY
+        4 -> Color.GREEN
+        5 -> Color.LTGRAY
+        6 -> Color.MAGENTA
+        7 -> Color.RED
+        8 -> Color.YELLOW
+        else -> Color.WHITE
     }
 }

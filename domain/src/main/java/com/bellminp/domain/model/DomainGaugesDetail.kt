@@ -19,7 +19,7 @@ data class DomainGaugesDetailList(
     val autorange: Boolean,
     val minrange: Double,
     val maxrange: Double,
-    val ystep: Int,
+    val ystep: Double,
     val hi1enable: Boolean,
     val hi2enable: Boolean,
     val hi3enable: Boolean,

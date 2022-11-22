@@ -11,6 +11,8 @@
             type="com.bellminp.instrumentation.model.GaugesList" />
 
         <import type="android.view.View" />
+        <import type="android.graphics.Typeface" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -133,9 +135,9 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="16dp"
             android:background="@{item.clicked ? @color/gauges_click : @android:color/transparent}"
-            android:textColor="@{item.clicked ? @color/white : @color/basic}"
+            android:textColor="@{item.clicked ? @color/white : item.textGray ? @color/select_menu : @color/basic}"
             android:textSize="14sp"
-            android:textStyle="bold"
+            android:typeface="@{Typeface.defaultFromStyle(item.group ? Typeface.BOLD : Typeface.NORMAL)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_icon"
             app:layout_constraintTop_toTopOf="parent" />

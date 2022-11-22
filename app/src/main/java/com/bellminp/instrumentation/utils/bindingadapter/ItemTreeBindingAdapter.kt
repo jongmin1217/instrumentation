@@ -1,5 +1,6 @@
 package com.bellminp.instrumentation.utils.bindingadapter
 
+import android.graphics.Typeface
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -30,6 +31,7 @@ fun setGaugesName(tv: TextView, item: GaugesList) {
     val managenum = if(item.managenum.isNotEmpty()) "[${item.managenum}]" else String()
     val text = "${item.name} $managenum"
     tv.text = text
+
 }
 
 @BindingAdapter("setGaugesGroupName")

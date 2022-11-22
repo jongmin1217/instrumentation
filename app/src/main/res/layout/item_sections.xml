@@ -89,7 +89,7 @@
             app:layout_constraintStart_toEndOf="@id/iv_icon"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="16dp"
-            android:textColor="@color/basic"
+            android:textColor="@{item.textGray ? @color/select_menu : @color/basic}"
             android:layout_marginTop="5dp"
             android:textSize="14sp"
             android:textStyle="bold"

@@ -6,7 +6,8 @@ data class DomainGaugesGroupDetail(
     val chartType : Int?,
     val list : List<DomainGaugesGroupDetailList>?,
     val chartList : List<DomainGaugesGroupDetailChart>?,
-    val constantList : List<DomainGaugesGroupDetailConstantList>?
+    val constantList : List<DomainGaugesGroupDetailConstantList>?,
+    val vposList : List<Double>?
 )
 
 data class DomainGaugesGroupDetailList(
@@ -18,7 +19,7 @@ data class DomainGaugesGroupDetailList(
     val autorange: Boolean,
     val minrange: Double,
     val maxrange: Double,
-    val ystep: Int,
+    val ystep: Double,
     val hi1enable: Boolean,
     val hi2enable: Boolean,
     val hi3enable: Boolean,
@@ -39,17 +40,14 @@ data class DomainGaugesGroupDetailChart(
 )
 
 data class DomainGaugesGroupDetailChartList(
-    val gaugeNum : Int?,
-    val vpos : Double?,
     val expM1 : Double?,
     val expM2 : Double?,
-    val measurepos : String?,
     val x : Double?,
     val y : Double?
 )
 
 data class DomainGaugesGroupDetailConstantList(
-    val num : Int,
-    val gaugeNum : Int,
-    val value : Double
+    val measurepos : String,
+    val x : Double,
+    val y : Double
 )

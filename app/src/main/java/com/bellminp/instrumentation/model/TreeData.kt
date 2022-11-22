@@ -12,6 +12,7 @@ data class Field(
     override fun getGaugesNum() = 0
     override fun getGaugesType() = ""
     override fun getGroupNum() = num
+    override fun haveItems() {}
 }
 
 data class SitesList(
@@ -21,13 +22,15 @@ data class SitesList(
     val name : String,
     val managenum : String,
     var checked : Boolean,
-    var bottomViewVisible : Boolean = true
+    var bottomViewVisible : Boolean = true,
+    var textGray : Boolean = false
 ) : TreeModel{
     override fun getSectionsNum() = 0
     override fun getGaugesName() = ""
     override fun getGaugesNum() = 0
     override fun getGaugesType() = ""
     override fun getGroupNum() = num
+    override fun haveItems() {textGray = false}
 }
 
 data class SectionsList(
@@ -37,13 +40,15 @@ data class SectionsList(
     val managenum : String,
     var checked : Boolean,
     var bottomViewVisible : Boolean = true,
-    var sitesLineVisible : Boolean = true
+    var sitesLineVisible : Boolean = true,
+    var textGray : Boolean = false
 ) : TreeModel{
     override fun getSectionsNum() = 0
     override fun getGaugesName() = ""
     override fun getGaugesNum() = 0
     override fun getGaugesType() = ""
     override fun getGroupNum() = num
+    override fun haveItems() {textGray = false}
 }
 
 data class GaugesList(
@@ -62,7 +67,8 @@ data class GaugesList(
     var bottomViewVisible : Boolean = true,
     var sitesLineVisible : Boolean = true,
     var sectionsLineVisible : Boolean = true,
-    var siteNum : Int = 0
+    var siteNum : Int = 0,
+    var textGray : Boolean = false
 ) : TreeModel{
     fun getGroup() = type == "group"
     override fun getSectionsNum() = sectionNum
@@ -73,6 +79,7 @@ data class GaugesList(
     override fun getGaugesNum() = num
     override fun getGaugesType() = type
     override fun getGroupNum() = num
+    override fun haveItems() {textGray = false}
 }
 
 data class GaugesGroupList(
@@ -100,6 +107,7 @@ data class GaugesGroupList(
     override fun getGaugesNum() = num
     override fun getGaugesType() = type
     override fun getGroupNum() = gaugegroupNum
+    override fun haveItems() {}
 }
 
 data class GaugesTypeList(
@@ -116,4 +124,5 @@ interface TreeModel{
     fun getGaugesNum() : Int
     fun getGaugesType() : String
     fun getGroupNum() : Int
+    fun haveItems()
 }
