@@ -15,5 +15,6 @@ data class GaugesGroupListResponse(
     val managenum : String,
     val vpos : Double,
     val measurepos : String,
-    val type : String
+    val type : String,
+    val time : Long? = null
 )

@@ -16,5 +16,6 @@ data class DataGaugesList(
     val position : String?,
     val measurepos : String?,
     val gaugetypeNum : Int?,
-    val chcount : Int?
+    val chcount : Int?,
+    val time : Long? = null
 )

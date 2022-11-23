@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
@@ -58,12 +59,17 @@ abstract class BaseFragment<VDB : ViewDataBinding, VM : BaseViewModel>(
         }
     }
 
-    fun showDateSelect() {
-        val builder = MaterialDatePicker.Builder.dateRangePicker()
-        val picker = builder.build()
-        picker.show(parentFragmentManager, picker.toString())
+    fun showDateSelect(start : Long, end : Long) {
+        timberMsg(start)
+        val builder = MaterialDatePicker.Builder.dateRangePicker().setSelection(
+            Pair(
+                start*1000 + ONE_DAY,
+                end*1000
+            )
+        ).build()
+        builder.show(parentFragmentManager, builder.toString())
 
-        picker.addOnPositiveButtonClickListener {
+        builder.addOnPositiveButtonClickListener {
             val startPeriod = convertTimestampToDateTerm(it.first ?: 0)
             val endPeriod = convertTimestampToDateTerm(it.second ?: 0)
             val days = ((it.second - it.first) / ONE_DAY).toInt()

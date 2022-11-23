@@ -70,7 +70,8 @@ fun GaugesResponse.gaugesToData(): DataGauges {
                 it.position,
                 it.measurepos,
                 it.gaugetypeNum,
-                it.chcount
+                it.chcount,
+                it.time
             )
         }
     )
@@ -90,7 +91,8 @@ fun GaugesGroupResponse.gaugesGroupToData(): DataGaugesGroup {
                 it.managenum,
                 it.vpos,
                 it.measurepos,
-                it.type
+                it.type,
+                it.time
             )
         }
     )

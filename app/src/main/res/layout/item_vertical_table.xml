@@ -8,6 +8,7 @@
             name="item"
             type="com.bellminp.instrumentation.model.CellData" />
         <import type="android.view.Gravity" />
+        <import type="android.graphics.Typeface" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,11 +23,12 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             setTextColor="@{item}"
-            android:textSize="@{item.title ? @dimen/sp_16 : @dimen/sp_14}"
+            android:textSize="11sp"
             android:gravity="@{item.title ? Gravity.CENTER : Gravity.START}"
             android:text="@{item.realText}"
             android:padding="5dp"
             android:maxLines="1"
+            android:typeface="@{Typeface.defaultFromStyle(item.title ? Typeface.BOLD : Typeface.NORMAL)}"
             />
 
 

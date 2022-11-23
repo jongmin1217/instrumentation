@@ -85,7 +85,8 @@ fun DomainGauges.mapToData(): DataGauges {
                 it.position,
                 it.measurepos,
                 it.gaugetypeNum,
-                it.chcount
+                it.chcount,
+                it.time
             )
         }
     )
@@ -105,7 +106,8 @@ fun DomainGaugesGroup.mapToData(): DataGaugesGroup {
                 it.managenum,
                 it.vpos,
                 it.measurepos,
-                it.type
+                it.type,
+                it.time
             )
         }
     )
@@ -173,7 +175,8 @@ fun DataGauges.mapToDomain(): DomainGauges {
                 it.position,
                 it.measurepos,
                 it.gaugetypeNum,
-                it.chcount
+                it.chcount,
+                it.time
             )
         }
     )
@@ -193,7 +196,8 @@ fun DataGaugesGroup.mapToDomain(): DomainGaugesGroup {
                 it.managenum,
                 it.vpos,
                 it.measurepos,
-                it.type
+                it.type,
+                it.time
             )
         }
     )

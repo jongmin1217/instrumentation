@@ -122,11 +122,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
 
     private fun editGaugesSelectData(data : SelectData){
         with(viewModel){
-            selectData.selectSections = data.selectSections
-            selectData.selectGauges = data.selectGauges
-            selectData.gaugesNum = data.gaugesNum
-            selectData.type = data.type
-
+            selectData = data
         }
         settingSelectData()
     }
@@ -139,7 +135,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
             selectData.startUnixTime = data.startUnixTime
             selectData.endUnixTime = data.endUnixTime
 
-            getProcessLog()
         }
         settingSelectData()
     }
@@ -149,7 +144,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         graphFragment?.setSelectData(viewModel.selectData)
         recordFragment?.setSelectData(viewModel.selectData)
 
-        viewModel.getGaugesData()
+        with(viewModel){
+            getProcessLog()
+            getGaugesData()
+        }
     }
 
 

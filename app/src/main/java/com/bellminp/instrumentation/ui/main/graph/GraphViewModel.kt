@@ -16,5 +16,8 @@ class GraphViewModel @Inject constructor() : BaseViewModel() {
     val selectSections = MutableLiveData<String>().default("")
     val selectGauges = MutableLiveData<String>().default("")
 
+    var startUnixTime = 0L
+    var endUnixTime = 0L
+
     val gaugesData = MutableLiveData<GaugesData>().default(null)
 }

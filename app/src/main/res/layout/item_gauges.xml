@@ -11,13 +11,16 @@
             type="com.bellminp.instrumentation.model.GaugesList" />
 
         <import type="android.view.View" />
+
         <import type="android.graphics.Typeface" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clickable="@{item.time == null ? false : true}"
+        >
 
         <View
             android:id="@+id/line_sites"
@@ -115,39 +118,52 @@
             app:layout_constraintStart_toStartOf="@id/iv_more"
             app:layout_constraintTop_toBottomOf="@id/iv_more" />
 
-        <ImageView
-            android:id="@+id/iv_icon"
-            setGaugesIconType="@{item.type}"
-            setGaugesIconGaugesType="@{item.gaugetypeNum}"
-            setGaugesIconNum="@{item.num}"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/line"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_name"
-            setGaugesName="@{item}"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="16dp"
-            android:background="@{item.clicked ? @color/gauges_click : @android:color/transparent}"
-            android:textColor="@{item.clicked ? @color/white : item.textGray ? @color/select_menu : @color/basic}"
-            android:textSize="14sp"
-            android:typeface="@{Typeface.defaultFromStyle(item.group ? Typeface.BOLD : Typeface.NORMAL)}"
+            android:layout_marginTop="1dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_icon"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/line"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_icon"
+                setGaugesIconGaugesType="@{item.gaugetypeNum}"
+                setGaugesIconNum="@{item.num}"
+                setGaugesIconType="@{item.type}"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                setGaugesName="@{item}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:background="@{item.clicked ? @color/gauges_click : @android:color/transparent}"
+                android:textColor="@{item.clicked ? @color/white : item.textGray || item.time == null ? @color/select_menu : @color/basic}"
+                android:textSize="10sp"
+                android:typeface="@{Typeface.defaultFromStyle(item.group ? Typeface.BOLD : Typeface.NORMAL)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SmallSp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="1dp"
             android:background="@android:color/transparent"
-            app:layout_constraintTop_toBottomOf="@id/tv_name" />
+            app:layout_constraintTop_toBottomOf="@id/layout_center" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

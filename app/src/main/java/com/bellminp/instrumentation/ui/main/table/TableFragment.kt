@@ -27,7 +27,7 @@ class TableFragment(
 ) : BaseFragment<FragmentTableBinding, TableViewModel>(R.layout.fragment_table) {
     override val viewModel by activityViewModels<TableViewModel>()
 
-    val adapter = TableAdapter()
+    private val adapter = TableAdapter()
 
     override fun setupBinding() {
         binding.vm = viewModel
@@ -44,15 +44,15 @@ class TableFragment(
 
     private fun initListener(){
         binding.layoutFromValue.setOnClickListener {
-            showDateSelect()
+            showDateSelect(viewModel.startUnixTime,viewModel.endUnixTime)
         }
 
         binding.layoutDaysValue.setOnClickListener {
-            showDateSelect()
+            showDateSelect(viewModel.startUnixTime,viewModel.endUnixTime)
         }
 
         binding.layoutToValue.setOnClickListener {
-            showDateSelect()
+            showDateSelect(viewModel.startUnixTime,viewModel.endUnixTime)
         }
     }
 
@@ -71,6 +71,9 @@ class TableFragment(
             toDay.value = selectData.toDay
             selectSections.value = selectData.selectSections
             selectGauges.value = selectData.selectGauges
+
+            startUnixTime = selectData.startUnixTime
+            endUnixTime = selectData.endUnixTime
         }
     }
 

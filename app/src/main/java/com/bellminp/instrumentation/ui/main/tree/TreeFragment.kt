@@ -11,6 +11,10 @@ import com.bellminp.instrumentation.model.*
 import com.bellminp.instrumentation.ui.base.BaseFragment
 import com.bellminp.instrumentation.ui.dialog.fieldselect.FieldListAdapter
 import com.bellminp.instrumentation.ui.dialog.fieldselect.FieldSelectViewModel
+import com.bellminp.instrumentation.utils.ONE_DAY
+import com.bellminp.instrumentation.utils.convertTimestampToDateTerm
+import com.bellminp.instrumentation.utils.convertTimestampToDateText
+import com.bellminp.instrumentation.utils.getUnixTime
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,7 +28,7 @@ class TreeFragment(
         TreeAdapter(
             {
                 when (it) {
-                    is Field -> viewModel.getSites(fieldNum, false)
+                    is Field -> viewModel.getSites(fieldNum)
                     is SitesList -> viewModel.getSections(it.num)
                     is SectionsList -> viewModel.getGauges(it.num)
                     is GaugesList -> viewModel.getGaugesGroup(it.num)
@@ -48,7 +52,7 @@ class TreeFragment(
 
         initAdapter()
         initListener()
-        viewModel.getSites(fieldNum, true)
+        viewModel.initSearch(fieldNum)
     }
 
     private fun initListener() {
@@ -88,17 +92,50 @@ class TreeFragment(
             addGaugesGroup.observe(viewLifecycleOwner) {
                 treeAdapter.addGaugesGroup(it)
             }
+
+            addSectionsNone.observe(viewLifecycleOwner) {
+                treeAdapter.addSectionsNone(it)
+            }
+
+            addGaugesNone.observe(viewLifecycleOwner) {
+                treeAdapter.addGaugesNone(it)
+            }
+
+            addGaugesGroupNone.observe(viewLifecycleOwner) {
+                treeAdapter.addGaugesGroupNone(it)
+            }
         }
     }
 
     private fun clickGauges(item: TreeModel) {
+        val time = if(item.getGaugesTime() == null) getUnixTime()
+        else item.getGaugesTime()!!
+
         gaugesClick(
             SelectData(
-                selectSections = if (item is GaugesList) treeAdapter.getSectionsName(item.getSectionsNum())
+                convertTimestampToDateText(
+                    getUnixTime(
+                        convertTimestampToDateTerm(time),
+                        false
+                    )
+                ),
+                convertTimestampToDateText(
+                    getUnixTime(
+                        convertTimestampToDateTerm(time - (ONE_DAY * 3)),
+                        true
+                    )
+                ),
+                "3",
+                if (item is GaugesList) treeAdapter.getSectionsName(item.getSectionsNum())
                 else treeAdapter.getGroupName(item.getGroupNum()),
-                selectGauges = item.getGaugesName(),
-                gaugesNum = item.getGaugesNum(),
-                type = item.getGaugesType()
+                item.getGaugesName(),
+                getUnixTime(
+                    convertTimestampToDateTerm(time - (ONE_DAY * 3)),
+                    true
+                ) / 1000,
+                getUnixTime(convertTimestampToDateTerm(time), false) / 1000,
+                item.getGaugesNum(),
+                item.getGaugesType()
             )
         )
     }

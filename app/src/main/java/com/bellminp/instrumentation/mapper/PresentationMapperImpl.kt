@@ -6,6 +6,8 @@ import com.bellminp.domain.model.*
 import com.bellminp.instrumentation.model.*
 import com.bellminp.instrumentation.utils.convertTimestampToDateRecord
 import com.bellminp.instrumentation.utils.getColorType
+import com.bellminp.instrumentation.utils.graphLegendValue
+import com.bellminp.instrumentation.utils.roundOff
 
 fun DomainLogin.mapToPresentation(): Login {
     return Login(
@@ -50,7 +52,7 @@ fun AutoLogin.mapToDomain(): DomainAutoLogin {
     )
 }
 
-fun List<DomainSitesList>.mapToPresentation(): List<SitesList> {
+fun List<DomainSitesList>.mapToPresentation(checked : Boolean = false): List<SitesList> {
     return this.map {
         SitesList(
             it.num,
@@ -58,20 +60,20 @@ fun List<DomainSitesList>.mapToPresentation(): List<SitesList> {
             it.fieldName,
             it.name,
             it.managenum,
-            false
+            checked
         )
     }
 }
 
 @JvmName("mapToPresentationDomainSectionsList")
-fun List<DomainSectionsList>.mapToPresentation(): List<SectionsList> {
+fun List<DomainSectionsList>.mapToPresentation(checked : Boolean = false): List<SectionsList> {
     return this.map {
         SectionsList(
             it.num,
             it.siteNum,
             it.name,
             it.managenum,
-            false
+            checked
         )
     }
 }
@@ -91,7 +93,8 @@ fun List<DomainGaugesList>.mapToPresentation(sectionsNum: Int): List<GaugesList>
             it.gaugetypeNum,
             it.chcount,
             checked = false,
-            clicked = false
+            clicked = false,
+            time = it.time
         )
     }
 }
@@ -109,7 +112,8 @@ fun DomainGaugesGroup.mapToPresentation(): List<GaugesGroupList> {
             it.measurepos,
             this.gaugetypeNum,
             it.type,
-            clicked = false
+            clicked = false,
+            time = it.time
         )
     }
 }
@@ -136,7 +140,7 @@ fun List<DomainRecordList>.mapToPresentation(
 
     val titleData = RecordData(
         0,
-        "내용",
+        "검사내용",
         0,
         0,
         0,
@@ -158,13 +162,9 @@ fun List<RecordData>.mapToCellData(): List<RecordListData> {
     val list = ArrayList<RecordListData>()
 
     if (this.isNotEmpty()) {
-        if (this[0].admin) {
-            val fieldItem = this.map { CellData(it.fieldName, it.title) }
-            list.add(RecordListData(fieldItem))
-        }
         val timeItem = this.map {
             CellData(
-                if (it.title) "측정일시" else convertTimestampToDateRecord(it.time),
+                if (it.title) "검사일시" else graphLegendValue(it.time),
                 it.title
             )
         }
@@ -290,7 +290,7 @@ fun GaugesDetail.dataToTableData(): List<TableData> {
             it.forEach { chartList ->
                 timeList.add(
                     CellData(
-                        convertTimestampToDateRecord(chartList.time),
+                        graphLegendValue(chartList.time),
                         false
                     )
                 )
@@ -306,16 +306,16 @@ fun GaugesDetail.dataToTableData(): List<TableData> {
             this.chartList?.let { chartList ->
                 chartList.forEach {
                     val value = when (i) {
-                        0 -> it.expM1
-                        1 -> it.expM2
-                        2 -> it.expM3
-                        3 -> it.expM4
-                        else -> it.expT
+                        0 -> roundOff(it.expM1?:0.0)
+                        1 -> roundOff(it.expM2?:0.0)
+                        2 -> roundOff(it.expM3?:0.0)
+                        3 -> roundOff(it.expM4?:0.0)
+                        else -> roundOff(it.expT?:0.0)
                     }
 
                     gaugesList.add(
                         CellData(
-                            value?.toString() ?: "", false,
+                            value.toString(), false,
                             getColorType(value, gaugesDetailList[i])
                         )
                     )
@@ -340,7 +340,7 @@ fun GaugesGroupDetail.dataToTableData(): List<TableData> {
             it.forEach { chartList ->
                 timeList.add(
                     CellData(
-                        convertTimestampToDateRecord(chartList.time),
+                        graphLegendValue(chartList.time),
                         false
                     )
                 )
@@ -391,14 +391,14 @@ fun GaugesGroupDetail.dataToTableData(): List<TableData> {
                         if (i % 2 == 0) {
                             cellData.add(
                                 CellData(
-                                    data.x?.toString() ?: data.expM1?.toString() ?: "", false,
+                                    roundOff(data.x?:data.expM1?:0.0).toString(), false,
                                     getColorType(data.x ?: data.expM1, gaugesDetailList[0])
                                 )
                             )
                         } else {
                             cellData.add(
                                 CellData(
-                                    data.y?.toString() ?: data.expM2?.toString() ?: "",
+                                    roundOff(data.y?:data.expM2?:0.0).toString(),
                                     false,
                                     getColorType(data.y ?: data.expM2, gaugesDetailList[1]),
                                     data.expM2 != null
@@ -408,7 +408,7 @@ fun GaugesGroupDetail.dataToTableData(): List<TableData> {
                     } else {
                         cellData.add(
                             CellData(
-                                data.x?.toString() ?: data.expM1?.toString() ?: "", false,
+                                roundOff(data.x?:data.expM1?:0.0).toString(), false,
                                 getColorType(data.x ?: data.expM1, gaugesDetailList[0])
                             )
                         )
@@ -537,6 +537,104 @@ fun GaugesDetail.dataToGraph(): List<GraphData> {
                     )
                 )
             }
+        }
+    }
+
+    return list
+}
+
+fun GaugesGroupDetail.dataToGraph() : List<GraphData>{
+    val list = ArrayList<GraphType2>()
+
+    val size = if(this.chartList?.get(0)?.list?.get(0)?.expM2 == null) 1 else 2
+
+    for(i in 0 until size){
+        this.list?.get(i)?.let {
+            val itemsList = ArrayList<GraphGroupPointType2>()
+
+            this.chartList?.forEach { chartList ->
+                val itemList = ArrayList<GraphPointType2>()
+
+                for(j in chartList.list.indices){
+                    itemList.add(GraphPointType2(this.vposList?.get(j)?:0.0,if(i == 0) chartList.list[j].expM1 else chartList.list[j].expM2))
+                }
+
+                itemsList.add(GraphGroupPointType2(chartList.time,itemList))
+            }
+
+            list.add(
+                GraphType2(
+                    it.managenum,
+                    "간격변위(mm)",
+                    it.hi1enable,
+                    it.hi2enable,
+                    it.hi3enable,
+                    it.low1enable,
+                    it.low2enable,
+                    it.low3enable,
+                    it.hi1,
+                    it.hi2,
+                    it.hi3,
+                    it.low1,
+                    it.low2,
+                    it.low3,
+                    it.ystep,
+                    it.reunit,
+                    it.autorange,
+                    it.minrange,
+                    it.maxrange,
+                    itemsList
+                )
+            )
+        }
+    }
+
+    return list
+}
+
+fun GaugesGroupDetail.dataToGraph3() : List<GraphData>{
+    val list = ArrayList<GraphType3>()
+
+    val size = if(this.chartList?.get(0)?.list?.get(0)?.expM2 == null) 1 else 2
+
+    for(i in 0 until size){
+        this.list?.get(i)?.let {
+            val itemsList = ArrayList<GraphGroupPointType3>()
+
+            this.chartList?.forEach { chartList ->
+                val itemList = ArrayList<GraphPointType3>()
+
+                for(j in chartList.list.indices){
+                    itemList.add(GraphPointType3(this.vposList?.get(j)?:0.0,if(i == 0) chartList.list[j].expM1 else chartList.list[j].expM2))
+                }
+
+                itemsList.add(GraphGroupPointType3(chartList.time,itemList))
+            }
+
+            list.add(
+                GraphType3(
+                    "누적간격변위",
+                    "심도",
+                    it.hi1enable,
+                    it.hi2enable,
+                    it.hi3enable,
+                    it.low1enable,
+                    it.low2enable,
+                    it.low3enable,
+                    it.hi1,
+                    it.hi2,
+                    it.hi3,
+                    it.low1,
+                    it.low2,
+                    it.low3,
+                    it.ystep,
+                    it.reunit,
+                    it.autorange,
+                    it.minrange,
+                    it.maxrange,
+                    itemsList
+                )
+            )
         }
     }
 

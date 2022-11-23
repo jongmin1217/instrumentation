@@ -40,6 +40,9 @@ class RecordFragment(
             fromDay.value = selectData.fromDay
             days.value = selectData.days
             toDay.value = selectData.toDay
+
+            startUnixTime = selectData.startUnixTime
+            endUnixTime = selectData.endUnixTime
         }
     }
 
@@ -66,15 +69,15 @@ class RecordFragment(
 
     private fun initListener(){
         binding.layoutFromValue.setOnClickListener {
-            showDateSelect()
+            showDateSelect(viewModel.startUnixTime,viewModel.endUnixTime)
         }
 
         binding.layoutDaysValue.setOnClickListener {
-            showDateSelect()
+            showDateSelect(viewModel.startUnixTime,viewModel.endUnixTime)
         }
 
         binding.layoutToValue.setOnClickListener {
-            showDateSelect()
+            showDateSelect(viewModel.startUnixTime,viewModel.endUnixTime)
         }
     }
 

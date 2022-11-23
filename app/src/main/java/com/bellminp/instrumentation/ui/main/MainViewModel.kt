@@ -33,13 +33,13 @@ class MainViewModel @Inject constructor(
     val setGaugesData: LiveData<GaugesData?> get() = _setGaugesData
 
     var fieldNum = 0
-    val selectData = SelectData()
+    var selectData = SelectData()
 
     fun getProcessLog() {
         viewModelScope.launch {
             remoteUseCase.getProcessLog(
                 localUseCase.getToken(),
-                if (localUseCase.getAdmin()) null else fieldNum,
+                fieldNum,
                 selectData.startUnixTime,
                 selectData.endUnixTime
             ).collect {

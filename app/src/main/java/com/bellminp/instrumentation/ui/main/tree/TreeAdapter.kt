@@ -19,7 +19,6 @@ class TreeAdapter(
     private val unSelectGauges: (() -> Unit)
 ) : BaseListAdapter<TreeModel>() {
 
-    var init = true
     private var selectNum: Int? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<TreeModel> {
@@ -59,7 +58,6 @@ class TreeAdapter(
                         val item = currentList[it.adapterPosition]
                         if (item is SitesList) {
                             item.checked = !item.checked
-                            item.textGray = item.checked
                             notifyItemChanged(it.adapterPosition)
 
                             if (item.checked) onItemClick(currentList[it.adapterPosition])
@@ -67,13 +65,7 @@ class TreeAdapter(
                         }
                     }
 
-                    if (init) {
-                        it.itemView.run {
-                            postDelayed({
-                                this.callOnClick()
-                            }, 100)
-                        }
-                    }
+
                 }
             }
 
@@ -90,7 +82,6 @@ class TreeAdapter(
                         val item = currentList[it.adapterPosition]
                         if (item is SectionsList) {
                             item.checked = !item.checked
-                            item.textGray = item.checked
                             notifyItemChanged(it.adapterPosition)
 
                             if (item.checked) onItemClick(currentList[it.adapterPosition])
@@ -98,13 +89,7 @@ class TreeAdapter(
                         }
                     }
 
-                    if (init) {
-                        it.itemView.run {
-                            postDelayed({
-                                this.callOnClick()
-                            }, 100)
-                        }
-                    }
+
                 }
             }
 
@@ -134,7 +119,6 @@ class TreeAdapter(
                         val item = currentList[it.adapterPosition]
                         if (item is GaugesList) {
                             item.checked = !item.checked
-                            item.textGray = item.checked
                             notifyItemChanged(it.adapterPosition)
 
                             if (item.checked) onItemClick(currentList[it.adapterPosition])
@@ -240,8 +224,6 @@ class TreeAdapter(
     fun addSections(items: List<SectionsList>) {
         val index = currentList.indexOfFirst { it is SitesList && it.num == items[0].siteNum }
         if (index != -1) {
-            currentList[index].haveItems()
-            notifyItemChanged(index)
 
             addAll(index + 1, items.apply {
                 this[this.size - 1].bottomViewVisible = false
@@ -253,12 +235,8 @@ class TreeAdapter(
     }
 
     fun addGauges(items: List<GaugesList>) {
-        init = false
-
         val index = currentList.indexOfFirst { it is SectionsList && it.num == items[0].sectionNum }
         if (index != -1) {
-            currentList[index].haveItems()
-            notifyItemChanged(index)
 
             addAll(index + 1, items.apply {
                 selectNum?.let { num ->
@@ -283,8 +261,6 @@ class TreeAdapter(
         val index =
             currentList.indexOfFirst { it is GaugesList && it.type == "group" && it.num == items[0].gaugegroupNum }
         if (index != -1) {
-            currentList[index].haveItems()
-            notifyItemChanged(index)
 
             addAll(index + 1, items.apply {
                 selectNum?.let { num ->
@@ -305,6 +281,31 @@ class TreeAdapter(
                     it.siteNum = (currentList[index] as GaugesList).siteNum
                 }
             })
+        }
+    }
+
+    fun addSectionsNone(num: Int) {
+        val index = currentList.indexOfFirst { it is SitesList && it.num == num }
+        if (index != -1) {
+            currentList[index].noneItem()
+            notifyItemChanged(index)
+        }
+    }
+
+    fun addGaugesNone(num: Int) {
+        val index = currentList.indexOfFirst { it is SectionsList && it.num == num }
+        if (index != -1) {
+            currentList[index].noneItem()
+            notifyItemChanged(index)
+        }
+    }
+
+    fun addGaugesGroupNone(num: Int) {
+        val index =
+            currentList.indexOfFirst { it is GaugesList && it.type == "group" && it.num == num }
+        if (index != -1) {
+            currentList[index].noneItem()
+            notifyItemChanged(index)
         }
     }
 

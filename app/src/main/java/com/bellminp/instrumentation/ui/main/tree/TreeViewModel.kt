@@ -36,20 +36,64 @@ class TreeViewModel @Inject constructor(
     private val _addGaugesGroup = SingleLiveEvent<List<GaugesGroupList>>()
     val addGaugesGroup: LiveData<List<GaugesGroupList>> get() = _addGaugesGroup
 
-    fun getSites(fieldNum : Int, init : Boolean){
+    private val _addSectionsNone = SingleLiveEvent<Int>()
+    val addSectionsNone: LiveData<Int> get() = _addSectionsNone
+
+    private val _addGaugesNone = SingleLiveEvent<Int>()
+    val addGaugesNone: LiveData<Int> get() = _addGaugesNone
+
+    private val _addGaugesGroupNone = SingleLiveEvent<Int>()
+    val addGaugesGroupNone: LiveData<Int> get() = _addGaugesGroupNone
+
+    fun initSearch(fieldNum : Int){
         viewModelScope.launch {
             remoteUseCase.getSites(localUseCase.getToken(), fieldNum).collect {
                 if(it.status == ApiResult.Status.SUCCESS){
                     it.data?.list?.let { data ->
                         if(data.isNotEmpty()){
-                            if(init){
-                                _addField.value = Field(
-                                    data[0].fieldNum,
-                                    data[0].fieldName,
-                                    true
-                                )
-                            }
+                            _addField.value = Field(
+                                data[0].fieldNum,
+                                data[0].fieldName,
+                                true
+                            )
+                            _addSites.value = data.mapToPresentation(true)
 
+                            for(i in data.mapToPresentation()){
+                                remoteUseCase.getSections(localUseCase.getToken(), i.num).collect {itSection->
+                                    if(itSection.status == ApiResult.Status.SUCCESS){
+                                        itSection.data?.list?.let { dataSection ->
+                                            if(dataSection.isNotEmpty()){
+                                                _addSections.value = dataSection.mapToPresentation(true)
+
+                                                for(j in dataSection.mapToPresentation()){
+                                                    remoteUseCase.getGauges(localUseCase.getToken(), j.num).collect {itGauges->
+                                                        if(itGauges.status == ApiResult.Status.SUCCESS){
+                                                            itGauges.data?.list?.let { dataGauges ->
+                                                                if(dataGauges.isNotEmpty()) _addGauges.value = dataGauges.mapToPresentation(j.num)
+                                                                else _addGaugesNone.value = j.num
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else _addSectionsNone.value = i.num
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    fun getSites(fieldNum : Int){
+        viewModelScope.launch {
+            remoteUseCase.getSites(localUseCase.getToken(), fieldNum).collect {
+                if(it.status == ApiResult.Status.SUCCESS){
+                    it.data?.list?.let { data ->
+                        if(data.isNotEmpty()){
                             _addSites.value = data.mapToPresentation()
                         }
                     }
@@ -63,9 +107,8 @@ class TreeViewModel @Inject constructor(
             remoteUseCase.getSections(localUseCase.getToken(), sitesNum).collect {
                 if(it.status == ApiResult.Status.SUCCESS){
                     it.data?.list?.let { data ->
-                        if(data.isNotEmpty()){
-                            _addSections.value = data.mapToPresentation()
-                        }
+                        if(data.isNotEmpty()) _addSections.value = data.mapToPresentation()
+                        else _addSectionsNone.value = sitesNum
                     }
                 }
             }
@@ -77,9 +120,8 @@ class TreeViewModel @Inject constructor(
             remoteUseCase.getGauges(localUseCase.getToken(), sectionsNum).collect {
                 if(it.status == ApiResult.Status.SUCCESS){
                     it.data?.list?.let { data ->
-                        if(data.isNotEmpty()){
-                            _addGauges.value = data.mapToPresentation(sectionsNum)
-                        }
+                        if(data.isNotEmpty()) _addGauges.value = data.mapToPresentation(sectionsNum)
+                        else _addGaugesNone.value = sectionsNum
                     }
                 }
             }
@@ -91,9 +133,8 @@ class TreeViewModel @Inject constructor(
             remoteUseCase.getGaugesGroup(localUseCase.getToken(), gaugesNum).collect {
                 if(it.status == ApiResult.Status.SUCCESS){
                     it.data?.list?.let { data ->
-                        if(data.isNotEmpty()){
-                            _addGaugesGroup.value = it.data!!.mapToPresentation()
-                        }
+                        if(data.isNotEmpty()) _addGaugesGroup.value = it.data!!.mapToPresentation()
+                        else _addGaugesNone.value = gaugesNum
                     }
                 }
             }

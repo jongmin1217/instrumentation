@@ -7,10 +7,8 @@ import com.bellminp.common.timberMsg
 import com.bellminp.instrumentation.R
 import com.bellminp.instrumentation.databinding.FragmentGraphBinding
 import com.bellminp.instrumentation.mapper.dataToGraph
-import com.bellminp.instrumentation.model.GaugesData
-import com.bellminp.instrumentation.model.GaugesDetail
-import com.bellminp.instrumentation.model.GraphType1
-import com.bellminp.instrumentation.model.SelectData
+import com.bellminp.instrumentation.mapper.dataToGraph3
+import com.bellminp.instrumentation.model.*
 import com.bellminp.instrumentation.ui.base.BaseFragment
 import com.bellminp.instrumentation.ui.main.tree.TreeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,15 +39,19 @@ class GraphFragment(
     fun settingGraphData(data : GaugesData?){
         viewModel.gaugesData.value = data
 
-        if(data is GaugesDetail){
-            val graphData = data.dataToGraph()
-
-            if(graphData.isNotEmpty()){
-                val titleData = graphData[0]
-                if(titleData is GraphType1) binding.tvName.text = String.format("%s [%s]",titleData.managenum,titleData.name)
+        when(data){
+            is GaugesDetail -> adapter.submitList(data.dataToGraph())
+            is GaugesGroupDetail -> {
+                when(data.chartType){
+                    2 -> adapter.submitList(data.dataToGraph())
+                    3 -> {
+                        timberMsg(data.dataToGraph3())
+                        adapter.submitList(data.dataToGraph3())
+                    }
+                }
             }
-            adapter.submitList(graphData)
         }
+
     }
 
     fun setSelectData(selectData : SelectData){
@@ -59,6 +61,9 @@ class GraphFragment(
             toDay.value = selectData.toDay
             selectSections.value = selectData.selectSections
             selectGauges.value = selectData.selectGauges
+
+            startUnixTime = selectData.startUnixTime
+            endUnixTime = selectData.endUnixTime
         }
     }
 
@@ -72,15 +77,15 @@ class GraphFragment(
 
     private fun initListener(){
         binding.layoutFromValue.setOnClickListener {
-            showDateSelect()
+            showDateSelect(viewModel.startUnixTime,viewModel.endUnixTime)
         }
 
         binding.layoutDaysValue.setOnClickListener {
-            showDateSelect()
+            showDateSelect(viewModel.startUnixTime,viewModel.endUnixTime)
         }
 
         binding.layoutToValue.setOnClickListener {
-            showDateSelect()
+            showDateSelect(viewModel.startUnixTime,viewModel.endUnixTime)
         }
     }
 

@@ -12,7 +12,8 @@ data class Field(
     override fun getGaugesNum() = 0
     override fun getGaugesType() = ""
     override fun getGroupNum() = num
-    override fun haveItems() {}
+    override fun noneItem() {}
+    override fun getGaugesTime(): Long? = null
 }
 
 data class SitesList(
@@ -30,7 +31,8 @@ data class SitesList(
     override fun getGaugesNum() = 0
     override fun getGaugesType() = ""
     override fun getGroupNum() = num
-    override fun haveItems() {textGray = false}
+    override fun noneItem() {textGray = true}
+    override fun getGaugesTime(): Long? = null
 }
 
 data class SectionsList(
@@ -48,7 +50,8 @@ data class SectionsList(
     override fun getGaugesNum() = 0
     override fun getGaugesType() = ""
     override fun getGroupNum() = num
-    override fun haveItems() {textGray = false}
+    override fun noneItem() {textGray = true}
+    override fun getGaugesTime(): Long? = null
 }
 
 data class GaugesList(
@@ -68,7 +71,8 @@ data class GaugesList(
     var sitesLineVisible : Boolean = true,
     var sectionsLineVisible : Boolean = true,
     var siteNum : Int = 0,
-    var textGray : Boolean = false
+    var textGray : Boolean = false,
+    val time : Long? = null
 ) : TreeModel{
     fun getGroup() = type == "group"
     override fun getSectionsNum() = sectionNum
@@ -79,7 +83,8 @@ data class GaugesList(
     override fun getGaugesNum() = num
     override fun getGaugesType() = type
     override fun getGroupNum() = num
-    override fun haveItems() {textGray = false}
+    override fun noneItem() {textGray = true}
+    override fun getGaugesTime() = time
 }
 
 data class GaugesGroupList(
@@ -97,7 +102,8 @@ data class GaugesGroupList(
     var bottomViewVisible : Boolean = true,
     var sitesLineVisible : Boolean = true,
     var sectionsLineVisible : Boolean = true,
-    var gaugesLineVisible : Boolean = true
+    var gaugesLineVisible : Boolean = true,
+    val time : Long? = null
 ) : TreeModel{
     override fun getSectionsNum() = sectionNum
     override fun getGaugesName() : String {
@@ -107,7 +113,8 @@ data class GaugesGroupList(
     override fun getGaugesNum() = num
     override fun getGaugesType() = type
     override fun getGroupNum() = gaugegroupNum
-    override fun haveItems() {}
+    override fun noneItem() {}
+    override fun getGaugesTime() = time
 }
 
 data class GaugesTypeList(
@@ -124,5 +131,6 @@ interface TreeModel{
     fun getGaugesNum() : Int
     fun getGaugesType() : String
     fun getGroupNum() : Int
-    fun haveItems()
+    fun noneItem()
+    fun getGaugesTime() : Long?
 }

@@ -12,6 +12,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 fun <T : Any?> MutableLiveData<T>.default(initialValue: T?) = apply { setValue(initialValue) }
 
@@ -54,8 +55,8 @@ fun getUnixTime(date: String, fromDay: Boolean): Long {
 }
 
 @SuppressLint("SimpleDateFormat")
-fun graphXValue(value: Float): String {
-    return SimpleDateFormat("yyyy/MM/dd HH:mm").format(value)
+fun graphLegendValue(value: Long): String {
+    return SimpleDateFormat("MM/dd HH:mm").format(value)
 }
 
 fun getColorType(value: Double?, gaugesDetailList: GaugesDetailList) : Int {
@@ -130,3 +131,5 @@ fun getGraphColor(index : Int) : Int {
         else -> Color.WHITE
     }
 }
+
+fun roundOff(value : Double) = (value * 1000).roundToInt().toDouble()/1000

@@ -60,7 +60,9 @@ ext {
 
             adaptivetablelayout : '1.2.1',
 
-            MPAndroidChart : '3.1.0'
+            MPAndroidChart : '3.1.0',
+
+            flexbox : '2.0.1'
     ]
 
     deps = [
@@ -100,7 +102,10 @@ ext {
 
             calendar_view : "com.applandeo:material-calendar-view:$versions.calendar_view",
 
-            MPAndroidChart : "com.github.PhilJay:MPAndroidChart:v$versions.MPAndroidChart"
+            MPAndroidChart : "com.github.PhilJay:MPAndroidChart:v$versions.MPAndroidChart",
+
+            flexbox : "com.google.android:flexbox:$versions.flexbox"
+
     ]
 
     common = [

@@ -8,6 +8,6 @@ class DateAxisValueFormat : IndexAxisValueFormatter() {
 
     @SuppressLint("SimpleDateFormat")
     override fun getFormattedValue(value: Float): String {
-        return SimpleDateFormat("yyyy/MM/dd\nHH:mm").format(value)
+        return SimpleDateFormat("MM/dd HH:mm").format(value)
     }
 }
