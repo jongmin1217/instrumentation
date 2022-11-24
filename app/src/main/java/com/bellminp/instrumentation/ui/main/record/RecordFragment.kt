@@ -7,20 +7,30 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.bellminp.instrumentation.R
 import com.bellminp.instrumentation.databinding.FragmentRecordBinding
 import com.bellminp.instrumentation.mapper.mapToCellData
+import com.bellminp.instrumentation.model.GaugesList
 import com.bellminp.instrumentation.model.RecordData
 import com.bellminp.instrumentation.model.SelectData
 import com.bellminp.instrumentation.ui.base.BaseFragment
+import com.bellminp.instrumentation.utils.ONE_DAY
+import com.bellminp.instrumentation.utils.convertTimestampToDateTerm
+import com.bellminp.instrumentation.utils.convertTimestampToDateText
+import com.bellminp.instrumentation.utils.getUnixTime
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RecordFragment(
     private val selectData : SelectData,
     private val recordList : List<RecordData>?,
-    private val selectedData : ((date : SelectData) -> Unit)
+    private val selectedData : ((date : SelectData) -> Unit),
+    private val clickRecord : ((date : SelectData) -> Unit)
 ) : BaseFragment<FragmentRecordBinding, RecordViewModel>(R.layout.fragment_record) {
     override val viewModel by activityViewModels<RecordViewModel>()
 
-    private val adapter = RecordListAdapter()
+    private val adapter = RecordListAdapter{
+        it.cellTableData?.let { data ->
+            viewModel.getGaugesName(data)
+        }
+    }
 
     override fun setupBinding() {
         binding.vm = viewModel
@@ -33,6 +43,16 @@ class RecordFragment(
         initListener()
         initAdapter()
         settingRecordList(recordList)
+    }
+
+    override fun setupObserver() {
+        super.setupObserver()
+
+        with(viewModel){
+            setSelectData.observe(viewLifecycleOwner){
+                clickRecord(it)
+            }
+        }
     }
 
     fun setSelectData(selectData : SelectData){

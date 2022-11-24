@@ -1,6 +1,7 @@
 package com.bellminp.instrumentation.model
 
 import com.bellminp.common.timberMsg
+import com.github.mikephil.charting.data.Entry
 import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
@@ -314,7 +315,14 @@ data class GraphType3(
         }
 
         val valueList = list.map { it.vpos }
-        return Collections.min(valueList)
+        return try {
+            val distinctList = valueList.distinct()
+            distinctList.sortedBy { it }
+            val minValue = Collections.min(distinctList) + (distinctList[0] - distinctList[1])
+            minValue
+        }catch (e: Exception){
+            Collections.min(valueList)
+        }
     }
 
     fun getVpos(): List<Double> {

@@ -150,4 +150,8 @@ class TreeFragment(
             )
         )
     }
+
+    fun toRecord(num : Int){
+        treeAdapter.toRecord(num)
+    }
 }

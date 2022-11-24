@@ -461,3 +461,11 @@ fun DataGaugesGroupDetail.mapToDomain() : DomainGaugesGroupDetail{
     )
 }
 
+fun DomainAllGauges.mapToData() : DataAllGauges{
+    return DataAllGauges(this.num,this.name)
+}
+
+fun DataAllGauges.mapToDomain() : DomainAllGauges{
+    return DomainAllGauges(this.num,this.name)
+}
+

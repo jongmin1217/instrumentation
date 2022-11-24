@@ -23,7 +23,6 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             tools:listitem="@layout/item_vertical_table"
-            setRecordItems = "@{item}"
             />
 
 

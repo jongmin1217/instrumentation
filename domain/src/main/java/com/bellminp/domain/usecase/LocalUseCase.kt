@@ -1,5 +1,6 @@
 package com.bellminp.domain.usecase
 
+import com.bellminp.domain.model.DomainAllGauges
 import com.bellminp.domain.model.DomainAutoLogin
 import com.bellminp.domain.repository.LocalRepository
 import javax.inject.Inject
@@ -27,6 +28,12 @@ class LocalUseCase @Inject constructor(private val localRepository: LocalReposit
     }
 
     fun getAdmin() = localRepository.getAdmin()
+
+    fun setAllGauges(allGauges : DomainAllGauges){
+        localRepository.setDataAllGauges(allGauges)
+    }
+
+    fun getAllGauges(num : Int) = localRepository.getDataAllGauges(num)
 
     fun clear(){
         localRepository.clear()

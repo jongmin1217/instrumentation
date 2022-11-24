@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.bellminp.common.timberMsg
 import com.bellminp.domain.model.ApiResult
+import com.bellminp.domain.model.DomainAllGauges
 import com.bellminp.domain.usecase.LocalUseCase
 import com.bellminp.domain.usecase.RemoteUseCase
 import com.bellminp.instrumentation.mapper.mapToPresentation
@@ -45,12 +46,12 @@ class TreeViewModel @Inject constructor(
     private val _addGaugesGroupNone = SingleLiveEvent<Int>()
     val addGaugesGroupNone: LiveData<Int> get() = _addGaugesGroupNone
 
-    fun initSearch(fieldNum : Int){
+    fun initSearch(fieldNum: Int) {
         viewModelScope.launch {
             remoteUseCase.getSites(localUseCase.getToken(), fieldNum).collect {
-                if(it.status == ApiResult.Status.SUCCESS){
+                if (it.status == ApiResult.Status.SUCCESS) {
                     it.data?.list?.let { data ->
-                        if(data.isNotEmpty()){
+                        if (data.isNotEmpty()) {
                             _addField.value = Field(
                                 data[0].fieldNum,
                                 data[0].fieldName,
@@ -58,28 +59,66 @@ class TreeViewModel @Inject constructor(
                             )
                             _addSites.value = data.mapToPresentation(true)
 
-                            for(i in data.mapToPresentation()){
-                                remoteUseCase.getSections(localUseCase.getToken(), i.num).collect {itSection->
-                                    if(itSection.status == ApiResult.Status.SUCCESS){
-                                        itSection.data?.list?.let { dataSection ->
-                                            if(dataSection.isNotEmpty()){
-                                                _addSections.value = dataSection.mapToPresentation(true)
+                            for (i in data.mapToPresentation()) {
+                                remoteUseCase.getSections(localUseCase.getToken(), i.num)
+                                    .collect { itSection ->
+                                        if (itSection.status == ApiResult.Status.SUCCESS) {
+                                            itSection.data?.list?.let { dataSection ->
+                                                if (dataSection.isNotEmpty()) {
+                                                    _addSections.value =
+                                                        dataSection.mapToPresentation(true)
 
-                                                for(j in dataSection.mapToPresentation()){
-                                                    remoteUseCase.getGauges(localUseCase.getToken(), j.num).collect {itGauges->
-                                                        if(itGauges.status == ApiResult.Status.SUCCESS){
-                                                            itGauges.data?.list?.let { dataGauges ->
-                                                                if(dataGauges.isNotEmpty()) _addGauges.value = dataGauges.mapToPresentation(j.num)
-                                                                else _addGaugesNone.value = j.num
+                                                    for (j in dataSection.mapToPresentation()) {
+                                                        remoteUseCase.getGauges(
+                                                            localUseCase.getToken(),
+                                                            j.num
+                                                        ).collect { itGauges ->
+                                                            if (itGauges.status == ApiResult.Status.SUCCESS) {
+                                                                itGauges.data?.list?.let { dataGauges ->
+                                                                    if (dataGauges.isNotEmpty()) {
+                                                                        _addGauges.value =
+                                                                            dataGauges.mapToPresentation(
+                                                                                j.num
+                                                                            )
+
+                                                                        for (k in dataGauges.mapToPresentation(j.num)) {
+                                                                            if (k.type == "gauges") {
+                                                                                localUseCase.setAllGauges(
+                                                                                    DomainAllGauges(
+                                                                                        k.num.toString(),
+                                                                                        "${j.name} : ${k.name} [${k.managenum}]"
+                                                                                    )
+                                                                                )
+                                                                            } else {
+                                                                                remoteUseCase.getGaugesGroup(
+                                                                                    localUseCase.getToken(),
+                                                                                    k.num
+                                                                                ).collect { itGaugesGroup ->
+                                                                                        if (itGaugesGroup.status == ApiResult.Status.SUCCESS) {
+                                                                                            itGaugesGroup.data?.list?.let { dataGaugesGroup ->
+                                                                                                for (p in dataGaugesGroup) {
+                                                                                                    localUseCase.setAllGauges(
+                                                                                                        DomainAllGauges(
+                                                                                                            p.num.toString(),
+                                                                                                            "${k.name} : ${p.name} [${p.managenum}]"
+                                                                                                        )
+                                                                                                    )
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                            }
+                                                                        }
+                                                                    } else _addGaugesNone.value =
+                                                                        j.num
+                                                                }
                                                             }
                                                         }
                                                     }
-                                                }
+                                                } else _addSectionsNone.value = i.num
                                             }
-                                            else _addSectionsNone.value = i.num
                                         }
                                     }
-                                }
                             }
                         }
                     }
@@ -88,12 +127,12 @@ class TreeViewModel @Inject constructor(
         }
     }
 
-    fun getSites(fieldNum : Int){
+    fun getSites(fieldNum: Int) {
         viewModelScope.launch {
             remoteUseCase.getSites(localUseCase.getToken(), fieldNum).collect {
-                if(it.status == ApiResult.Status.SUCCESS){
+                if (it.status == ApiResult.Status.SUCCESS) {
                     it.data?.list?.let { data ->
-                        if(data.isNotEmpty()){
+                        if (data.isNotEmpty()) {
                             _addSites.value = data.mapToPresentation()
                         }
                     }
@@ -102,12 +141,12 @@ class TreeViewModel @Inject constructor(
         }
     }
 
-    fun getSections(sitesNum : Int){
+    fun getSections(sitesNum: Int) {
         viewModelScope.launch {
             remoteUseCase.getSections(localUseCase.getToken(), sitesNum).collect {
-                if(it.status == ApiResult.Status.SUCCESS){
+                if (it.status == ApiResult.Status.SUCCESS) {
                     it.data?.list?.let { data ->
-                        if(data.isNotEmpty()) _addSections.value = data.mapToPresentation()
+                        if (data.isNotEmpty()) _addSections.value = data.mapToPresentation()
                         else _addSectionsNone.value = sitesNum
                     }
                 }
@@ -115,12 +154,13 @@ class TreeViewModel @Inject constructor(
         }
     }
 
-    fun getGauges(sectionsNum : Int){
+    fun getGauges(sectionsNum: Int) {
         viewModelScope.launch {
             remoteUseCase.getGauges(localUseCase.getToken(), sectionsNum).collect {
-                if(it.status == ApiResult.Status.SUCCESS){
+                if (it.status == ApiResult.Status.SUCCESS) {
                     it.data?.list?.let { data ->
-                        if(data.isNotEmpty()) _addGauges.value = data.mapToPresentation(sectionsNum)
+                        if (data.isNotEmpty()) _addGauges.value =
+                            data.mapToPresentation(sectionsNum)
                         else _addGaugesNone.value = sectionsNum
                     }
                 }
@@ -128,12 +168,12 @@ class TreeViewModel @Inject constructor(
         }
     }
 
-    fun getGaugesGroup(gaugesNum : Int){
+    fun getGaugesGroup(gaugesNum: Int) {
         viewModelScope.launch {
             remoteUseCase.getGaugesGroup(localUseCase.getToken(), gaugesNum).collect {
-                if(it.status == ApiResult.Status.SUCCESS){
+                if (it.status == ApiResult.Status.SUCCESS) {
                     it.data?.list?.let { data ->
-                        if(data.isNotEmpty()) _addGaugesGroup.value = it.data!!.mapToPresentation()
+                        if (data.isNotEmpty()) _addGaugesGroup.value = it.data!!.mapToPresentation()
                         else _addGaugesNone.value = gaugesNum
                     }
                 }
@@ -141,7 +181,7 @@ class TreeViewModel @Inject constructor(
         }
     }
 
-    fun logout(){
+    fun logout() {
         localUseCase.clear()
         goLogin()
     }

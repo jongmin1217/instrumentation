@@ -372,7 +372,7 @@ class GraphAdapter : BaseListAdapter<GraphData>() {
                         setDrawGridLines(false)
                         textSize = 12f
 
-                        labelCount = item.getVpos().size - 1
+                        labelCount = item.getVpos().size
                         axisMinimum = item.getMinVpos().toFloat()
                         axisMaximum = item.getMaxVpos().toFloat()
                         setDrawGridLines(true)
@@ -448,6 +448,12 @@ class GraphAdapter : BaseListAdapter<GraphData>() {
                     var i = 0
                     item.list.forEach {
                         val entryList = ArrayList<Entry>()
+
+                        try{
+                            val initVpos = it.list[0].vpos + (it.list[0].vpos - it.list[1].vpos)
+                            entryList.add(Entry(initVpos.toFloat(), 0f))
+
+                        }catch (e : Exception){}
 
                         it.list.forEach { data ->
                             entryList.add(Entry(data.vpos.toFloat(), data.value?.toFloat() ?: 0F))

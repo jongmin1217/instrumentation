@@ -11,7 +11,9 @@ import com.bellminp.instrumentation.ui.base.BaseListAdapter
 import com.bellminp.instrumentation.ui.base.BaseViewHolder
 import kotlinx.coroutines.delay
 
-class VerticalAdapter : BaseListAdapter<CellData>() {
+class VerticalAdapter(
+    private val onItemClick : ((item : CellData) -> Unit)? = null
+) : BaseListAdapter<CellData>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<CellData> {
         return HorizontalHolder(
@@ -20,7 +22,13 @@ class VerticalAdapter : BaseListAdapter<CellData>() {
                 parent,
                 false
             )
-        )
+        ).also {
+            it.itemView.setOnClickListener { _->
+                onItemClick?.let { click ->
+                    currentList.getOrNull(it.adapterPosition)?.let(click)
+                }
+            }
+        }
     }
 
     class HorizontalHolder(

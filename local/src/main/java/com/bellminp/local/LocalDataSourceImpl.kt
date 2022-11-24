@@ -1,6 +1,7 @@
 package com.bellminp.local
 
 import com.bellminp.data.local.LocalDataSource
+import com.bellminp.data.model.DataAllGauges
 import com.bellminp.data.model.DataAutoLogin
 import com.bellminp.local.prefs.PrefsHelper
 import javax.inject.Inject
@@ -26,6 +27,12 @@ class LocalDataSourceImpl@Inject constructor(
     }
 
     override fun getAdmin() = prefsHelper.admin
+
+    override fun setDataAllGauges(dataAllGauges : DataAllGauges) {
+        prefsHelper.setAllGauges(dataAllGauges)
+    }
+
+    override fun getDataAllGauges(num : Int) = prefsHelper.getAllGauges(num)
 
     override fun clear() {
         prefsHelper.clear()

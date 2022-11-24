@@ -52,7 +52,7 @@ fun AutoLogin.mapToDomain(): DomainAutoLogin {
     )
 }
 
-fun List<DomainSitesList>.mapToPresentation(checked : Boolean = false): List<SitesList> {
+fun List<DomainSitesList>.mapToPresentation(checked: Boolean = false): List<SitesList> {
     return this.map {
         SitesList(
             it.num,
@@ -66,7 +66,7 @@ fun List<DomainSitesList>.mapToPresentation(checked : Boolean = false): List<Sit
 }
 
 @JvmName("mapToPresentationDomainSectionsList")
-fun List<DomainSectionsList>.mapToPresentation(checked : Boolean = false): List<SectionsList> {
+fun List<DomainSectionsList>.mapToPresentation(checked: Boolean = false): List<SectionsList> {
     return this.map {
         SectionsList(
             it.num,
@@ -165,15 +165,28 @@ fun List<RecordData>.mapToCellData(): List<RecordListData> {
         val timeItem = this.map {
             CellData(
                 if (it.title) "검사일시" else graphLegendValue(it.time),
-                it.title
+                it.title,
+                cellTableData = if (it.title) null else CellTableData(it.time, it.gaugeNum)
             )
         }
         list.add(RecordListData(timeItem))
 
-        val gaugesNameItem = this.map { CellData(it.gaugeName, it.title) }
+        val gaugesNameItem = this.map {
+            CellData(
+                it.gaugeName,
+                it.title,
+                cellTableData = if (it.title) null else CellTableData(it.time, it.gaugeNum)
+            )
+        }
         list.add(RecordListData(gaugesNameItem))
 
-        val msgItem = this.map { CellData(it.msg, it.title) }
+        val msgItem = this.map {
+            CellData(
+                it.msg,
+                it.title,
+                cellTableData = if (it.title) null else CellTableData(it.time, it.gaugeNum)
+            )
+        }
         list.add(RecordListData(msgItem))
     }
 
@@ -306,11 +319,11 @@ fun GaugesDetail.dataToTableData(): List<TableData> {
             this.chartList?.let { chartList ->
                 chartList.forEach {
                     val value = when (i) {
-                        0 -> roundOff(it.expM1?:0.0)
-                        1 -> roundOff(it.expM2?:0.0)
-                        2 -> roundOff(it.expM3?:0.0)
-                        3 -> roundOff(it.expM4?:0.0)
-                        else -> roundOff(it.expT?:0.0)
+                        0 -> roundOff(it.expM1 ?: 0.0)
+                        1 -> roundOff(it.expM2 ?: 0.0)
+                        2 -> roundOff(it.expM3 ?: 0.0)
+                        3 -> roundOff(it.expM4 ?: 0.0)
+                        else -> roundOff(it.expT ?: 0.0)
                     }
 
                     gaugesList.add(
@@ -391,14 +404,14 @@ fun GaugesGroupDetail.dataToTableData(): List<TableData> {
                         if (i % 2 == 0) {
                             cellData.add(
                                 CellData(
-                                    roundOff(data.x?:data.expM1?:0.0).toString(), false,
+                                    roundOff(data.x ?: data.expM1 ?: 0.0).toString(), false,
                                     getColorType(data.x ?: data.expM1, gaugesDetailList[0])
                                 )
                             )
                         } else {
                             cellData.add(
                                 CellData(
-                                    roundOff(data.y?:data.expM2?:0.0).toString(),
+                                    roundOff(data.y ?: data.expM2 ?: 0.0).toString(),
                                     false,
                                     getColorType(data.y ?: data.expM2, gaugesDetailList[1]),
                                     data.expM2 != null
@@ -408,7 +421,7 @@ fun GaugesGroupDetail.dataToTableData(): List<TableData> {
                     } else {
                         cellData.add(
                             CellData(
-                                roundOff(data.x?:data.expM1?:0.0).toString(), false,
+                                roundOff(data.x ?: data.expM1 ?: 0.0).toString(), false,
                                 getColorType(data.x ?: data.expM1, gaugesDetailList[0])
                             )
                         )
@@ -456,7 +469,7 @@ fun GaugesDetail.dataToGraph(): List<GraphData> {
             }
 
 
-            items.add(GraphGroupPointType1(this.list?.get(i)?.reunit?:"",groupItems))
+            items.add(GraphGroupPointType1(this.list?.get(i)?.reunit ?: "", groupItems))
         }
 
 
@@ -465,7 +478,7 @@ fun GaugesDetail.dataToGraph(): List<GraphData> {
             list.add(
                 GraphType1(
                     it.managenum,
-                    this.list?.get(0)?.reunit?:"",
+                    this.list?.get(0)?.reunit ?: "",
                     it.hi1enable,
                     it.hi2enable,
                     it.hi3enable,
@@ -495,7 +508,7 @@ fun GaugesDetail.dataToGraph(): List<GraphData> {
                 val multiSize = this.chartList?.size ?: 0
 
                 for (j in 0 until multiSize) {
-                    this.chartList?.sortedBy {chart -> chart.time }?.get(j)?.let { multiData ->
+                    this.chartList?.sortedBy { chart -> chart.time }?.get(j)?.let { multiData ->
                         multiItems.add(
                             GraphPointType1(
                                 multiData.time,
@@ -533,7 +546,7 @@ fun GaugesDetail.dataToGraph(): List<GraphData> {
                         it.autorange,
                         it.minrange,
                         it.maxrange,
-                        listOf(GraphGroupPointType1(it.reunit,multiItems))
+                        listOf(GraphGroupPointType1(it.reunit, multiItems))
                     )
                 )
             }
@@ -543,23 +556,28 @@ fun GaugesDetail.dataToGraph(): List<GraphData> {
     return list
 }
 
-fun GaugesGroupDetail.dataToGraph() : List<GraphData>{
+fun GaugesGroupDetail.dataToGraph(): List<GraphData> {
     val list = ArrayList<GraphType2>()
 
-    val size = if(this.chartList?.get(0)?.list?.get(0)?.expM2 == null) 1 else 2
+    val size = if (this.chartList?.get(0)?.list?.get(0)?.expM2 == null) 1 else 2
 
-    for(i in 0 until size){
+    for (i in 0 until size) {
         this.list?.get(i)?.let {
             val itemsList = ArrayList<GraphGroupPointType2>()
 
             this.chartList?.forEach { chartList ->
                 val itemList = ArrayList<GraphPointType2>()
 
-                for(j in chartList.list.indices){
-                    itemList.add(GraphPointType2(this.vposList?.get(j)?:0.0,if(i == 0) chartList.list[j].expM1 else chartList.list[j].expM2))
+                for (j in chartList.list.indices) {
+                    itemList.add(
+                        GraphPointType2(
+                            this.vposList?.get(j) ?: 0.0,
+                            if (i == 0) chartList.list[j].expM1 else chartList.list[j].expM2
+                        )
+                    )
                 }
 
-                itemsList.add(GraphGroupPointType2(chartList.time,itemList))
+                itemsList.add(GraphGroupPointType2(chartList.time, itemList))
             }
 
             list.add(
@@ -592,23 +610,28 @@ fun GaugesGroupDetail.dataToGraph() : List<GraphData>{
     return list
 }
 
-fun GaugesGroupDetail.dataToGraph3() : List<GraphData>{
+fun GaugesGroupDetail.dataToGraph3(): List<GraphData> {
     val list = ArrayList<GraphType3>()
 
-    val size = if(this.chartList?.get(0)?.list?.get(0)?.expM2 == null) 1 else 2
+    val size = if (this.chartList?.get(0)?.list?.get(0)?.expM2 == null) 1 else 2
 
-    for(i in 0 until size){
+    for (i in 0 until size) {
         this.list?.get(i)?.let {
             val itemsList = ArrayList<GraphGroupPointType3>()
 
             this.chartList?.forEach { chartList ->
                 val itemList = ArrayList<GraphPointType3>()
 
-                for(j in chartList.list.indices){
-                    itemList.add(GraphPointType3(this.vposList?.get(j)?:0.0,if(i == 0) chartList.list[j].expM1 else chartList.list[j].expM2))
+                for (j in chartList.list.indices) {
+                    itemList.add(
+                        GraphPointType3(
+                            this.vposList?.get(j) ?: 0.0,
+                            if (i == 0) chartList.list[j].expM1 else chartList.list[j].expM2
+                        )
+                    )
                 }
 
-                itemsList.add(GraphGroupPointType3(chartList.time,itemList))
+                itemsList.add(GraphGroupPointType3(chartList.time, itemList))
             }
 
             list.add(

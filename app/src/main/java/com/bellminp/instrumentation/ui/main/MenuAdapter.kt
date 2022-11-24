@@ -34,6 +34,11 @@ class MenuAdapter(
         }
     }
 
+    fun moveMenu(position: Int){
+        select(position,position)
+        onItemClick(currentList[position])
+    }
+
     private fun select(id : Int, position : Int){
         currentList[position].checked = true
         notifyItemChanged(position)

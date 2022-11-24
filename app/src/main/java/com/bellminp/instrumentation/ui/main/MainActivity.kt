@@ -26,41 +26,20 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.activity_main) {
 
     override val viewModel: MainViewModel by viewModels()
-    private lateinit var treeFragment :TreeFragment
-    private var graphFragment : GraphFragment? = null
-    private var tableFragment : TableFragment? = null
-    private var recordFragment : RecordFragment? = null
+    private lateinit var treeFragment: TreeFragment
+    private var graphFragment: GraphFragment? = null
+    private var tableFragment: TableFragment? = null
+    private var recordFragment: RecordFragment? = null
 
-    private var recordList : List<RecordData>? = null
-    private var gaugesData : GaugesData? = null
+    private var recordList: List<RecordData>? = null
+    private var gaugesData: GaugesData? = null
 
     private val menuAdapter = MenuAdapter {
-        when(it.id){
-            0 -> changeFragment(treeFragment)
-
-            1 -> {
-                if(tableFragment != null) changeFragment(tableFragment!!)
-                else {
-                    tableFragment = TableFragment(viewModel.selectData,gaugesData){ data -> editDateSelectData(data) }
-                    addFragment(tableFragment!!)
-                }
-            }
-
-            2 -> {
-                if(graphFragment != null) changeFragment(graphFragment!!)
-                else {
-                    graphFragment = GraphFragment(viewModel.selectData,gaugesData){ data -> editDateSelectData(data) }
-                    addFragment(graphFragment!!)
-                }
-            }
-
-            3 -> {
-                if(recordFragment != null) changeFragment(recordFragment!!)
-                else {
-                    recordFragment = RecordFragment(viewModel.selectData,recordList){ data -> editDateSelectData(data) }
-                    addFragment(recordFragment!!)
-                }
-            }
+        when (it.id) {
+            0 -> goTree()
+            1 -> goTable()
+            2 -> goGraph()
+            3 -> goRecord()
         }
     }
 
@@ -76,24 +55,65 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         initAdapter()
 
 
-        with(viewModel){
+        with(viewModel) {
             fieldNum = num
             getProcessLog()
         }
     }
 
+    private fun goTree(){
+        changeFragment(treeFragment)
+    }
+
+    private fun goTable(){
+        if (tableFragment != null) changeFragment(tableFragment!!)
+        else {
+            tableFragment = TableFragment(
+                viewModel.selectData,
+                gaugesData
+            ) { data -> editDateSelectData(data) }
+            addFragment(tableFragment!!)
+        }
+    }
+
+    private fun goGraph(){
+        if (graphFragment != null) changeFragment(graphFragment!!)
+        else {
+            graphFragment = GraphFragment(
+                viewModel.selectData,
+                gaugesData
+            ) { data -> editDateSelectData(data) }
+            addFragment(graphFragment!!)
+        }
+    }
+
+    private fun goRecord(){
+        if (recordFragment != null) changeFragment(recordFragment!!)
+        else {
+            recordFragment = RecordFragment(
+                viewModel.selectData,
+                recordList,
+                { data -> editDateSelectData(data) },
+                { data ->
+                    editGaugesSelectData(data)
+                    menuAdapter.moveMenu(1)
+                    treeFragment.toRecord(data.gaugesNum)
+                })
+            addFragment(recordFragment!!)
+        }
+    }
 
 
     override fun setupObserver() {
         super.setupObserver()
 
-        with(viewModel){
+        with(viewModel) {
             setRecordList.observe(this@MainActivity) {
                 recordList = it
                 recordFragment?.settingRecordList(it)
             }
 
-            setGaugesData.observe(this@MainActivity){
+            setGaugesData.observe(this@MainActivity) {
                 gaugesData = it
                 tableFragment?.settingTableData(it)
                 graphFragment?.settingGraphData(it)
@@ -113,22 +133,24 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         )
     }
 
-    private fun initLayout(fieldNum : Int){
-        treeFragment = TreeFragment(fieldNum){ item ->
+    private fun initLayout(fieldNum: Int) {
+        treeFragment = TreeFragment(fieldNum) { item ->
             editGaugesSelectData(item)
+            menuAdapter.moveMenu(2)
         }
-        supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, treeFragment).commit()
+        supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, treeFragment)
+            .commit()
     }
 
-    private fun editGaugesSelectData(data : SelectData){
-        with(viewModel){
+    private fun editGaugesSelectData(data: SelectData) {
+        with(viewModel) {
             selectData = data
         }
         settingSelectData()
     }
 
-    private fun editDateSelectData(data : SelectData){
-        with(viewModel){
+    private fun editDateSelectData(data: SelectData) {
+        with(viewModel) {
             selectData.toDay = data.toDay
             selectData.fromDay = data.fromDay
             selectData.days = data.days
@@ -139,12 +161,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         settingSelectData()
     }
 
-    private fun settingSelectData(){
+    private fun settingSelectData() {
         tableFragment?.setSelectData(viewModel.selectData)
         graphFragment?.setSelectData(viewModel.selectData)
         recordFragment?.setSelectData(viewModel.selectData)
 
-        with(viewModel){
+        with(viewModel) {
             getProcessLog()
             getGaugesData()
         }
@@ -162,7 +184,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         for (fragment: Fragment in supportFragmentManager.fragments) {
             if (fragment.isVisible) {
                 supportFragmentManager.beginTransaction().hide(fragment).commit()
-                supportFragmentManager.beginTransaction().add(binding.frameLayout.id, newFragment).commit()
+                supportFragmentManager.beginTransaction().add(binding.frameLayout.id, newFragment)
+                    .commit()
             }
         }
     }

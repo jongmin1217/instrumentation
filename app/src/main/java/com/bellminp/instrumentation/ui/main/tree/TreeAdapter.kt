@@ -154,6 +154,25 @@ class TreeAdapter(
         }
     }
 
+    fun toRecord(num : Int){
+        val index = currentList.indexOfFirst { it is GaugesList && it.num == num}
+        if(index != -1){
+            val item = currentList[index]
+            if(item is GaugesList){
+                item.clicked = true
+                notifyItemChanged(index)
+                gaugesClick(num)
+
+            }
+        }else{
+            val clickedSize = (currentList.filter { (it is GaugesList && it.clicked) || (it is GaugesGroupList && it.clicked)}).size
+            for(i in 0 until clickedSize){
+                gaugesClick(num)
+            }
+        }
+        selectNum = num
+    }
+
     private fun gaugesClick(num: Int) {
         val index =
             currentList.indexOfFirst { (it is GaugesList && it.clicked && it.num != num) || (it is GaugesGroupList && it.clicked && it.num != num) }

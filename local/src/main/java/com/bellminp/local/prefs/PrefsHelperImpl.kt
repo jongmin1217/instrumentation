@@ -2,6 +2,7 @@ package com.bellminp.local.prefs
 
 import android.content.Context
 import androidx.core.content.edit
+import com.bellminp.data.model.DataAllGauges
 import com.bellminp.data.model.DataAutoLogin
 import com.bellminp.local.utils.*
 import javax.inject.Inject
@@ -39,6 +40,14 @@ class PrefsHelperImpl @Inject constructor(applicationContext: Context) : PrefsHe
                 putBoolean(ADMIN, value)
             }
         }
+
+    override fun getAllGauges(num: Int) = prefs.getString(num.toString(),null)?:""
+
+    override fun setAllGauges(data: DataAllGauges) {
+        prefs.edit {
+            putString(data.num,data.name)
+        }
+    }
 
     override fun clear(){
         prefs.edit{
