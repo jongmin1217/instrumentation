@@ -5,6 +5,8 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.3277777777777778" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.32314814814814813" />
+        <entry key="app/src/main/res/drawable/selector_date_text_color.xml" value="0.3824074074074074" />
+        <entry key="app/src/main/res/drawable/shape_calendar_header.xml" value="0.3824074074074074" />
         <entry key="app/src/main/res/drawable/shape_date_select.xml" value="0.39814814814814814" />
         <entry key="app/src/main/res/drawable/shape_dialog.xml" value="0.39444444444444443" />
         <entry key="app/src/main/res/drawable/shape_login_button.xml" value="0.3277777777777778" />
@@ -16,6 +18,7 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.29030797101449274" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.29030797101449274" />
+        <entry key="app/src/main/res/layout/dialog_date_select.xml" value="0.36231884057971014" />
         <entry key="app/src/main/res/layout/dialog_field_select.xml" value="0.29030797101449274" />
         <entry key="app/src/main/res/layout/fragment_graph.xml" value="0.28396739130434784" />
         <entry key="app/src/main/res/layout/fragment_record.xml" value="0.28396739130434784" />
@@ -29,6 +32,8 @@
         <entry key="app/src/main/res/layout/item_graph_type_1.xml" value="0.3754528985507246" />
         <entry key="app/src/main/res/layout/item_graph_type_2.xml" value="0.3713768115942029" />
         <entry key="app/src/main/res/layout/item_graph_type_3.xml" value="0.3713768115942029" />
+        <entry key="app/src/main/res/layout/item_graph_type_4.xml" value="0.36231884057971014" />
+        <entry key="app/src/main/res/layout/item_graph_type_5.xml" value="0.36231884057971014" />
         <entry key="app/src/main/res/layout/item_header.xml" value="0.3836050724637681" />
         <entry key="app/src/main/res/layout/item_horizontal_table.xml" value="0.67" />
         <entry key="app/src/main/res/layout/item_legend.xml" value="0.3713768115942029" />

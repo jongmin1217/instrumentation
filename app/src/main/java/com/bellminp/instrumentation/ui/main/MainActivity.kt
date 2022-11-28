@@ -71,7 +71,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
             tableFragment = TableFragment(
                 viewModel.selectData,
                 gaugesData
-            ) { data -> editDateSelectData(data) }
+            ) { type, text, time -> editDateSelectData(type, text, time) }
             addFragment(tableFragment!!)
         }
     }
@@ -82,7 +82,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
             graphFragment = GraphFragment(
                 viewModel.selectData,
                 gaugesData
-            ) { data -> editDateSelectData(data) }
+            ) { type, text, time -> editDateSelectData(type, text, time) }
             addFragment(graphFragment!!)
         }
     }
@@ -93,7 +93,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
             recordFragment = RecordFragment(
                 viewModel.selectData,
                 recordList,
-                { data -> editDateSelectData(data) },
+                { type, text, time -> editDateSelectData(type, text, time) },
                 { data ->
                     editGaugesSelectData(data)
                     menuAdapter.moveMenu(1)
@@ -136,7 +136,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
     private fun initLayout(fieldNum: Int) {
         treeFragment = TreeFragment(fieldNum) { item ->
             editGaugesSelectData(item)
-            menuAdapter.moveMenu(2)
+            if(item.gaugesNum != 0) menuAdapter.moveMenu(2)
         }
         supportFragmentManager.beginTransaction().replace(binding.frameLayout.id, treeFragment)
             .commit()
@@ -149,17 +149,19 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         settingSelectData()
     }
 
-    private fun editDateSelectData(data: SelectData) {
+    private fun editDateSelectData(type : Int, text : String, time : Long){
         with(viewModel) {
-            selectData.toDay = data.toDay
-            selectData.fromDay = data.fromDay
-            selectData.days = data.days
-            selectData.startUnixTime = data.startUnixTime
-            selectData.endUnixTime = data.endUnixTime
-
+            if(type == 0){
+                selectData.fromDay = text
+                selectData.startUnixTime = time
+            }else{
+                selectData.toDay = text
+                selectData.endUnixTime = time
+            }
         }
         settingSelectData()
     }
+
 
     private fun settingSelectData() {
         tableFragment?.setSelectData(viewModel.selectData)

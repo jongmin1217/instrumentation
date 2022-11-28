@@ -18,4 +18,9 @@
     <string name="auto_login">자동 로그인</string>
 
     <string formatted="false" name="graph_name">%d [%s]</string>
+    <string name="cancel">취소</string>
+    <string name="ok">확인</string>
+    <string name="date_center">></string>
+    <string name="start_date">시작일</string>
+    <string name="end_date">종료일</string>
 </resources>

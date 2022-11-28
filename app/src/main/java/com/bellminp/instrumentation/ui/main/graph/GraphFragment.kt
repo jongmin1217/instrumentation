@@ -6,18 +6,18 @@ import androidx.fragment.app.activityViewModels
 import com.bellminp.common.timberMsg
 import com.bellminp.instrumentation.R
 import com.bellminp.instrumentation.databinding.FragmentGraphBinding
-import com.bellminp.instrumentation.mapper.dataToGraph
-import com.bellminp.instrumentation.mapper.dataToGraph3
+import com.bellminp.instrumentation.mapper.*
 import com.bellminp.instrumentation.model.*
 import com.bellminp.instrumentation.ui.base.BaseFragment
 import com.bellminp.instrumentation.ui.main.tree.TreeViewModel
+import com.bellminp.instrumentation.utils.getUnixTime
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class GraphFragment(
     private val selectData : SelectData,
     private val gaugesData: GaugesData?,
-    private val selectedData : ((date : SelectData) -> Unit)
+    private val selectedData : ((type: Int, text: String, time: Long) -> Unit)
 ) : BaseFragment<FragmentGraphBinding,GraphViewModel>(R.layout.fragment_graph) {
     override val viewModel by activityViewModels<GraphViewModel>()
 
@@ -40,14 +40,18 @@ class GraphFragment(
         viewModel.gaugesData.value = data
 
         when(data){
-            is GaugesDetail -> adapter.submitList(data.dataToGraph())
+            is GaugesDetail -> {
+                when(data.chartType){
+                    5,6 -> adapter.submitList(data.dataToGraph5())
+                    7 -> adapter.submitList(data.dataToGraph7())
+                    else -> adapter.submitList(data.dataToGraph())
+                }
+            }
             is GaugesGroupDetail -> {
                 when(data.chartType){
                     2 -> adapter.submitList(data.dataToGraph())
-                    3 -> {
-                        timberMsg(data.dataToGraph3())
-                        adapter.submitList(data.dataToGraph3())
-                    }
+                    3 -> adapter.submitList(data.dataToGraph3())
+                    4 -> adapter.submitList(data.dataToGraph4())
                 }
             }
         }
@@ -76,20 +80,26 @@ class GraphFragment(
     }
 
     private fun initListener(){
-        binding.layoutFromValue.setOnClickListener {
-            showDateSelect(viewModel.startUnixTime,viewModel.endUnixTime)
+        binding.layoutFrom.setOnClickListener {
+            selectDateShow(
+                null,
+                getUnixTime(viewModel.toDay.value?:""),
+                getUnixTime(viewModel.fromDay.value?:""),
+                0
+            )
         }
 
-        binding.layoutDaysValue.setOnClickListener {
-            showDateSelect(viewModel.startUnixTime,viewModel.endUnixTime)
-        }
-
-        binding.layoutToValue.setOnClickListener {
-            showDateSelect(viewModel.startUnixTime,viewModel.endUnixTime)
+        binding.layoutTo.setOnClickListener {
+            selectDateShow(
+                getUnixTime(viewModel.fromDay.value?:""),
+                getUnixTime(),
+                getUnixTime(viewModel.toDay.value?:""),
+                1
+            )
         }
     }
 
-    override fun selectedDate(selectData: SelectData) {
-        selectedData(selectData)
+    override fun selectedDate(type: Int, text: String, time: Long) {
+        selectedData(type,text,time)
     }
 }

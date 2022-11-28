@@ -15,6 +15,8 @@ import com.bellminp.common.timberMsg
 import com.bellminp.instrumentation.R
 import com.bellminp.instrumentation.model.SelectData
 import com.bellminp.instrumentation.model.TreeModel
+import com.bellminp.instrumentation.ui.dialog.dateselect.DateSelectDialog
+import com.bellminp.instrumentation.ui.dialog.fieldselect.FieldSelectDialog
 import com.bellminp.instrumentation.ui.login.LoginActivity
 import com.bellminp.instrumentation.utils.ONE_DAY
 import com.bellminp.instrumentation.utils.convertTimestampToDateTerm
@@ -47,8 +49,8 @@ abstract class BaseFragment<VDB : ViewDataBinding, VM : BaseViewModel>(
     }
 
     open fun setupObserver() {
-        with(viewModel){
-            goLogin.observe(viewLifecycleOwner){
+        with(viewModel) {
+            goLogin.observe(viewLifecycleOwner) {
                 activity?.let {
                     Intent(it, LoginActivity::class.java).apply {
                         startActivity(this)
@@ -59,47 +61,17 @@ abstract class BaseFragment<VDB : ViewDataBinding, VM : BaseViewModel>(
         }
     }
 
-    fun showDateSelect(start : Long, end : Long) {
-        timberMsg(start)
-        val builder = MaterialDatePicker.Builder.dateRangePicker().setSelection(
-            Pair(
-                start*1000 + ONE_DAY,
-                end*1000
-            )
-        ).build()
-        builder.show(parentFragmentManager, builder.toString())
-
-        builder.addOnPositiveButtonClickListener {
-            val startPeriod = convertTimestampToDateTerm(it.first ?: 0)
-            val endPeriod = convertTimestampToDateTerm(it.second ?: 0)
-            val days = ((it.second - it.first) / ONE_DAY).toInt()
-            SelectData(
-                toDay = convertTimestampToDateText(
-                    getUnixTime(
-                        endPeriod,
-                        false
-                    )
-                ),
-                fromDay = convertTimestampToDateText(
-                    getUnixTime(
-                        startPeriod,
-                        true
-                    )
-                ),
-                days = days.toString(),
-                startUnixTime = getUnixTime(
-                    startPeriod,
-                    true
-                ) / 1000,
-                endUnixTime = getUnixTime(
-                    endPeriod,
-                    false
-                ) / 1000
-            ).apply {
-                selectedDate(this)
-            }
-        }
+    fun selectDateShow(
+        minDate: Long?,
+        maxDate: Long,
+        initDate: Long,
+        type: Int
+    ) {
+        DateSelectDialog(minDate,maxDate,initDate,type) { dateType,text,time->
+            selectedDate(dateType, text, time)
+        }.show(parentFragmentManager,"DateSelectDialog")
     }
 
-    open fun selectedDate(selectData : SelectData){}
+    open fun selectedDate(type : Int, text : String, time : Long){}
+
 }

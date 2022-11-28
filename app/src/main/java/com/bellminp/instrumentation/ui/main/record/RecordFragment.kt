@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class RecordFragment(
     private val selectData : SelectData,
     private val recordList : List<RecordData>?,
-    private val selectedData : ((date : SelectData) -> Unit),
+    private val selectedData : ((type: Int, text: String, time: Long) -> Unit),
     private val clickRecord : ((date : SelectData) -> Unit)
 ) : BaseFragment<FragmentRecordBinding, RecordViewModel>(R.layout.fragment_record) {
     override val viewModel by activityViewModels<RecordViewModel>()
@@ -88,20 +88,26 @@ class RecordFragment(
     }
 
     private fun initListener(){
-        binding.layoutFromValue.setOnClickListener {
-            showDateSelect(viewModel.startUnixTime,viewModel.endUnixTime)
+        binding.layoutFrom.setOnClickListener {
+            selectDateShow(
+                null,
+                getUnixTime(viewModel.toDay.value?:""),
+                getUnixTime(viewModel.fromDay.value?:""),
+                0
+            )
         }
 
-        binding.layoutDaysValue.setOnClickListener {
-            showDateSelect(viewModel.startUnixTime,viewModel.endUnixTime)
-        }
-
-        binding.layoutToValue.setOnClickListener {
-            showDateSelect(viewModel.startUnixTime,viewModel.endUnixTime)
+        binding.layoutTo.setOnClickListener {
+            selectDateShow(
+                getUnixTime(viewModel.fromDay.value?:""),
+                getUnixTime(),
+                getUnixTime(viewModel.toDay.value?:""),
+                1
+            )
         }
     }
 
-    override fun selectedDate(selectData: SelectData) {
-        selectedData(selectData)
+    override fun selectedDate(type: Int, text: String, time: Long) {
+        selectedData(type,text,time)
     }
 }

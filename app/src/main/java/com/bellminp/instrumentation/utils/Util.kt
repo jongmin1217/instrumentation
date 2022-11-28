@@ -43,13 +43,21 @@ fun convertTimestampToDateRecord(timestamp: Long): String =
 
 @SuppressLint("SimpleDateFormat")
 fun convertTimestampToDateText(timestamp: Long): String =
-    SimpleDateFormat("MM / dd").format(timestamp)
+    SimpleDateFormat("yyyy/MM/dd").format(timestamp)
 
 @SuppressLint("SimpleDateFormat")
 fun getUnixTime(date: String, fromDay: Boolean): Long {
     val formatter = SimpleDateFormat("yyyy.MM.dd.HH.mm")
     val fullDate = if (fromDay) "$date.00.00" else "$date.23.59"
     val timestamp = formatter.parse(fullDate) as Date
+
+    return timestamp.time
+}
+
+@SuppressLint("SimpleDateFormat")
+fun getUnixTime(date: String): Long {
+    val formatter = SimpleDateFormat("yyyy/MM/dd")
+    val timestamp = formatter.parse(date) as Date
 
     return timestamp.time
 }
@@ -133,3 +141,15 @@ fun getGraphColor(index : Int) : Int {
 }
 
 fun roundOff(value : Double) = (value * 1000).roundToInt().toDouble()/1000
+
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+@SuppressLint("SimpleDateFormat")
+fun getDateDay(date: String, dateType: String): Int {
+    val dateFormat = SimpleDateFormat(dateType)
+    val nDate = dateFormat.parse(date)
+
+    val cal = Calendar.getInstance()
+    cal.time = nDate
+
+    return cal.get(Calendar.DAY_OF_WEEK)
+}

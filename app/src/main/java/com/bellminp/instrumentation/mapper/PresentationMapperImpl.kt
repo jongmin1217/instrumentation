@@ -663,3 +663,258 @@ fun GaugesGroupDetail.dataToGraph3(): List<GraphData> {
 
     return list
 }
+
+fun GaugesGroupDetail.dataToGraph4(): List<GraphData> {
+    val graphList = ArrayList<GraphType4>()
+
+    val itemsList = ArrayList<GraphGroupPointType4>()
+
+    this.chartList?.let {
+        for (i in it.indices) {
+            val itemList = ArrayList<GraphPointType4>()
+
+            for (j in it[i].list.indices) {
+                val standardX = this.constantList?.get(j)?.x ?: 0.0
+                val standardY = this.constantList?.get(j)?.y ?: 0.0
+                val x = (it[i].list[j].x ?: 0.0) * 150
+                val y = (it[i].list[j].y ?: 0.0) * 150
+                itemList.add(GraphPointType4(standardX + x, standardY + y,if(i == it.size -1) (it[i].list[j].x ?: 0.0) else 0.0,if(i == it.size -1) (it[i].list[j].y ?: 0.0) else 0.0))
+            }
+            itemsList.add(GraphGroupPointType4(it[i].time, itemList))
+        }
+    }
+
+//    val standardList = ArrayList<GraphGroupPointStandard>()
+//    this.constantList?.let {
+//        this.list?.let { list->
+//            for(i in 0..6){
+//                val standardItemList = ArrayList<GraphPointType4>()
+//
+//                for(j in -1 until it.size){
+//                    var standardX: Double
+//                    var standardY: Double
+//                    try {
+//                        standardX = it[j].x
+//                        standardY = it[j].y
+//                    }catch (e : IndexOutOfBoundsException){
+//                        standardX = 0.0
+//                        standardY = 0.0
+//                    }
+//
+//                    var x = 0.0
+//                    var y = 0.0
+//                    try {
+//                        when(i){
+//                            0 -> {
+//                                if(list[0].hi1enable && list[1].hi1enable){
+//                                    x = 1.1
+//                                    y = 1.1
+//                                }
+//                            }
+//
+//                            1 -> {
+//                                if(list[0].hi2enable && list[1].hi2enable){
+//                                    x = 1.2
+//                                    y = 1.2
+//                                }
+//                            }
+//
+//                            2 -> {
+//                                if(list[0].hi3enable && list[1].hi3enable){
+//                                    x = 1.3
+//                                    y = 1.3
+//                                }
+//                            }
+//
+//                            3 -> {
+//                                if(list[0].low1enable && list[1].low1enable){
+//                                    x = 0.9
+//                                    y = 0.9
+//                                }
+//                            }
+//
+//                            4 -> {
+//                                if(list[0].low2enable && list[1].low2enable){
+//                                    x = 0.8
+//                                    y = 0.8
+//                                }
+//                            }
+//
+//                            5 -> {
+//                                if(list[0].low3enable && list[1].low3enable){
+//                                    x = 0.7
+//                                    y = 0.7
+//                                }
+//                            }
+//                        }
+//                    }catch (e :Exception){}
+//
+//
+//                    standardItemList.add(GraphPointType4(standardX * x,standardY * y))
+//
+//
+//                }
+//
+////                when(i){
+////                    0 -> {
+////                        standardItemList.add(0,GraphPointType4(-list[0].hi1*100,0.0))
+////                        standardItemList.add(GraphPointType4(it[it.size-1].x + list[0].hi1*100,0.0))
+////                    }
+////                    1 -> {
+////                        standardItemList.add(0,GraphPointType4(-list[0].hi2*100,0.0))
+////                        standardItemList.add(GraphPointType4(it[it.size-1].x + list[0].hi2*100,0.0))
+////                    }
+////                    2 -> {
+////                        standardItemList.add(0,GraphPointType4(-list[0].hi3*100,0.0))
+////                        standardItemList.add(GraphPointType4(it[it.size-1].x + list[0].hi3*100,0.0))
+////                    }
+////                }
+//
+//                standardList.add(GraphGroupPointStandard(i,standardItemList))
+//            }
+//
+//            graphList.add(
+//                GraphType4(
+//                    "",
+//                    "",
+//                    list[0].ystep,
+//                    list[0].reunit,
+//                    list[0].autorange,
+//                    list[0].minrange,
+//                    list[0].maxrange,
+//                    itemsList,
+//                    standardList
+//                )
+//            )
+//
+//        }
+//    }
+
+    this.list?.let {
+        graphList.add(
+            GraphType4(
+                "",
+                "",
+                list[0].ystep,
+                list[0].reunit,
+                list[0].autorange,
+                list[0].minrange,
+                list[0].maxrange,
+                itemsList,
+                arrayListOf()
+            )
+        )
+    }
+
+    return graphList
+}
+
+fun GaugesDetail.dataToGraph5(): List<GraphType5> {
+    val list = ArrayList<GraphType5>()
+
+    this.list?.let {
+        this.chartList?.let { chartList ->
+            val itemsList = ArrayList<GraphGroupPointType5>()
+            chartList.forEach { data ->
+                val itemList = ArrayList<GraphPointType5>()
+                for (i in 0..360) {
+                    itemList.add(
+                        GraphPointType5(
+                            i,
+                            if (data.expM1 ?: 0.0 == i.toDouble()) data.expM2?:1.0 else 0.0
+                        )
+                    )
+                }
+                itemsList.add(GraphGroupPointType5(data.time, itemList))
+            }
+
+            list.add(
+                GraphType5(
+                    "",
+                    "",
+                    it[0].ystep,
+                    it[0].reunit,
+                    itemsList
+                )
+            )
+        }
+    }
+
+    return list
+}
+
+fun GaugesDetail.dataToGraph7(): List<GraphData> {
+    val list = ArrayList<GraphData>()
+
+    this.list?.let {
+        this.chartList?.let { chartList ->
+            val itemsList = ArrayList<GraphGroupPointType5>()
+            chartList.forEach { data ->
+                val itemList = ArrayList<GraphPointType5>()
+                for (i in 0..360) {
+                    itemList.add(
+                        GraphPointType5(
+                            i,
+                            if (data.expM1 ?: 0.0 == i.toDouble()) data.expM2?:1.0 else 0.0
+                        )
+                    )
+                }
+                itemsList.add(GraphGroupPointType5(data.time, itemList))
+            }
+
+            list.add(
+                GraphType5(
+                    "",
+                    "",
+                    it[0].ystep,
+                    it[0].reunit,
+                    itemsList
+                )
+            )
+
+            it[2].let {
+                val multiItems = ArrayList<GraphPointType1>()
+                val multiSize = this.chartList.size
+
+                for (j in 0 until multiSize) {
+                    this.chartList.sortedBy { chart -> chart.time }[j].let { multiData ->
+                        multiItems.add(
+                            GraphPointType1(
+                                multiData.time,
+                                multiData.expM3
+                            )
+                        )
+                    }
+
+                }
+
+                list.add(
+                    GraphType1(
+                        it.managenum,
+                        it.reunit,
+                        it.hi1enable,
+                        it.hi2enable,
+                        it.hi3enable,
+                        it.low1enable,
+                        it.low2enable,
+                        it.low3enable,
+                        it.hi1,
+                        it.hi2,
+                        it.hi3,
+                        it.low1,
+                        it.low2,
+                        it.low3,
+                        it.ystep,
+                        it.reunit,
+                        it.autorange,
+                        it.minrange,
+                        it.maxrange,
+                        listOf(GraphGroupPointType1(it.reunit, multiItems))
+                    )
+                )
+            }
+        }
+    }
+
+    return list
+}

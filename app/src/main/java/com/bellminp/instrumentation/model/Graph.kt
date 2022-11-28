@@ -340,4 +340,121 @@ data class GraphPointType3(
     val value: Double?
 )
 
+data class GraphType4(
+    val xName: String,
+    val name: String,
+    val ystep: Double,
+    val reunit: String,
+    val autorange: Boolean,
+    val minrange: Double,
+    val maxrange: Double,
+    val list: List<GraphGroupPointType4>,
+    val standardList : List<GraphGroupPointStandard>
+) : GraphData{
+
+    fun xMax() : Int{
+        val valueList = ArrayList<Double>()
+        list.forEach {
+            it.list.forEach { data ->
+                valueList.add(data.x)
+            }
+        }
+
+        standardList.forEach {
+            it.list.forEach { data ->
+                valueList.add(data.x)
+            }
+        }
+
+        val maxValue = Collections.max(valueList).toInt()
+
+        return maxValue + (1000 - maxValue%1000)
+    }
+
+    fun xMin() : Int{
+        val valueList = ArrayList<Double>()
+        list.forEach {
+            it.list.forEach { data ->
+                valueList.add(data.x)
+            }
+        }
+
+        standardList.forEach {
+            it.list.forEach { data ->
+                valueList.add(data.x)
+            }
+        }
+
+        val minValue = Collections.min(valueList).toInt()
+
+        return minValue - (1000 - minValue%1000)
+    }
+
+    fun yMax() : Int{
+        val valueList = ArrayList<Double>()
+        list.forEach {
+            it.list.forEach { data ->
+                valueList.add(data.y)
+            }
+        }
+
+        standardList.forEach {
+            it.list.forEach { data ->
+                valueList.add(data.y)
+            }
+        }
+
+        val maxValue = Collections.max(valueList).toInt()
+
+        return maxValue + (1000 - maxValue%1000)
+    }
+}
+
+data class GraphGroupPointType4(
+    val time: Long,
+    val list: List<GraphPointType4>
+)
+
+data class GraphGroupPointStandard(
+    val type: Int,
+    val list: List<GraphPointType4>
+)
+
+data class GraphPointType4(
+    val x: Double,
+    val y: Double,
+    val initX : Double = 0.0,
+    val initY : Double = 0.0
+)
+
+data class GraphType5(
+    val xName: String,
+    val name: String,
+    val ystep: Double,
+    val reunit: String,
+    val list: List<GraphGroupPointType5>
+) : GraphData{
+    fun getMax() : Double{
+        val items = ArrayList<Double>()
+
+        list.forEach {
+            it.list.forEach { data ->
+                items.add(data.y)
+            }
+        }
+
+        return Collections.max(items)
+    }
+}
+
+data class GraphGroupPointType5(
+    val time: Long,
+    val list: List<GraphPointType5>
+)
+
+data class GraphPointType5(
+    val x: Int,
+    val y: Double
+)
+
 interface GraphData

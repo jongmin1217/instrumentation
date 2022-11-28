@@ -23,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class TableFragment(
     private val selectData : SelectData,
     private val gaugesData: GaugesData?,
-    private val selectedData : ((date : SelectData) -> Unit)
+    private val selectedData : ((type: Int, text: String, time: Long) -> Unit)
 ) : BaseFragment<FragmentTableBinding, TableViewModel>(R.layout.fragment_table) {
     override val viewModel by activityViewModels<TableViewModel>()
 
@@ -43,16 +43,22 @@ class TableFragment(
     }
 
     private fun initListener(){
-        binding.layoutFromValue.setOnClickListener {
-            showDateSelect(viewModel.startUnixTime,viewModel.endUnixTime)
+        binding.layoutFrom.setOnClickListener {
+            selectDateShow(
+                null,
+                getUnixTime(viewModel.toDay.value?:""),
+                getUnixTime(viewModel.fromDay.value?:""),
+                0
+            )
         }
 
-        binding.layoutDaysValue.setOnClickListener {
-            showDateSelect(viewModel.startUnixTime,viewModel.endUnixTime)
-        }
-
-        binding.layoutToValue.setOnClickListener {
-            showDateSelect(viewModel.startUnixTime,viewModel.endUnixTime)
+        binding.layoutTo.setOnClickListener {
+            selectDateShow(
+                getUnixTime(viewModel.fromDay.value?:""),
+                getUnixTime(),
+                getUnixTime(viewModel.toDay.value?:""),
+                1
+            )
         }
     }
 
@@ -89,7 +95,8 @@ class TableFragment(
         setSelectData(selectData)
     }
 
-    override fun selectedDate(selectData: SelectData) {
-        selectedData(selectData)
+    override fun selectedDate(type: Int, text: String, time: Long) {
+        selectedData(type,text,time)
     }
+
 }
