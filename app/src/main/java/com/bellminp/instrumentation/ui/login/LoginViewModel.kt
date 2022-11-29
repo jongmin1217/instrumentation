@@ -28,7 +28,7 @@ class LoginViewModel @Inject constructor(
 
     var id = String()
     var password = String()
-    var checkAutoLogin = false
+    var checkAutoLogin = true
 
     fun login(){
         viewModelScope.launch {

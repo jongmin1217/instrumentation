@@ -58,11 +58,12 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginStart="16dp"
                     android:text="@string/start_date"
                     android:textColor="@color/black"
-                    android:textSize="14dp"
+                    android:textSize="@dimen/dp_13"
+                    android:textStyle="bold"
                     />
 
                 <TextView
@@ -75,13 +76,13 @@
                     android:text="@{vm.fromDay}"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textSize="16dp"
+                    android:textSize="@dimen/dp_13"
                     />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="10dp"
                     android:background="@android:color/transparent"
                     app:layout_constraintTop_toBottomOf="@id/tv_start_date_value" />
 
@@ -103,11 +104,12 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="16dp"
                     android:text="@string/end_date"
                     android:textColor="@color/black"
-                    android:textSize="14dp"
+                    android:textSize="@dimen/dp_13"
+                    android:textStyle="bold"
                     />
 
                 <TextView
@@ -120,13 +122,13 @@
                     android:text="@{vm.toDay}"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textSize="16dp"
+                    android:textSize="@dimen/dp_13"
                     />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="10dp"
                     android:background="@android:color/transparent"
                     app:layout_constraintTop_toBottomOf="@id/tv_end_date_value" />
 
@@ -148,7 +150,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_bottom"
             android:layout_width="match_parent"
-            android:layout_height="46dp"
+            android:layout_height="36dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="@color/black"
             >
@@ -156,12 +158,12 @@
             <TextView
                 android:id="@+id/tv_sections_value"
                 android:layout_width="0dp"
-                android:layout_height="38dp"
+                android:layout_height="30dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/tv_gauges_value"
-                android:textSize="14dp"
+                android:textSize="@dimen/dp_13"
                 android:textColor="@color/black"
                 android:gravity="center"
                 android:textStyle="bold"
@@ -177,12 +179,12 @@
             <TextView
                 android:id="@+id/tv_gauges_value"
                 android:layout_width="0dp"
-                android:layout_height="38dp"
+                android:layout_height="30dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_sections_value"
-                android:textSize="14dp"
+                android:textSize="@dimen/dp_13"
                 android:textColor="@color/black"
                 android:gravity="center"
                 android:textStyle="bold"
@@ -215,7 +217,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:textSize="18dp"
+                    android:textSize="@dimen/dp_13"
                     android:textColor="@color/black"
                     android:id="@+id/tv_name"
                     android:textStyle="bold"
@@ -242,17 +244,22 @@
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/no_data"
+            android:text="@{vm.selectGauges.empty ? @string/no_select_gauges : @string/no_data}"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="@dimen/dp_13"
             android:textStyle="bold"
             android:visibility="@{vm.gaugesData == null ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:lineSpacingMultiplier="1.3"
+            android:gravity="center"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

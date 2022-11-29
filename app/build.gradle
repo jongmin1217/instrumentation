@@ -81,4 +81,5 @@ dependencies {
 
     api deps.MPAndroidChart
     api deps.flexbox
+    api deps.splashscreen
 }

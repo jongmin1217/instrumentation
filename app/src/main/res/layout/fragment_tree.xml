@@ -50,7 +50,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:textSize="16dp"
+                android:textSize="@dimen/dp_13"
                 tools:ignore="SpUsage"
                 android:background="@drawable/shape_table_title"
                 android:text="@string/logout"

@@ -24,18 +24,32 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@drawable/shape_dialog"
+            android:background="@drawable/shape_field_dialog"
             >
+
+            <TextView
+                android:id="@+id/tv_header"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/shape_select_field_header"
+                android:textSize="@dimen/dp_13"
+                tools:ignore="SpUsage"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/select_field"
+                android:gravity="center"
+                android:textColor="@color/black"
+                />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_header"
                 android:overScrollMode="never"
                 android:id="@+id/recyclerview_field"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_field_list"
+                tools:itemCount="3"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

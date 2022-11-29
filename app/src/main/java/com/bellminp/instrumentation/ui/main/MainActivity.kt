@@ -21,6 +21,7 @@ import com.bellminp.instrumentation.ui.main.tree.TreeFragment
 import com.bellminp.instrumentation.ui.splash.SplashViewModel
 import com.bellminp.instrumentation.utils.TYPE
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.system.exitProcess
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.activity_main) {
@@ -33,6 +34,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
 
     private var recordList: List<RecordData>? = null
     private var gaugesData: GaugesData? = null
+
+    private var time: Long = 0
 
     private val menuAdapter = MenuAdapter {
         when (it.id) {
@@ -197,6 +200,21 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
             if (fragment.isVisible) {
                 supportFragmentManager.beginTransaction().hide(fragment).commit()
             }
+        }
+    }
+
+    override fun onBackPressed() {
+        doubleTabBack()
+    }
+
+    private fun doubleTabBack() {
+        if (System.currentTimeMillis() - time >= 2000) {
+            time = System.currentTimeMillis()
+            showToast(resources.getString(R.string.double_tab))
+        } else if (System.currentTimeMillis() - time < 2000) {
+            super.onBackPressed()
+            finish()
+            exitProcess(0)
         }
     }
 

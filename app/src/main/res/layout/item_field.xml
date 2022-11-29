@@ -65,11 +65,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="16dp"
                 android:textColor="@color/basic"
-                android:textSize="10sp"
+                android:textSize="@dimen/dp_13"
                 android:textStyle="bold"
                 android:layout_marginStart="8dp"
                 setFieldName="@{item}"
-                tools:ignore="SmallSp"
+                tools:ignore="SmallSp,SpUsage"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,10 +4,7 @@ import com.bellminp.common.timberMsg
 import com.bellminp.data.model.*
 import com.bellminp.domain.model.*
 import com.bellminp.instrumentation.model.*
-import com.bellminp.instrumentation.utils.convertTimestampToDateRecord
-import com.bellminp.instrumentation.utils.getColorType
-import com.bellminp.instrumentation.utils.graphLegendValue
-import com.bellminp.instrumentation.utils.roundOff
+import com.bellminp.instrumentation.utils.*
 
 fun DomainLogin.mapToPresentation(): Login {
     return Login(
@@ -557,7 +554,7 @@ fun GaugesDetail.dataToGraph(): List<GraphData> {
 }
 
 fun GaugesGroupDetail.dataToGraph(): List<GraphData> {
-    val list = ArrayList<GraphType2>()
+    val list = ArrayList<GraphData>()
 
     val size = if (this.chartList?.get(0)?.list?.get(0)?.expM2 == null) 1 else 2
 
@@ -607,11 +604,29 @@ fun GaugesGroupDetail.dataToGraph(): List<GraphData> {
         }
     }
 
+    if(list.isNotEmpty()){
+        val legendList = ArrayList<LegendData>()
+        val listData = list[0]
+        if(listData is GraphType2){
+            for (i in listData.list.indices) {
+                legendList.add(
+                    LegendData(
+                        getGraphColor(i),
+                        graphLegendValue(listData.list[i].time)
+                    )
+                )
+            }
+        }
+
+        list.add(GraphLegend(legendList))
+    }
+
+
     return list
 }
 
 fun GaugesGroupDetail.dataToGraph3(): List<GraphData> {
-    val list = ArrayList<GraphType3>()
+    val list = ArrayList<GraphData>()
 
     val size = if (this.chartList?.get(0)?.list?.get(0)?.expM2 == null) 1 else 2
 
@@ -661,11 +676,28 @@ fun GaugesGroupDetail.dataToGraph3(): List<GraphData> {
         }
     }
 
+    if(list.isNotEmpty()){
+        val legendList = ArrayList<LegendData>()
+        val listData = list[0]
+        if(listData is GraphType3){
+            for (i in listData.list.indices) {
+                legendList.add(
+                    LegendData(
+                        getGraphColor(i),
+                        graphLegendValue(listData.list[i].time)
+                    )
+                )
+            }
+        }
+
+        list.add(GraphLegend(legendList))
+    }
+
     return list
 }
 
 fun GaugesGroupDetail.dataToGraph4(): List<GraphData> {
-    val graphList = ArrayList<GraphType4>()
+    val graphList = ArrayList<GraphData>()
 
     val itemsList = ArrayList<GraphGroupPointType4>()
 
@@ -806,11 +838,28 @@ fun GaugesGroupDetail.dataToGraph4(): List<GraphData> {
         )
     }
 
+    if(graphList.isNotEmpty()){
+        val legendList = ArrayList<LegendData>()
+        val listData = graphList[0]
+        if(listData is GraphType4){
+            for (i in listData.list.indices) {
+                legendList.add(
+                    LegendData(
+                        getGraphColor(i),
+                        graphLegendValue(listData.list[i].time)
+                    )
+                )
+            }
+        }
+
+        graphList.add(GraphLegend(legendList))
+    }
+
     return graphList
 }
 
-fun GaugesDetail.dataToGraph5(): List<GraphType5> {
-    val list = ArrayList<GraphType5>()
+fun GaugesDetail.dataToGraph5(): List<GraphData> {
+    val list = ArrayList<GraphData>()
 
     this.list?.let {
         this.chartList?.let { chartList ->

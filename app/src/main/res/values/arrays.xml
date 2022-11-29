@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="direction">
+        <item>-34.0</item>
+        <item>-27.2</item>
+        <item>-20.4</item>
+        <item>-13.6</item>
+        <item>-6.8</item>
+        <item>0.0</item>
+        <item>6.8</item>
+        <item>13.6</item>
+        <item>20.4</item>
+        <item>27.2</item>
+        <item>34.0</item>
+    </string-array>
+</resources>

@@ -1,5 +1,6 @@
 package com.bellminp.instrumentation.ui.main.graph
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
@@ -9,7 +10,9 @@ import com.bellminp.instrumentation.databinding.FragmentGraphBinding
 import com.bellminp.instrumentation.mapper.*
 import com.bellminp.instrumentation.model.*
 import com.bellminp.instrumentation.ui.base.BaseFragment
+import com.bellminp.instrumentation.ui.graphdetail.GraphDetailActivity
 import com.bellminp.instrumentation.ui.main.tree.TreeViewModel
+import com.bellminp.instrumentation.utils.GRAPH_DATA
 import com.bellminp.instrumentation.utils.getUnixTime
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +24,14 @@ class GraphFragment(
 ) : BaseFragment<FragmentGraphBinding,GraphViewModel>(R.layout.fragment_graph) {
     override val viewModel by activityViewModels<GraphViewModel>()
 
-    val adapter = GraphAdapter()
+    private val adapter = GraphAdapter{ data ->
+        activity?.let { activity->
+            Intent(activity,GraphDetailActivity::class.java).also {
+                it.putExtra(GRAPH_DATA,data)
+                startActivity(it)
+            }
+        }
+    }
 
     override fun setupBinding() {
         binding.vm = viewModel

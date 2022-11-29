@@ -3,8 +3,13 @@ package com.bellminp.instrumentation.model
 import com.bellminp.common.timberMsg
 import com.github.mikephil.charting.data.Entry
 import timber.log.Timber
+import java.io.Serializable
 import java.util.*
 import kotlin.collections.ArrayList
+
+data class GraphLegend(
+    val list : List<LegendData>
+) : GraphData
 
 data class LegendData(
     val color : Int,
@@ -32,7 +37,7 @@ data class GraphType1(
     val minrange: Double,
     val maxrange: Double,
     val list: List<GraphGroupPointType1>
-) : GraphData {
+) : GraphData,Serializable {
 
     fun getMax(): Double {
         val list = ArrayList<GraphPointType1>()
@@ -112,12 +117,12 @@ data class GraphType1(
 data class GraphGroupPointType1(
     val name: String,
     val list: List<GraphPointType1>
-)
+) : Serializable
 
 data class GraphPointType1(
     val time: Long,
     val value: Double?
-)
+) : Serializable
 
 data class GraphType2(
     val managenum: String,
@@ -140,7 +145,7 @@ data class GraphType2(
     val minrange: Double,
     val maxrange: Double,
     val list: List<GraphGroupPointType2>
-) : GraphData {
+) : GraphData,Serializable {
     fun getMax(): Double {
         val list = ArrayList<GraphPointType2>()
 
@@ -219,12 +224,12 @@ data class GraphType2(
 data class GraphGroupPointType2(
     val time: Long,
     val list: List<GraphPointType2>
-)
+) : Serializable
 
 data class GraphPointType2(
     val vpos: Double,
     val value: Double?
-)
+) : Serializable
 
 data class GraphType3(
     val xName: String,
@@ -350,7 +355,7 @@ data class GraphType4(
     val maxrange: Double,
     val list: List<GraphGroupPointType4>,
     val standardList : List<GraphGroupPointStandard>
-) : GraphData{
+) : GraphData,Serializable{
 
     fun xMax() : Int{
         val valueList = ArrayList<Double>()
@@ -413,19 +418,19 @@ data class GraphType4(
 data class GraphGroupPointType4(
     val time: Long,
     val list: List<GraphPointType4>
-)
+) : Serializable
 
 data class GraphGroupPointStandard(
     val type: Int,
     val list: List<GraphPointType4>
-)
+) : Serializable
 
 data class GraphPointType4(
     val x: Double,
     val y: Double,
     val initX : Double = 0.0,
     val initY : Double = 0.0
-)
+) : Serializable
 
 data class GraphType5(
     val xName: String,
@@ -457,4 +462,4 @@ data class GraphPointType5(
     val y: Double
 )
 
-interface GraphData
+interface GraphData : Serializable

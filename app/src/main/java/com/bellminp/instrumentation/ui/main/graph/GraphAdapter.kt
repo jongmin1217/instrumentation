@@ -22,6 +22,7 @@ import com.bellminp.instrumentation.utils.ext.margin
 import com.github.mikephil.charting.components.*
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.EntryXComparator
 import com.github.mikephil.charting.utils.MPPointF
@@ -33,7 +34,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
-class GraphAdapter : BaseListAdapter<GraphData>() {
+class GraphAdapter(
+    private val onItemClick : ((item : GraphData) -> Unit)
+) : BaseListAdapter<GraphData>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<GraphData> {
         return when (viewType) {
             TYPE1 -> {
@@ -42,7 +45,8 @@ class GraphAdapter : BaseListAdapter<GraphData>() {
                         LayoutInflater.from(parent.context),
                         parent,
                         false
-                    )
+                    ),
+                    onItemClick
                 )
             }
 
@@ -52,7 +56,8 @@ class GraphAdapter : BaseListAdapter<GraphData>() {
                         LayoutInflater.from(parent.context),
                         parent,
                         false
-                    )
+                    ),
+                    onItemClick
                 )
             }
 
@@ -72,7 +77,8 @@ class GraphAdapter : BaseListAdapter<GraphData>() {
                         LayoutInflater.from(parent.context),
                         parent,
                         false
-                    )
+                    ),
+                    onItemClick
                 )
             }
 
@@ -86,13 +92,24 @@ class GraphAdapter : BaseListAdapter<GraphData>() {
                 )
             }
 
+            TYPE_LEGEND -> {
+                LegendHolder(
+                    ItemGraphLegendBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                )
+            }
+
             else -> {
                 Type1Holder(
                     ItemGraphType1Binding.inflate(
                         LayoutInflater.from(parent.context),
                         parent,
                         false
-                    )
+                    ),
+                    onItemClick
                 )
             }
         }
@@ -104,17 +121,25 @@ class GraphAdapter : BaseListAdapter<GraphData>() {
         is GraphType3 -> TYPE3
         is GraphType4 -> TYPE4
         is GraphType5 -> TYPE5
+        is GraphLegend -> TYPE_LEGEND
         else -> throw IllegalStateException("can't find view type")
     }
 
     class Type1Holder(
-        private val binding: ItemGraphType1Binding
+        private val binding: ItemGraphType1Binding,
+        private val onItemClick : ((item : GraphData) -> Unit)
     ) : BaseViewHolder<GraphData>(binding) {
 
         override fun bind(item: GraphData) {
             if (item is GraphType1) {
                 binding.item = item
                 binding.executePendingBindings()
+
+                binding.lineChart.setOnClickListener{
+                    onItemClick(item)
+                }
+
+
 
                 binding.lineChart.apply {
                     this.xAxis.apply {
@@ -238,13 +263,20 @@ class GraphAdapter : BaseListAdapter<GraphData>() {
     }
 
     class Type2Holder(
-        private val binding: ItemGraphType2Binding
+        private val binding: ItemGraphType2Binding,
+        private val onItemClick : ((item : GraphData) -> Unit)
     ) : BaseViewHolder<GraphData>(binding) {
 
         override fun bind(item: GraphData) {
             if (item is GraphType2) {
                 binding.item = item
                 binding.executePendingBindings()
+
+                binding.lineChart.setOnClickListener{
+                    onItemClick(item)
+                }
+
+
 
                 binding.lineChart.apply {
                     this.xAxis.apply {
@@ -346,26 +378,6 @@ class GraphAdapter : BaseListAdapter<GraphData>() {
 
                     data = chartData
                     invalidate()
-                }
-
-                FlexboxLayoutManager(binding.recyclerviewLegend.context).apply {
-                    flexWrap = FlexWrap.WRAP
-                    flexDirection = FlexDirection.ROW
-                    justifyContent = JustifyContent.FLEX_START
-                }.let {
-                    binding.recyclerviewLegend.layoutManager = it
-                    binding.recyclerviewLegend.adapter = LegendAdapter().apply {
-                        val list = ArrayList<LegendData>()
-                        for (i in item.list.indices) {
-                            list.add(
-                                LegendData(
-                                    getGraphColor(i),
-                                    graphLegendValue(item.list[i].time)
-                                )
-                            )
-                        }
-                        submitList(list)
-                    }
                 }
 
             }
@@ -501,26 +513,6 @@ class GraphAdapter : BaseListAdapter<GraphData>() {
                     invalidate()
                 }
 
-                FlexboxLayoutManager(binding.recyclerviewLegend.context).apply {
-                    flexWrap = FlexWrap.WRAP
-                    flexDirection = FlexDirection.ROW
-                    justifyContent = JustifyContent.FLEX_START
-                }.let {
-                    binding.recyclerviewLegend.layoutManager = it
-                    binding.recyclerviewLegend.adapter = LegendAdapter().apply {
-                        val list = ArrayList<LegendData>()
-                        for (i in item.list.indices) {
-                            list.add(
-                                LegendData(
-                                    getGraphColor(i),
-                                    graphLegendValue(item.list[i].time)
-                                )
-                            )
-                        }
-                        submitList(list)
-                    }
-                }
-
             }
         }
 
@@ -530,13 +522,20 @@ class GraphAdapter : BaseListAdapter<GraphData>() {
 
 
     class Type4Holder(
-        private val binding: ItemGraphType4Binding
+        private val binding: ItemGraphType4Binding,
+        private val onItemClick : ((item : GraphData) -> Unit)
     ) : BaseViewHolder<GraphData>(binding) {
 
         override fun bind(item: GraphData) {
             if (item is GraphType4) {
                 binding.item = item
                 binding.executePendingBindings()
+
+                binding.lineChart.setOnClickListener{
+                    onItemClick(item)
+                }
+
+
 
                 val display = InstrumentationApplication.mInstance.resources.displayMetrics
                 val width = display.widthPixels
@@ -646,26 +645,6 @@ class GraphAdapter : BaseListAdapter<GraphData>() {
                     invalidate()
                 }
 
-                FlexboxLayoutManager(binding.recyclerviewLegend.context).apply {
-                    flexWrap = FlexWrap.WRAP
-                    flexDirection = FlexDirection.ROW
-                    justifyContent = JustifyContent.FLEX_START
-                }.let {
-                    binding.recyclerviewLegend.layoutManager = it
-                    binding.recyclerviewLegend.adapter = LegendAdapter().apply {
-                        val list = ArrayList<LegendData>()
-                        for (i in item.list.indices) {
-                            list.add(
-                                LegendData(
-                                    getGraphColor(i),
-                                    graphLegendValue(item.list[i].time)
-                                )
-                            )
-                        }
-                        submitList(list)
-                    }
-                }
-
             }
         }
 
@@ -694,6 +673,7 @@ class GraphAdapter : BaseListAdapter<GraphData>() {
                         axisMaximum = 360f
                         setDrawGridLines(false)
                         setDrawLabels(false)
+
                     }
 
                     this.yAxis.apply {
@@ -703,6 +683,35 @@ class GraphAdapter : BaseListAdapter<GraphData>() {
                         axisMinimum = 0f
                         setDrawLabels(false)
                         setDrawGridLines(false)
+
+                        val directionList = ArrayList<Direction>()
+                        val range = max/4
+                        for(i in 0..3){
+                            directionList.add(
+                                Direction(
+                                    String.format("%.1f",-(max - (range*i))),
+                                    if(i == 0) 0 else 1
+                                )
+                            )
+                        }
+                        directionList.add(
+                            Direction(
+                                "0.0",
+                                1
+                            )
+                        )
+                        for(i in 3 downTo 0){
+                            directionList.add(
+                                Direction(
+                                    String.format("%.1f",(max - (range*i))),
+                                    if(i == 0) 2 else 1
+                                )
+                            )
+                        }
+
+
+                        val directionAdapter = DirectionAdapter().apply { submitList(directionList) }
+                        binding.recyclerviewDirection.adapter = directionAdapter
                     }
                     legend.isEnabled = false
 
@@ -738,6 +747,23 @@ class GraphAdapter : BaseListAdapter<GraphData>() {
 
                 }
 
+
+            }
+        }
+
+        override fun recycle() {
+        }
+    }
+
+    class LegendHolder(
+        private val binding: ItemGraphLegendBinding
+    ) : BaseViewHolder<GraphData>(binding) {
+
+        override fun bind(item: GraphData) {
+            if (item is GraphLegend) {
+                binding.item = item
+                binding.executePendingBindings()
+
                 FlexboxLayoutManager(binding.recyclerviewLegend.context).apply {
                     flexWrap = FlexWrap.WRAP
                     flexDirection = FlexDirection.ROW
@@ -745,16 +771,7 @@ class GraphAdapter : BaseListAdapter<GraphData>() {
                 }.let {
                     binding.recyclerviewLegend.layoutManager = it
                     binding.recyclerviewLegend.adapter = LegendAdapter().apply {
-                        val list = ArrayList<LegendData>()
-                        for (i in item.list.indices) {
-                            list.add(
-                                LegendData(
-                                    getGraphColor(i),
-                                    graphLegendValue(item.list[i].time)
-                                )
-                            )
-                        }
-                        submitList(list)
+                        submitList(item.list)
                     }
                 }
             }
@@ -770,5 +787,6 @@ class GraphAdapter : BaseListAdapter<GraphData>() {
         const val TYPE3 = 2
         const val TYPE4 = 3
         const val TYPE5 = 4
+        const val TYPE_LEGEND = 5
     }
 }
