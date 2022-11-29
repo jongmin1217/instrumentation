@@ -347,7 +347,7 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                             if (i == graphData.list.size - 1) {
                                 valueTextSize = 10f
                                 valueFormatter = Type4LabelFormat(graphData.list[i])
-                                valueTextColor = Color.BLUE
+                                valueTextColor = getGraphColor(i)
                             } else {
                                 valueTextSize = 0f
                             }

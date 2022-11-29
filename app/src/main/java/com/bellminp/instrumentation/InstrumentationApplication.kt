@@ -3,10 +3,13 @@ package com.bellminp.instrumentation
 import android.app.Application
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.util.Log
 import androidx.annotation.NonNull
+import com.bellminp.common.timberMsg
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
+import kotlin.random.Random
 
 @HiltAndroidApp
 class InstrumentationApplication : Application(){
@@ -23,6 +26,7 @@ class InstrumentationApplication : Application(){
 
         mInstance = this
         setUpTimber()
+
     }
 
     private fun setUpTimber(){

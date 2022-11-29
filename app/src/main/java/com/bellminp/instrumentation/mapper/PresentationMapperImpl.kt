@@ -5,6 +5,8 @@ import com.bellminp.data.model.*
 import com.bellminp.domain.model.*
 import com.bellminp.instrumentation.model.*
 import com.bellminp.instrumentation.utils.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 fun DomainLogin.mapToPresentation(): Login {
     return Login(
@@ -705,14 +707,27 @@ fun GaugesGroupDetail.dataToGraph4(): List<GraphData> {
         for (i in it.indices) {
             val itemList = ArrayList<GraphPointType4>()
 
+            val xyList = ArrayList<Double>()
+
+            it[i].list.forEach { xy->
+                xyList.add(xy.x?:0.0)
+                xyList.add(xy.y?:0.0)
+            }
+
+            val xyMax = Collections.max(xyList)
+            val xyMin = Collections.min(xyList)
+
+            val tooMuchValue = xyMax > 50.0 || xyMin < -50.0
+
             for (j in it[i].list.indices) {
                 val standardX = this.constantList?.get(j)?.x ?: 0.0
                 val standardY = this.constantList?.get(j)?.y ?: 0.0
-                val x = (it[i].list[j].x ?: 0.0) * 150
-                val y = (it[i].list[j].y ?: 0.0) * 150
-                itemList.add(GraphPointType4(standardX + x, standardY + y,if(i == it.size -1) (it[i].list[j].x ?: 0.0) else 0.0,if(i == it.size -1) (it[i].list[j].y ?: 0.0) else 0.0))
+                val x = (it[i].list[j].x ?: 0.0) * if(tooMuchValue)1 else 150
+                val y = (it[i].list[j].y ?: 0.0) * if(tooMuchValue)1 else 150
+                itemList.add(GraphPointType4(standardX + x, standardY + y,if(i == it.size -1) (it[i].list[j].x ?: 0.0) else null,if(i == it.size -1) (it[i].list[j].y ?: 0.0) else null))
             }
             itemsList.add(GraphGroupPointType4(it[i].time, itemList))
+
         }
     }
 

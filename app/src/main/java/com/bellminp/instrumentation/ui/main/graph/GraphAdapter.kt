@@ -595,10 +595,12 @@ class GraphAdapter(
                         set.apply {
                             axisDependency = YAxis.AxisDependency.LEFT
                             if (i == item.list.size - 1) {
+                                setDrawValues(true)
                                 valueTextSize = 10f
                                 valueFormatter = Type4LabelFormat(item.list[i])
-                                valueTextColor = Color.BLUE
+                                valueTextColor = getGraphColor(i)
                             } else {
+                                setDrawValues(false)
                                 valueTextSize = 0f
                             }
 

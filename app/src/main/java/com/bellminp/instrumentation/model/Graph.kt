@@ -428,8 +428,8 @@ data class GraphGroupPointStandard(
 data class GraphPointType4(
     val x: Double,
     val y: Double,
-    val initX : Double = 0.0,
-    val initY : Double = 0.0
+    val initX : Double? = null,
+    val initY : Double? = null
 ) : Serializable
 
 data class GraphType5(

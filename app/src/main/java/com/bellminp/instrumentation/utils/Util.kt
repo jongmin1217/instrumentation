@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import androidx.lifecycle.MutableLiveData
 import com.bellminp.common.timberMsg
+import com.bellminp.instrumentation.InstrumentationApplication
+import com.bellminp.instrumentation.R
 import com.bellminp.instrumentation.model.GaugesDetailList
 import com.bellminp.instrumentation.model.GaugesGroupDetailList
 import com.github.mikephil.charting.components.YAxis
@@ -13,6 +15,8 @@ import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
+import kotlin.random.Random
+import kotlin.random.Random.Default.nextInt
 
 fun <T : Any?> MutableLiveData<T>.default(initialValue: T?) = apply { setValue(initialValue) }
 
@@ -126,18 +130,7 @@ fun getColorType(value: Double?, gaugesDetailList: GaugesGroupDetailList) : Int 
 }
 
 fun getGraphColor(index : Int) : Int {
-    return when(index){
-        0 -> Color.BLACK
-        1 -> Color.BLUE
-        2 -> Color.CYAN
-        3 -> Color.GRAY
-        4 -> Color.GREEN
-        5 -> Color.LTGRAY
-        6 -> Color.MAGENTA
-        7 -> Color.RED
-        8 -> Color.YELLOW
-        else -> Color.WHITE
-    }
+    return InstrumentationApplication.mInstance.resources.getIntArray(R.array.color)[index]
 }
 
 fun roundOff(value : Double) = (value * 1000).roundToInt().toDouble()/1000
