@@ -158,12 +158,14 @@ class GraphAdapter(
                     this.axisLeft.apply {
                         removeAllLimitLines()
 
-                        if (item.ystep != 0.0) granularity = item.ystep.toFloat()
+
 
                         if (item.hi1enable) addLimitLine(LimitLine(item.hi1.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
+                            label = item.hi1.toString()
+                            textColor = Color.BLUE
                         })
                         if (item.hi2enable) addLimitLine(LimitLine(item.hi2.toFloat()).apply {
                             lineWidth = 1f
@@ -172,16 +174,27 @@ class GraphAdapter(
                                 R.color.orange,
                                 null
                             )
+                            label = item.hi2.toString()
+                            textColor = InstrumentationApplication.mInstance.resources.getColor(
+                                R.color.orange,
+                                null
+                            )
                         })
                         if (item.hi3enable) addLimitLine(LimitLine(item.hi3.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
+                            label = item.hi3.toString()
+                            textColor = Color.RED
                         })
                         if (item.low1enable) addLimitLine(LimitLine(item.low1.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
+                            label = item.low1.toString()
+                            textColor = Color.BLUE
+                            labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
+
                         })
                         if (item.low2enable) addLimitLine(LimitLine(item.low2.toFloat()).apply {
                             lineWidth = 1f
@@ -190,11 +203,20 @@ class GraphAdapter(
                                 R.color.orange,
                                 null
                             )
+                            label = item.low2.toString()
+                            textColor = InstrumentationApplication.mInstance.resources.getColor(
+                                R.color.orange,
+                                null
+                            )
+                            labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
                         })
                         if (item.low3enable) addLimitLine(LimitLine(item.low3.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
+                            label = item.low3.toString()
+                            textColor = Color.RED
+                            labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
                         })
 
                         axisMaximum =
@@ -203,7 +225,10 @@ class GraphAdapter(
                             if (item.autorange) item.getMin().toFloat() else item.minrange.toFloat()
                         textSize = 12f
 
-
+                        if (item.ystep != 0.0){
+                            granularity = item.ystep.toFloat()
+                            setLabelCount((((axisMaximum/item.ystep)*2)+1).toInt(),true)
+                        }
                     }
 
                     axisRight.isEnabled = false
@@ -298,13 +323,12 @@ class GraphAdapter(
                         removeAllLimitLines()
 
 
-
-                        if (item.ystep != 0.0) granularity = item.ystep.toFloat()
-
                         if (item.hi1enable) addLimitLine(LimitLine(item.hi1.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
+                            label = item.hi1.toString()
+                            textColor = Color.BLUE
                         })
                         if (item.hi2enable) addLimitLine(LimitLine(item.hi2.toFloat()).apply {
                             lineWidth = 1f
@@ -313,16 +337,27 @@ class GraphAdapter(
                                 R.color.orange,
                                 null
                             )
+                            label = item.hi2.toString()
+                            textColor = InstrumentationApplication.mInstance.resources.getColor(
+                                R.color.orange,
+                                null
+                            )
                         })
                         if (item.hi3enable) addLimitLine(LimitLine(item.hi3.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
+                            label = item.hi3.toString()
+                            textColor = Color.RED
                         })
                         if (item.low1enable) addLimitLine(LimitLine(item.low1.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
+                            label = item.low1.toString()
+                            textColor = Color.BLUE
+                            labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
+
                         })
                         if (item.low2enable) addLimitLine(LimitLine(item.low2.toFloat()).apply {
                             lineWidth = 1f
@@ -331,11 +366,20 @@ class GraphAdapter(
                                 R.color.orange,
                                 null
                             )
+                            label = item.low2.toString()
+                            textColor = InstrumentationApplication.mInstance.resources.getColor(
+                                R.color.orange,
+                                null
+                            )
+                            labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
                         })
                         if (item.low3enable) addLimitLine(LimitLine(item.low3.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
+                            label = item.low3.toString()
+                            textColor = Color.RED
+                            labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
                         })
 
                         axisMaximum =
@@ -343,6 +387,11 @@ class GraphAdapter(
                         axisMinimum =
                             if (item.autorange) item.getMin().toFloat() else item.minrange.toFloat()
                         textSize = 12f
+
+                        if (item.ystep != 0.0){
+                            granularity = item.ystep.toFloat()
+                            setLabelCount((((axisMaximum/item.ystep)*2)+1).toInt(),true)
+                        }
                     }
 
                     axisRight.isEnabled = false
@@ -421,12 +470,13 @@ class GraphAdapter(
                         removeAllLimitLines()
 
 
-                        if (item.ystep != 0.0) granularity = item.ystep.toFloat()
-
                         if (item.hi1enable) addLimitLine(LimitLine(item.hi1.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
+                            label = item.hi1.toString()
+                            textColor = Color.BLUE
+                            labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
                         })
                         if (item.hi2enable) addLimitLine(LimitLine(item.hi2.toFloat()).apply {
                             lineWidth = 1f
@@ -435,16 +485,27 @@ class GraphAdapter(
                                 R.color.orange,
                                 null
                             )
+                            label = item.hi2.toString()
+                            textColor = InstrumentationApplication.mInstance.resources.getColor(
+                                R.color.orange,
+                                null
+                            )
+                            labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
                         })
                         if (item.hi3enable) addLimitLine(LimitLine(item.hi3.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
+                            label = item.hi3.toString()
+                            textColor = Color.RED
+                            labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
                         })
                         if (item.low1enable) addLimitLine(LimitLine(item.low1.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
+                            label = item.low1.toString()
+                            textColor = Color.BLUE
                         })
                         if (item.low2enable) addLimitLine(LimitLine(item.low2.toFloat()).apply {
                             lineWidth = 1f
@@ -453,12 +514,20 @@ class GraphAdapter(
                                 R.color.orange,
                                 null
                             )
+                            label = item.low2.toString()
+                            textColor = InstrumentationApplication.mInstance.resources.getColor(
+                                R.color.orange,
+                                null
+                            )
                         })
                         if (item.low3enable) addLimitLine(LimitLine(item.low3.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
+                            label = item.low3.toString()
+                            textColor = Color.RED
                         })
+
                         isInverted = true
                         axisMaximum =
                             if (item.autorange) item.getMax().toFloat() else item.maxrange.toFloat()
@@ -467,6 +536,11 @@ class GraphAdapter(
                         textSize = 12f
 
                         labelCount = 3
+
+                        if (item.ystep != 0.0){
+                            granularity = item.ystep.toFloat()
+                            setLabelCount((((axisMaximum/item.ystep)*2)+1).toInt(),true)
+                        }
                         //isKeepPositionOnRotation = true
 
                     }

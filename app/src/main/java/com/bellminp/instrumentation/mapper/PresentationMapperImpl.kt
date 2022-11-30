@@ -717,7 +717,7 @@ fun GaugesGroupDetail.dataToGraph4(): List<GraphData> {
             val xyMax = Collections.max(xyList)
             val xyMin = Collections.min(xyList)
 
-            val tooMuchValue = xyMax > 50.0 || xyMin < -50.0
+            val tooMuchValue = xyMax > 150.0 || xyMin < -150.0
 
             for (j in it[i].list.indices) {
                 val standardX = this.constantList?.get(j)?.x ?: 0.0

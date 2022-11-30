@@ -60,12 +60,12 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                     this.axisLeft.apply {
                         removeAllLimitLines()
 
-                        if (graphData.ystep != 0.0) granularity = graphData.ystep.toFloat()
-
                         if (graphData.hi1enable) addLimitLine(LimitLine(graphData.hi1.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
+                            label = graphData.hi1.toString()
+                            textColor = Color.BLUE
                         })
                         if (graphData.hi2enable) addLimitLine(LimitLine(graphData.hi2.toFloat()).apply {
                             lineWidth = 1f
@@ -74,16 +74,26 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                                 R.color.orange,
                                 null
                             )
+                            label = graphData.hi2.toString()
+                            textColor = InstrumentationApplication.mInstance.resources.getColor(
+                                R.color.orange,
+                                null
+                            )
                         })
                         if (graphData.hi3enable) addLimitLine(LimitLine(graphData.hi3.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
+                            label = graphData.hi3.toString()
+                            textColor = Color.RED
                         })
                         if (graphData.low1enable) addLimitLine(LimitLine(graphData.low1.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
+                            label = graphData.low1.toString()
+                            textColor = Color.BLUE
+                            labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
                         })
                         if (graphData.low2enable) addLimitLine(LimitLine(graphData.low2.toFloat()).apply {
                             lineWidth = 1f
@@ -92,11 +102,20 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                                 R.color.orange,
                                 null
                             )
+                            label = graphData.low2.toString()
+                            textColor = InstrumentationApplication.mInstance.resources.getColor(
+                                R.color.orange,
+                                null
+                            )
+                            labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
                         })
                         if (graphData.low3enable) addLimitLine(LimitLine(graphData.low3.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
+                            label = graphData.low3.toString()
+                            textColor = Color.RED
+                            labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
                         })
 
                         axisMaximum =
@@ -105,7 +124,10 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                             if (graphData.autorange) graphData.getMin().toFloat() else graphData.minrange.toFloat()
                         textSize = 12f
 
-
+                        if (graphData.ystep != 0.0){
+                            granularity = graphData.ystep.toFloat()
+                            setLabelCount((((axisMaximum/graphData.ystep)*2)+1).toInt(),true)
+                        }
                     }
 
                     axisRight.isEnabled = false
@@ -181,13 +203,12 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                         removeAllLimitLines()
 
 
-
-                        if (graphData.ystep != 0.0) granularity = graphData.ystep.toFloat()
-
                         if (graphData.hi1enable) addLimitLine(LimitLine(graphData.hi1.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
+                            label = graphData.hi1.toString()
+                            textColor = Color.BLUE
                         })
                         if (graphData.hi2enable) addLimitLine(LimitLine(graphData.hi2.toFloat()).apply {
                             lineWidth = 1f
@@ -196,16 +217,26 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                                 R.color.orange,
                                 null
                             )
+                            label = graphData.hi2.toString()
+                            textColor = InstrumentationApplication.mInstance.resources.getColor(
+                                R.color.orange,
+                                null
+                            )
                         })
                         if (graphData.hi3enable) addLimitLine(LimitLine(graphData.hi3.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
+                            label = graphData.hi3.toString()
+                            textColor = Color.RED
                         })
                         if (graphData.low1enable) addLimitLine(LimitLine(graphData.low1.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
+                            label = graphData.low1.toString()
+                            textColor = Color.BLUE
+                            labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
                         })
                         if (graphData.low2enable) addLimitLine(LimitLine(graphData.low2.toFloat()).apply {
                             lineWidth = 1f
@@ -214,11 +245,20 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                                 R.color.orange,
                                 null
                             )
+                            label = graphData.low2.toString()
+                            textColor = InstrumentationApplication.mInstance.resources.getColor(
+                                R.color.orange,
+                                null
+                            )
+                            labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
                         })
                         if (graphData.low3enable) addLimitLine(LimitLine(graphData.low3.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
+                            label = graphData.low3.toString()
+                            textColor = Color.RED
+                            labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
                         })
 
                         axisMaximum =
@@ -226,6 +266,11 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                         axisMinimum =
                             if (graphData.autorange) graphData.getMin().toFloat() else graphData.minrange.toFloat()
                         textSize = 12f
+
+                        if (graphData.ystep != 0.0){
+                            granularity = graphData.ystep.toFloat()
+                            setLabelCount((((axisMaximum/graphData.ystep)*2)+1).toInt(),true)
+                        }
                     }
 
                     axisRight.isEnabled = false
