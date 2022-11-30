@@ -29,11 +29,12 @@ class FieldSelectDialog(
         super.onViewCreated(view, savedInstanceState)
 
         initAdapter()
-        adapter.submitList(items)
     }
 
 
     private fun initAdapter(){
         binding.recyclerviewField.adapter = adapter
+        adapter.submitList(items)
     }
+
 }

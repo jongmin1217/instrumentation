@@ -4,6 +4,7 @@ import com.bellminp.data.local.LocalDataSource
 import com.bellminp.data.mapper.mapToData
 import com.bellminp.data.mapper.mapToDomain
 import com.bellminp.data.remote.RemoteDataSource
+import com.bellminp.domain.model.DomainAllGauges
 import com.bellminp.domain.model.DomainAutoLogin
 import com.bellminp.domain.model.DomainLogin
 import com.bellminp.domain.repository.LocalRepository
@@ -27,6 +28,18 @@ class LocalRepositoryImpl@Inject constructor(
     override fun getToken(): String {
         return localDataSource.getToken()
     }
+
+    override fun setAdmin(admin: Boolean) {
+        localDataSource.setAdmin(admin)
+    }
+
+    override fun getAdmin() = localDataSource.getAdmin()
+
+    override fun setDataAllGauges(dataAllGauges: DomainAllGauges) {
+        localDataSource.setDataAllGauges(dataAllGauges.mapToData())
+    }
+
+    override fun getDataAllGauges(num : Int) = localDataSource.getDataAllGauges(num)
 
     override fun clear() {
         localDataSource.clear()

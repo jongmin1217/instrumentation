@@ -42,6 +42,7 @@ class SplashViewModel @Inject constructor(
 
                                     val items = data.mapToPresentation()
 
+                                    localUseCase.setAdmin(items.fieldList != null)
                                     if(items.fieldList == null) goMain(items.fieldNum?:0)
                                     else showFieldList(items.fieldList)
                                 }

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.bellminp.instrumentation.model.SectionsList" />
+
+        <import type="android.view.View" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/line_sites"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="48.5dp"
+            android:background="@color/unselect_menu"
+            android:visibility="@{item.sitesLineVisible ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_more"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="17.5dp"
+            android:background="@{item.checked ? @drawable/less : @drawable/more, default = @drawable/more}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/line_sites"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="8dp"
+            android:layout_height="1dp"
+            android:background="@color/unselect_menu"
+            app:layout_constraintBottom_toBottomOf="@id/iv_more"
+            app:layout_constraintStart_toEndOf="@id/iv_more"
+            app:layout_constraintTop_toTopOf="@id/iv_more" />
+
+        <View
+            android:id="@+id/line_top"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/unselect_menu"
+            app:layout_constraintBottom_toTopOf="@id/iv_more"
+            app:layout_constraintEnd_toEndOf="@id/iv_more"
+            app:layout_constraintStart_toStartOf="@id/iv_more"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/line_bottom"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/unselect_menu"
+            android:visibility="@{item.bottomViewVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/iv_more"
+            app:layout_constraintStart_toStartOf="@id/iv_more"
+            app:layout_constraintTop_toBottomOf="@id/iv_more" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/line"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/section24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                setSectionsName="@{item}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@{item.textGray ? @color/select_menu : @color/basic}"
+                android:textSize="@dimen/dp_13"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SmallSp,SpUsage"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="1dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintTop_toBottomOf="@id/layout_center" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

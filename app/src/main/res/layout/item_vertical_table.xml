@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="item"
+            type="com.bellminp.instrumentation.model.CellData" />
+        <import type="android.view.Gravity" />
+        <import type="android.graphics.Typeface" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@{item.title ? @drawable/shape_table_title : @drawable/shape_table}"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            setTextColor="@{item}"
+            android:textSize="@dimen/dp_13"
+            android:gravity="@{item.title ? Gravity.CENTER : Gravity.START}"
+            android:text="@{item.realText}"
+            android:padding="5dp"
+            android:maxLines="1"
+            android:typeface="@{Typeface.defaultFromStyle(item.title ? Typeface.BOLD : Typeface.NORMAL)}"
+            tools:ignore="SpUsage" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -19,6 +19,7 @@ abstract class BaseViewModel : ViewModel() {
     private val _showToast = SingleLiveEvent<String>()
     val showToast: LiveData<String> get() = _showToast
 
+
     fun showFieldList(items : List<FieldList>){
         _showFieldList.value = items
     }

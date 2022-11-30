@@ -2,11 +2,9 @@ package com.bellminp.local.prefs
 
 import android.content.Context
 import androidx.core.content.edit
-import com.bellminp.local.utils.AUTO_LOGIN_ID
-import com.bellminp.local.utils.AUTO_LOGIN_PW
-import com.bellminp.local.utils.PREFS_APP_NAME
+import com.bellminp.data.model.DataAllGauges
 import com.bellminp.data.model.DataAutoLogin
-import com.bellminp.local.utils.TOKEN
+import com.bellminp.local.utils.*
 import javax.inject.Inject
 
 class PrefsHelperImpl @Inject constructor(applicationContext: Context) : PrefsHelper {
@@ -34,6 +32,22 @@ class PrefsHelperImpl @Inject constructor(applicationContext: Context) : PrefsHe
                 putString(TOKEN, value)
             }
         }
+
+    override var admin: Boolean
+        get() = prefs.getBoolean(ADMIN, false)
+        set(value) {
+            prefs.edit {
+                putBoolean(ADMIN, value)
+            }
+        }
+
+    override fun getAllGauges(num: Int) = prefs.getString(num.toString(),null)?:""
+
+    override fun setAllGauges(data: DataAllGauges) {
+        prefs.edit {
+            putString(data.num,data.name)
+        }
+    }
 
     override fun clear(){
         prefs.edit{

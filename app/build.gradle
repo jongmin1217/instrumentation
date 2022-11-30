@@ -7,6 +7,20 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('/Users/parkjongmin/AndroidStudioProjects/instrumentation/Untitled')
+            keyAlias 'instrumentation'
+            storePassword 'whdals1217'
+            keyPassword 'whdals1217'
+        }
+        release {
+            storeFile file('/Users/parkjongmin/AndroidStudioProjects/instrumentation/Untitled')
+            keyAlias 'instrumentation'
+            storePassword 'whdals1217'
+            keyPassword 'whdals1217'
+        }
+    }
     compileSdk versions.compilesdk_version
 
     defaultConfig {
@@ -23,6 +37,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
@@ -63,4 +78,8 @@ dependencies {
 
     api deps.glide.glide
     annotationProcessor deps.glide.annotation
+
+    api deps.MPAndroidChart
+    api deps.flexbox
+    api deps.splashscreen
 }

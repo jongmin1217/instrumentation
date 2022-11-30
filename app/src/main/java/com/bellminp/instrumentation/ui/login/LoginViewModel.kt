@@ -28,6 +28,7 @@ class LoginViewModel @Inject constructor(
 
     var id = String()
     var password = String()
+    var checkAutoLogin = true
 
     fun login(){
         viewModelScope.launch {
@@ -37,11 +38,12 @@ class LoginViewModel @Inject constructor(
                         ApiResult.Status.SUCCESS -> {
                             if(it.data?.code == 0){
                                 it.data?.let{ data->
-                                    localUseCase.setAutoLogin(DomainAutoLogin(id,password))
+                                    if(checkAutoLogin) localUseCase.setAutoLogin(DomainAutoLogin(id,password))
                                     localUseCase.setToken("Bearer "+data.token)
 
                                     val items = data.mapToPresentation()
 
+                                    localUseCase.setAdmin(items.fieldList != null)
                                     if(items.fieldList == null) goMain(items.fieldNum?:0)
                                     else showFieldList(items.fieldList)
                                 }
@@ -49,7 +51,6 @@ class LoginViewModel @Inject constructor(
                                 showShortToast(InstrumentationApplication.mInstance.resources.getString(R.string.no_exist_user))
                             }
                         }
-
                         else -> {
                             showShortToast(InstrumentationApplication.mInstance.resources.getString(R.string.no_exist_user))
                         }
