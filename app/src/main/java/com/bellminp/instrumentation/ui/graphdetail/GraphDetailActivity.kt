@@ -132,7 +132,7 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
 
                     axisRight.isEnabled = false
                     description.text = ""
-                    setExtraOffsets(3f, 20f, 20f, 20f)
+                    setExtraOffsets(0f, 0f, 0f, 0f)
                     setPinchZoom(false)
                     isDoubleTapToZoomEnabled = false
                     legend.isEnabled = false
@@ -275,7 +275,7 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
 
                     axisRight.isEnabled = false
                     description.text = ""
-                    setExtraOffsets(3f, 20f, 20f, 20f)
+                    setExtraOffsets(0f, 0f, 0f, 0f)
                     setPinchZoom(false)
                     isDoubleTapToZoomEnabled = false
                     legend.isEnabled = false
@@ -372,7 +372,7 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
 
                     axisRight.isEnabled = false
                     description.text = ""
-                    setExtraOffsets(0f, 20f, 0f, 20f)
+                    setExtraOffsets(0f, 0f, 0f, 0f)
                     setPinchZoom(false)
                     isDoubleTapToZoomEnabled = false
                     legend.isEnabled = false

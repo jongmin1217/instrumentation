@@ -18,38 +18,37 @@
         >
 
 
-        <com.bellminp.instrumentation.utils.VerticalTextView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/line_chart"
-            app:layout_constraintBottom_toBottomOf="@id/line_chart"
+            app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/tv_y"
-            android:textSize="8dp"
+            android:textSize="@dimen/dp_13"
             android:textColor="@color/black"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
             android:text="@{item.name}"
             />
 
 
-        <com.bellminp.instrumentation.utils.RotatedLineChart
+        <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/line_chart"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toEndOf="@id/tv_y"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_y"
+            app:layout_constraintStart_toStartOf="parent"
+            android:rotation="-90"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/line_chart"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="10dp"
             android:id="@+id/tv_x"
-            android:textSize="8dp"
+            android:textSize="@dimen/dp_13"
             android:textColor="@color/black"
             android:text="@{item.xName}"
             />
