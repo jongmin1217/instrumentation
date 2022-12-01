@@ -653,7 +653,7 @@ fun GaugesGroupDetail.dataToGraph3(): List<GraphData> {
 
             list.add(
                 GraphType3(
-                    "누적간격변위",
+                    "변위",
                     "심도",
                     it.hi1enable,
                     it.hi2enable,

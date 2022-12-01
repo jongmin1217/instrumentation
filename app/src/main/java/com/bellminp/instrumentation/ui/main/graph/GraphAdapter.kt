@@ -233,7 +233,7 @@ class GraphAdapter(
 
                     axisRight.isEnabled = false
                     description.text = ""
-                    setExtraOffsets(3f, 20f, 20f, 0f)
+                    setExtraOffsets(0f, 0f, 0f, 0f)
                     setPinchZoom(false)
                     isDoubleTapToZoomEnabled = false
                     legend.isEnabled = false
@@ -396,7 +396,7 @@ class GraphAdapter(
 
                     axisRight.isEnabled = false
                     description.text = ""
-                    setExtraOffsets(3f, 20f, 20f, 0f)
+                    setExtraOffsets(0f, 0f, 0f, 0f)
                     setPinchZoom(false)
                     isDoubleTapToZoomEnabled = false
                     legend.isEnabled = false
@@ -450,13 +450,19 @@ class GraphAdapter(
                 binding.lineChart.apply {
                     val display = InstrumentationApplication.mInstance.resources.displayMetrics
                     val width = display.widthPixels
+
+                    val density = display.density
+                    val densityDpi = display.densityDpi
+
+                    val offset = (width/density).toFloat()
+                    timberMsg(width)
 //
 //                    val params1 = FrameLayout.LayoutParams(width*2, width)
 //                    layoutParams = params1
 
 //                    rotation = -90f
 //
-                    val params = FrameLayout.LayoutParams(width / 2, width * 2)
+                    val params = FrameLayout.LayoutParams(width * 2, width * 2)
                     layoutParams = params
 
                     this.xAxis.apply {
@@ -558,7 +564,7 @@ class GraphAdapter(
 
                     axisRight.isEnabled = false
                     description.text = ""
-                    setExtraOffsets(0f, 0f, 0f, 0f)
+                    setExtraOffsets(0f, 10f, 40f, offset+10f)
                     setPinchZoom(false)
                     isDoubleTapToZoomEnabled = false
                     legend.isEnabled = false
