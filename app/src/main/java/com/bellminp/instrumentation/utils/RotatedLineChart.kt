@@ -28,6 +28,7 @@ class RotatedLineChart @JvmOverloads constructor(
             canvas.rotate(VERTICAL_ROTATION)
 
             //canvas.restore()
+            //테스트입니다
         }
         super.onDraw(canvas)
     }
