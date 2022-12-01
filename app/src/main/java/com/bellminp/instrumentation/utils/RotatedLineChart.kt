@@ -4,9 +4,10 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Rect
 import android.util.AttributeSet
+import com.bellminp.common.timberMsg
 import com.github.mikephil.charting.charts.LineChart
 
-private const val VERTICAL_ROTATION = 270f
+private const val VERTICAL_ROTATION = -90f
 
 class RotatedLineChart @JvmOverloads constructor(
     context: Context,
@@ -14,12 +15,28 @@ class RotatedLineChart @JvmOverloads constructor(
     defStyle: Int = 0
 ) : LineChart(context, attrs, defStyle) {
 
+    private var _measuredWidth: Int = 0
+    private var _measuredHeight: Int = 0
+    private val _bounds = Rect()
+
     override fun onDraw(canvas: Canvas?) {
         canvas?.let {
-            it.translate(0f,height.toFloat())
-            it.scale(1f,-1f)
+            timberMsg(it)
+            canvas.save()
 
+            canvas.translate(0f, _measuredHeight.toFloat()*2)
+            canvas.rotate(VERTICAL_ROTATION)
+
+            //canvas.restore()
         }
         super.onDraw(canvas)
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        timberMsg("$measuredWidth $measuredHeight")
+        _measuredHeight = measuredWidth
+        _measuredWidth = measuredHeight
+        setMeasuredDimension(_measuredWidth, _measuredHeight*2)
     }
 }

@@ -35,7 +35,7 @@ import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
 class GraphAdapter(
-    private val onItemClick : ((item : GraphData) -> Unit)
+    private val onItemClick: ((item: GraphData) -> Unit)
 ) : BaseListAdapter<GraphData>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<GraphData> {
         return when (viewType) {
@@ -127,7 +127,7 @@ class GraphAdapter(
 
     class Type1Holder(
         private val binding: ItemGraphType1Binding,
-        private val onItemClick : ((item : GraphData) -> Unit)
+        private val onItemClick: ((item: GraphData) -> Unit)
     ) : BaseViewHolder<GraphData>(binding) {
 
         override fun bind(item: GraphData) {
@@ -135,7 +135,7 @@ class GraphAdapter(
                 binding.item = item
                 binding.executePendingBindings()
 
-                binding.lineChart.setOnClickListener{
+                binding.lineChart.setOnClickListener {
                     onItemClick(item)
                 }
 
@@ -225,9 +225,9 @@ class GraphAdapter(
                             if (item.autorange) item.getMin().toFloat() else item.minrange.toFloat()
                         textSize = 12f
 
-                        if (item.ystep != 0.0){
+                        if (item.ystep != 0.0) {
                             granularity = item.ystep.toFloat()
-                            setLabelCount((((axisMaximum/item.ystep)*2)+1).toInt(),true)
+                            setLabelCount((((axisMaximum / item.ystep) * 2) + 1).toInt(), true)
                         }
                     }
 
@@ -289,7 +289,7 @@ class GraphAdapter(
 
     class Type2Holder(
         private val binding: ItemGraphType2Binding,
-        private val onItemClick : ((item : GraphData) -> Unit)
+        private val onItemClick: ((item: GraphData) -> Unit)
     ) : BaseViewHolder<GraphData>(binding) {
 
         override fun bind(item: GraphData) {
@@ -297,7 +297,7 @@ class GraphAdapter(
                 binding.item = item
                 binding.executePendingBindings()
 
-                binding.lineChart.setOnClickListener{
+                binding.lineChart.setOnClickListener {
                     onItemClick(item)
                 }
 
@@ -388,9 +388,9 @@ class GraphAdapter(
                             if (item.autorange) item.getMin().toFloat() else item.minrange.toFloat()
                         textSize = 12f
 
-                        if (item.ystep != 0.0){
+                        if (item.ystep != 0.0) {
                             granularity = item.ystep.toFloat()
-                            setLabelCount((((axisMaximum/item.ystep)*2)+1).toInt(),true)
+                            setLabelCount((((axisMaximum / item.ystep) * 2) + 1).toInt(), true)
                         }
                     }
 
@@ -446,7 +446,18 @@ class GraphAdapter(
                 binding.executePendingBindings()
 
 
+
                 binding.lineChart.apply {
+                    val display = InstrumentationApplication.mInstance.resources.displayMetrics
+                    val width = display.widthPixels
+//
+//                    val params1 = FrameLayout.LayoutParams(width*2, width)
+//                    layoutParams = params1
+
+//                    rotation = -90f
+//
+                    val params = FrameLayout.LayoutParams(width / 2, width * 2)
+                    layoutParams = params
 
                     this.xAxis.apply {
 
@@ -537,9 +548,9 @@ class GraphAdapter(
 
                         labelCount = 3
 
-                        if (item.ystep != 0.0){
+                        if (item.ystep != 0.0) {
                             granularity = item.ystep.toFloat()
-                            setLabelCount((((axisMaximum/item.ystep)*2)+1).toInt(),true)
+                            setLabelCount((((axisMaximum / item.ystep) * 2) + 1).toInt(), true)
                         }
                         //isKeepPositionOnRotation = true
 
@@ -547,7 +558,7 @@ class GraphAdapter(
 
                     axisRight.isEnabled = false
                     description.text = ""
-                    setExtraOffsets(0f, 50f, 0f, 50f)
+                    setExtraOffsets(0f, 0f, 0f, 0f)
                     setPinchZoom(false)
                     isDoubleTapToZoomEnabled = false
                     legend.isEnabled = false
@@ -597,7 +608,7 @@ class GraphAdapter(
 
     class Type4Holder(
         private val binding: ItemGraphType4Binding,
-        private val onItemClick : ((item : GraphData) -> Unit)
+        private val onItemClick: ((item: GraphData) -> Unit)
     ) : BaseViewHolder<GraphData>(binding) {
 
         override fun bind(item: GraphData) {
@@ -605,10 +616,9 @@ class GraphAdapter(
                 binding.item = item
                 binding.executePendingBindings()
 
-                binding.lineChart.setOnClickListener{
+                binding.lineChart.setOnClickListener {
                     onItemClick(item)
                 }
-
 
 
                 val display = InstrumentationApplication.mInstance.resources.displayMetrics
@@ -753,20 +763,20 @@ class GraphAdapter(
                     }
 
                     this.yAxis.apply {
-                        val max = if(item.getMax() == 0.0) 1f else item.getMax().toFloat()
-                        setLabelCount(5,true)
+                        val max = if (item.getMax() == 0.0) 1f else item.getMax().toFloat()
+                        setLabelCount(5, true)
                         axisMaximum = max
                         axisMinimum = 0f
                         setDrawLabels(false)
                         setDrawGridLines(false)
 
                         val directionList = ArrayList<Direction>()
-                        val range = max/4
-                        for(i in 0..3){
+                        val range = max / 4
+                        for (i in 0..3) {
                             directionList.add(
                                 Direction(
-                                    String.format("%.1f",-(max - (range*i))),
-                                    if(i == 0) 0 else 1
+                                    String.format("%.1f", -(max - (range * i))),
+                                    if (i == 0) 0 else 1
                                 )
                             )
                         }
@@ -776,17 +786,18 @@ class GraphAdapter(
                                 1
                             )
                         )
-                        for(i in 3 downTo 0){
+                        for (i in 3 downTo 0) {
                             directionList.add(
                                 Direction(
-                                    String.format("%.1f",(max - (range*i))),
-                                    if(i == 0) 2 else 1
+                                    String.format("%.1f", (max - (range * i))),
+                                    if (i == 0) 2 else 1
                                 )
                             )
                         }
 
 
-                        val directionAdapter = DirectionAdapter().apply { submitList(directionList) }
+                        val directionAdapter =
+                            DirectionAdapter().apply { submitList(directionList) }
                         binding.recyclerviewDirection.adapter = directionAdapter
                     }
                     legend.isEnabled = false
