@@ -12,6 +12,7 @@
     <string name="to">To:</string>
 
     <string name="no_data">데이터가 없습니다.</string>
+    <string name="no_record">검사한 기록이 없습니다.</string>
     <string name="no_select_gauges">선택된 계측기가 없습니다. 계측기를 선택하세요.</string>
     <string name="test_no_list">test_no_list</string>
     <string name="test_list">test_list</string>
@@ -25,6 +26,12 @@
     <string name="start_date">시작일</string>
     <string name="end_date">종료일</string>
     <string name="select_field">현장을 선택하세요.</string>
+
+
+    <string name="type_2_x">지점(m)</string>
+    <string name="type_2_y">변위(mm)</string>
+    <string name="type_3_y">심도(m)</string>
+    <string name="type_4_x">(m)</string>
 
 
     <string name="double_tab">뒤로 버튼을 한번 더 누르면 종료합니다.</string>

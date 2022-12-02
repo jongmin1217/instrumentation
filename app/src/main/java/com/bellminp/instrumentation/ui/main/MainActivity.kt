@@ -94,9 +94,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         if (recordFragment != null) changeFragment(recordFragment!!)
         else {
             recordFragment = RecordFragment(
-                viewModel.selectData,
+                viewModel.recordSelectData,
                 recordList,
-                { type, text, time -> editDateSelectData(type, text, time) },
+                { type, text, time -> editRecordSelectData(type, text, time) },
                 { data ->
                     editGaugesSelectData(data)
                     menuAdapter.moveMenu(1)
@@ -165,15 +165,32 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         settingSelectData()
     }
 
+    private fun editRecordSelectData(type : Int, text : String, time : Long){
+        with(viewModel) {
+            if(type == 0){
+                recordSelectData.fromDay = text
+                recordSelectData.startUnixTime = time
+            }else{
+                recordSelectData.toDay = text
+                recordSelectData.endUnixTime = time
+            }
+        }
+        settingRecordSelectData()
+    }
+
 
     private fun settingSelectData() {
-        tableFragment?.setSelectData(viewModel.selectData)
-        graphFragment?.setSelectData(viewModel.selectData)
-        recordFragment?.setSelectData(viewModel.selectData)
-
         with(viewModel) {
-            getProcessLog()
+            tableFragment?.setSelectData(selectData)
+            graphFragment?.setSelectData(selectData)
             getGaugesData()
+        }
+    }
+
+    private fun settingRecordSelectData() {
+        with(viewModel) {
+            recordFragment?.setSelectData(recordSelectData)
+            getProcessLog()
         }
     }
 

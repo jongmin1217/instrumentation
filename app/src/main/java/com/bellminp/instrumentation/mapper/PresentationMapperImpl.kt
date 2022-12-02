@@ -138,7 +138,7 @@ fun List<DomainRecordList>.mapToPresentation(
     }.toMutableList()
 
     val titleData = RecordData(
-        0,
+        Long.MAX_VALUE,
         "검사내용",
         0,
         0,
@@ -159,31 +159,35 @@ fun List<DomainRecordList>.mapToPresentation(
 
 fun List<RecordData>.mapToCellData(): List<RecordListData> {
     val list = ArrayList<RecordListData>()
-
-    if (this.isNotEmpty()) {
-        val timeItem = this.map {
+    val items = sortedBy { it.time }.reversed()
+    if (items.isNotEmpty()) {
+        val timeItem = items.map {
             CellData(
                 if (it.title) "검사일시" else graphLegendValue(it.time),
                 it.title,
-                cellTableData = if (it.title) null else CellTableData(it.time, it.gaugeNum)
+                cellTableData = if (it.title) null else CellTableData(it.time, it.gaugeNum),
+                type = 1,
+                time = true
             )
         }
         list.add(RecordListData(timeItem))
 
-        val gaugesNameItem = this.map {
+        val gaugesNameItem = items.map {
             CellData(
                 it.gaugeName,
                 it.title,
-                cellTableData = if (it.title) null else CellTableData(it.time, it.gaugeNum)
+                cellTableData = if (it.title) null else CellTableData(it.time, it.gaugeNum),
+                type = 1
             )
         }
         list.add(RecordListData(gaugesNameItem))
 
-        val msgItem = this.map {
+        val msgItem = items.map {
             CellData(
                 it.msg,
                 it.title,
-                cellTableData = if (it.title) null else CellTableData(it.time, it.gaugeNum)
+                cellTableData = if (it.title) null else CellTableData(it.time, it.gaugeNum),
+                type = 1
             )
         }
         list.add(RecordListData(msgItem))
@@ -303,7 +307,8 @@ fun GaugesDetail.dataToTableData(): List<TableData> {
                 timeList.add(
                     CellData(
                         graphLegendValue(chartList.time),
-                        false
+                        false,
+                        time = true
                     )
                 )
             }
@@ -353,7 +358,8 @@ fun GaugesGroupDetail.dataToTableData(): List<TableData> {
                 timeList.add(
                     CellData(
                         graphLegendValue(chartList.time),
-                        false
+                        false,
+                        time = true
                     )
                 )
             }
@@ -895,10 +901,11 @@ fun GaugesDetail.dataToGraph5(): List<GraphData> {
             list.add(
                 GraphType5(
                     "",
-                    "",
+                    if(it.size > 1) it[1].reunit else "",
                     it[0].ystep,
                     it[0].reunit,
-                    itemsList
+                    itemsList,
+                    this.chartType?:5
                 )
             )
         }
@@ -929,10 +936,11 @@ fun GaugesDetail.dataToGraph7(): List<GraphData> {
             list.add(
                 GraphType5(
                     "",
-                    "",
+                    if(it.size > 1) it[1].reunit else "",
                     it[0].ystep,
                     it[0].reunit,
-                    itemsList
+                    itemsList,
+                    5
                 )
             )
 

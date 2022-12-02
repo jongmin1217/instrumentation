@@ -9,15 +9,13 @@ import com.bellminp.domain.model.ApiResult
 import com.bellminp.domain.usecase.LocalUseCase
 import com.bellminp.domain.usecase.RemoteUseCase
 import com.bellminp.instrumentation.mapper.mapToPresentation
-import com.bellminp.instrumentation.model.GaugesData
-import com.bellminp.instrumentation.model.RecordData
-import com.bellminp.instrumentation.model.SelectData
-import com.bellminp.instrumentation.model.SitesList
+import com.bellminp.instrumentation.model.*
 import com.bellminp.instrumentation.ui.base.BaseViewModel
 import com.bellminp.instrumentation.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,20 +32,46 @@ class MainViewModel @Inject constructor(
 
     var fieldNum = 0
     var selectData = SelectData()
+    var recordSelectData = RecordSelectData()
 
     fun getProcessLog() {
         viewModelScope.launch {
             remoteUseCase.getProcessLog(
                 localUseCase.getToken(),
                 fieldNum,
-                selectData.startUnixTime,
-                selectData.endUnixTime
+                recordSelectData.startUnixTime,
+                recordSelectData.endUnixTime
             ).collect {
                 if (it.status == ApiResult.Status.SUCCESS) {
                     when (it.data?.code) {
                         0 -> {
                             it.data?.list?.let { list ->
-                                _setRecordList.value = list.mapToPresentation(localUseCase.getAdmin())
+                                if(recordSelectData.startUnixTime == 0L){
+                                    val maxTime = Collections.max(list.map { data -> data.time })
+                                    recordSelectData.fromDay = convertTimestampToDateText(
+                                        getUnixTime(
+                                            convertTimestampToDateTerm(maxTime - (ONE_DAY * 3)),
+                                            false
+                                        )
+                                    )
+                                    recordSelectData.toDay = convertTimestampToDateText(
+                                        getUnixTime(
+                                            convertTimestampToDateTerm(maxTime),
+                                            true
+                                        )
+                                    )
+                                    recordSelectData.startUnixTime = getUnixTime(
+                                        convertTimestampToDateTerm(maxTime - (ONE_DAY * 3)),
+                                        true
+                                    )/1000
+                                    recordSelectData.endUnixTime = getUnixTime(
+                                        convertTimestampToDateTerm(maxTime),
+                                        false
+                                    )/1000
+
+                                    getProcessLog()
+                                }
+                                else _setRecordList.value = list.mapToPresentation(localUseCase.getAdmin())
                             }
                         }
 

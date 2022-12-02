@@ -19,5 +19,15 @@ fun setTextColor(tv: TextView, item: CellData) {
             3 -> tv.setTextColor(res.getColor(R.color.red,null))
         }
     }
+}
 
+@BindingAdapter("setCellWidth")
+fun setCellWidth(tv: TextView, type: Int) {
+    if(type == 0){
+        val display = InstrumentationApplication.mInstance.resources.displayMetrics
+
+        val density = display.density
+        tv.minWidth = (80*density).toInt()
+        tv.maxWidth = (160*density).toInt()
+    }
 }

@@ -39,6 +39,13 @@ data class GraphType1(
     val list: List<GraphGroupPointType1>
 ) : GraphData,Serializable {
 
+    fun getNameText() : String{
+        val splitText = reunit.split("(")
+        return if(splitText.isNotEmpty()){
+            "(${splitText[splitText.size-1]}"
+        }else ""
+    }
+
     fun getMax(): Double {
         val list = ArrayList<GraphPointType1>()
 
@@ -437,7 +444,8 @@ data class GraphType5(
     val name: String,
     val ystep: Double,
     val reunit: String,
-    val list: List<GraphGroupPointType5>
+    val list: List<GraphGroupPointType5>,
+    val chartType : Int
 ) : GraphData{
     fun getMax() : Double{
         val items = ArrayList<Double>()

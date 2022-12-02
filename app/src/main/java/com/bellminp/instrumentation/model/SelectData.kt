@@ -32,3 +32,23 @@ data class SelectData(
     var gaugesNum : Int = 0,
     var type : String = ""
 )
+
+data class RecordSelectData(
+    var toDay : String = convertTimestampToDateText(
+        getUnixTime(
+            convertTimestampToDateTerm(getUnixTime()),
+            false
+        )
+    ),
+    var fromDay : String = convertTimestampToDateText(
+        getUnixTime(
+            convertTimestampToDateTerm(getUnixTime() - (ONE_DAY * 3)),
+            true
+        )
+    ),
+    var startUnixTime : Long = 0,
+    var endUnixTime : Long = getUnixTime(
+        convertTimestampToDateTerm(getUnixTime()),
+        false
+    )/1000
+)

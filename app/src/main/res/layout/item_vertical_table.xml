@@ -24,10 +24,12 @@
             app:layout_constraintTop_toTopOf="parent"
             setTextColor="@{item}"
             android:textSize="@dimen/dp_13"
-            android:gravity="@{item.title ? Gravity.CENTER : Gravity.START}"
+            android:gravity="@{item.time || item.title ? item.recordInfo ? Gravity.START : Gravity.CENTER : item.type == 0 ? Gravity.END : Gravity.START}"
             android:text="@{item.realText}"
             android:padding="5dp"
             android:maxLines="1"
+            setCellWidth = "@{item.type}"
+            android:ellipsize="end"
             android:typeface="@{Typeface.defaultFromStyle(item.title ? Typeface.BOLD : Typeface.NORMAL)}"
             tools:ignore="SpUsage" />
 

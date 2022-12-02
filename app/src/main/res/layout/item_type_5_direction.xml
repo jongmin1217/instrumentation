@@ -59,6 +59,7 @@
             android:textSize="10dp"
             tools:ignore="SpUsage"
             android:text="@{item.text}"
+            android:visibility="@{item.chartType == 5 ? View.VISIBLE : View.GONE}"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

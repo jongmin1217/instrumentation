@@ -1,5 +1,6 @@
 package com.bellminp.instrumentation.ui.graphdetail
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -34,6 +35,7 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
         binding.vm = viewModel
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -41,7 +43,8 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
 
         when(graphData){
             is GraphType1 -> {
-                binding.tvY.text = graphData.name
+                binding.tvY.text = graphData.getNameText()
+                binding.tvX.visibility = View.GONE
 
                 binding.lineChart.apply {
                     this.xAxis.apply {
@@ -64,7 +67,7 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
-                            label = graphData.hi1.toString()
+                            label = "1차(${graphData.hi1})"
                             textColor = Color.BLUE
                         })
                         if (graphData.hi2enable) addLimitLine(LimitLine(graphData.hi2.toFloat()).apply {
@@ -74,7 +77,7 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                                 R.color.orange,
                                 null
                             )
-                            label = graphData.hi2.toString()
+                            label = "2차(${graphData.hi2})"
                             textColor = InstrumentationApplication.mInstance.resources.getColor(
                                 R.color.orange,
                                 null
@@ -84,16 +87,17 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
-                            label = graphData.hi3.toString()
+                            label = "3차(${graphData.hi3})"
                             textColor = Color.RED
                         })
                         if (graphData.low1enable) addLimitLine(LimitLine(graphData.low1.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
-                            label = graphData.low1.toString()
+                            label = "1차(${graphData.low1})"
                             textColor = Color.BLUE
                             labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
+
                         })
                         if (graphData.low2enable) addLimitLine(LimitLine(graphData.low2.toFloat()).apply {
                             lineWidth = 1f
@@ -102,7 +106,7 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                                 R.color.orange,
                                 null
                             )
-                            label = graphData.low2.toString()
+                            label = "2차(${graphData.low2})"
                             textColor = InstrumentationApplication.mInstance.resources.getColor(
                                 R.color.orange,
                                 null
@@ -113,7 +117,7 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
-                            label = graphData.low3.toString()
+                            label = "3차(${graphData.low3})"
                             textColor = Color.RED
                             labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
                         })
@@ -132,7 +136,7 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
 
                     axisRight.isEnabled = false
                     description.text = ""
-                    setExtraOffsets(0f, 0f, 0f, 0f)
+                    setExtraOffsets(16f, 0f, 16f, 0f)
                     setPinchZoom(false)
                     isDoubleTapToZoomEnabled = false
                     legend.isEnabled = false
@@ -181,7 +185,8 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
             }
             
             is GraphType2 -> {
-                binding.tvY.text = graphData.name
+                binding.tvY.text = "변위(mm)"
+                binding.tvX.text = "지점(m)"
                 
                 binding.lineChart.apply {
                     this.xAxis.apply {
@@ -207,7 +212,7 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
-                            label = graphData.hi1.toString()
+                            label = "1차(${graphData.hi1})"
                             textColor = Color.BLUE
                         })
                         if (graphData.hi2enable) addLimitLine(LimitLine(graphData.hi2.toFloat()).apply {
@@ -217,7 +222,7 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                                 R.color.orange,
                                 null
                             )
-                            label = graphData.hi2.toString()
+                            label = "2차(${graphData.hi2})"
                             textColor = InstrumentationApplication.mInstance.resources.getColor(
                                 R.color.orange,
                                 null
@@ -227,16 +232,17 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
-                            label = graphData.hi3.toString()
+                            label = "3차(${graphData.hi3})"
                             textColor = Color.RED
                         })
                         if (graphData.low1enable) addLimitLine(LimitLine(graphData.low1.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
-                            label = graphData.low1.toString()
+                            label = "1차(${graphData.low1})"
                             textColor = Color.BLUE
                             labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
+
                         })
                         if (graphData.low2enable) addLimitLine(LimitLine(graphData.low2.toFloat()).apply {
                             lineWidth = 1f
@@ -245,7 +251,7 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                                 R.color.orange,
                                 null
                             )
-                            label = graphData.low2.toString()
+                            label = "2차(${graphData.low2})"
                             textColor = InstrumentationApplication.mInstance.resources.getColor(
                                 R.color.orange,
                                 null
@@ -256,7 +262,7 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
-                            label = graphData.low3.toString()
+                            label = "3차(${graphData.low3})"
                             textColor = Color.RED
                             labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
                         })
@@ -275,7 +281,7 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
 
                     axisRight.isEnabled = false
                     description.text = ""
-                    setExtraOffsets(0f, 0f, 0f, 0f)
+                    setExtraOffsets(16f, 0f, 16f, 0f)
                     setPinchZoom(false)
                     isDoubleTapToZoomEnabled = false
                     legend.isEnabled = false
@@ -330,7 +336,8 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
             }
             
             is GraphType4 -> {
-                binding.tvY.visibility = View.GONE
+                binding.tvY.text = "(m)"
+                binding.tvX.text = "(m)"
 
                 val display = InstrumentationApplication.mInstance.resources.displayMetrics
                 val width = display.widthPixels
@@ -372,7 +379,7 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
 
                     axisRight.isEnabled = false
                     description.text = ""
-                    setExtraOffsets(0f, 0f, 0f, 0f)
+                    setExtraOffsets(16f, 0f, 16f, 0f)
                     setPinchZoom(false)
                     isDoubleTapToZoomEnabled = false
                     legend.isEnabled = false

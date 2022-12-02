@@ -21,10 +21,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="16dp"
             android:id="@+id/recyclerview_legend"
+            tools:listitem="@layout/item_legend"
             android:overScrollMode="never"
-            />
+            android:paddingEnd="16dp"
+            tools:ignore="RtlSymmetry" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -34,9 +36,9 @@
             android:id="@+id/tv_y"
             android:textSize="@dimen/dp_13"
             android:textColor="@color/black"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:text="@{item.name}"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@{item.nameText}"
             />
 
         <com.github.mikephil.charting.charts.LineChart
@@ -47,6 +49,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintDimensionRatio="H,2:1"
+            android:layout_marginTop="-10dp"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
