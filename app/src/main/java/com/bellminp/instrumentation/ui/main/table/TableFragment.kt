@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.bellminp.instrumentation.R
 import com.bellminp.instrumentation.databinding.FragmentRecordBinding
 import com.bellminp.instrumentation.databinding.FragmentTableBinding
+import com.bellminp.instrumentation.model.CellData
 import com.bellminp.instrumentation.model.GaugesData
 import com.bellminp.instrumentation.model.SelectData
+import com.bellminp.instrumentation.model.TableData
 import com.bellminp.instrumentation.ui.base.BaseFragment
 import com.bellminp.instrumentation.ui.main.record.RecordViewModel
 import com.bellminp.instrumentation.utils.ONE_DAY
@@ -28,6 +30,7 @@ class TableFragment(
     override val viewModel by activityViewModels<TableViewModel>()
 
     private val adapter = TableAdapter()
+    private val otherAdapter = OtherAdapter()
 
     override fun setupBinding() {
         binding.vm = viewModel
@@ -66,6 +69,22 @@ class TableFragment(
         viewModel.gaugesData.value = data
         data?.let {
             adapter.submitList(it.getTableData())
+
+            if(it.getTableData().isNotEmpty()){
+                val size = it.getTableData()[0].list.size
+
+                val otherList = ArrayList<CellData>()
+                for(i in 0 until size){
+                    if(i == 0){
+                        otherList.add(CellData("비고",title = true, type = 2))
+                    }else{
+                        otherList.add(CellData("", type = 2))
+                    }
+                }
+
+                otherAdapter.submitList(listOf(TableData(otherList)))
+            }
+
         }
     }
 
@@ -88,6 +107,12 @@ class TableFragment(
         val animator = binding.recyclerviewTable.itemAnimator
         if (animator is SimpleItemAnimator) {
             animator.supportsChangeAnimations = false
+        }
+
+        binding.recyclerviewOther.adapter = otherAdapter
+        val animatorOther = binding.recyclerviewOther.itemAnimator
+        if (animatorOther is SimpleItemAnimator) {
+            animatorOther.supportsChangeAnimations = false
         }
     }
 

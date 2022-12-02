@@ -153,18 +153,17 @@ class GraphAdapter(
                         axisMinimum = item.getMinTime().toFloat()
                         axisMaximum = item.getMaxTime().toFloat()
 
+
                     }
 
                     this.axisLeft.apply {
                         removeAllLimitLines()
 
-
-
                         if (item.hi1enable) addLimitLine(LimitLine(item.hi1.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
-                            label = item.hi1.toString()
+                            label = "1차(${item.hi1})"
                             textColor = Color.BLUE
                         })
                         if (item.hi2enable) addLimitLine(LimitLine(item.hi2.toFloat()).apply {
@@ -174,7 +173,7 @@ class GraphAdapter(
                                 R.color.orange,
                                 null
                             )
-                            label = item.hi2.toString()
+                            label = "2차(${item.hi2})"
                             textColor = InstrumentationApplication.mInstance.resources.getColor(
                                 R.color.orange,
                                 null
@@ -184,14 +183,14 @@ class GraphAdapter(
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
-                            label = item.hi3.toString()
+                            label = "3차(${item.hi3})"
                             textColor = Color.RED
                         })
                         if (item.low1enable) addLimitLine(LimitLine(item.low1.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
-                            label = item.low1.toString()
+                            label = "1차(${item.low1})"
                             textColor = Color.BLUE
                             labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
 
@@ -203,7 +202,7 @@ class GraphAdapter(
                                 R.color.orange,
                                 null
                             )
-                            label = item.low2.toString()
+                            label = "2차(${item.low2})"
                             textColor = InstrumentationApplication.mInstance.resources.getColor(
                                 R.color.orange,
                                 null
@@ -214,7 +213,7 @@ class GraphAdapter(
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
-                            label = item.low3.toString()
+                            label = "3차(${item.low3})"
                             textColor = Color.RED
                             labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
                         })
@@ -233,7 +232,7 @@ class GraphAdapter(
 
                     axisRight.isEnabled = false
                     description.text = ""
-                    setExtraOffsets(0f, 0f, 0f, 0f)
+                    setExtraOffsets(16f, 0f, 16f, 0f)
                     setPinchZoom(false)
                     isDoubleTapToZoomEnabled = false
                     legend.isEnabled = false
@@ -327,7 +326,7 @@ class GraphAdapter(
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
-                            label = item.hi1.toString()
+                            label = "1차(${item.hi1})"
                             textColor = Color.BLUE
                         })
                         if (item.hi2enable) addLimitLine(LimitLine(item.hi2.toFloat()).apply {
@@ -337,7 +336,7 @@ class GraphAdapter(
                                 R.color.orange,
                                 null
                             )
-                            label = item.hi2.toString()
+                            label = "2차(${item.hi2})"
                             textColor = InstrumentationApplication.mInstance.resources.getColor(
                                 R.color.orange,
                                 null
@@ -347,14 +346,14 @@ class GraphAdapter(
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
-                            label = item.hi3.toString()
+                            label = "3차(${item.hi3})"
                             textColor = Color.RED
                         })
                         if (item.low1enable) addLimitLine(LimitLine(item.low1.toFloat()).apply {
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
-                            label = item.low1.toString()
+                            label = "1차(${item.low1})"
                             textColor = Color.BLUE
                             labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
 
@@ -366,7 +365,7 @@ class GraphAdapter(
                                 R.color.orange,
                                 null
                             )
-                            label = item.low2.toString()
+                            label = "2차(${item.low2})"
                             textColor = InstrumentationApplication.mInstance.resources.getColor(
                                 R.color.orange,
                                 null
@@ -377,7 +376,7 @@ class GraphAdapter(
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
-                            label = item.low3.toString()
+                            label = "3차(${item.low3})"
                             textColor = Color.RED
                             labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
                         })
@@ -396,7 +395,7 @@ class GraphAdapter(
 
                     axisRight.isEnabled = false
                     description.text = ""
-                    setExtraOffsets(0f, 0f, 0f, 0f)
+                    setExtraOffsets(16f, 0f, 16f, 0f)
                     setPinchZoom(false)
                     isDoubleTapToZoomEnabled = false
                     legend.isEnabled = false
@@ -452,16 +451,8 @@ class GraphAdapter(
                     val width = display.widthPixels
 
                     val density = display.density
-                    val densityDpi = display.densityDpi
 
-                    val offset = (width/density).toFloat()
-                    timberMsg(width)
-//
-//                    val params1 = FrameLayout.LayoutParams(width*2, width)
-//                    layoutParams = params1
-
-//                    rotation = -90f
-//
+                    val offset = (width/density)
                     val params = FrameLayout.LayoutParams(width * 2, width * 2)
                     layoutParams = params
 
@@ -491,7 +482,7 @@ class GraphAdapter(
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
-                            label = item.hi1.toString()
+                            label = "1차(${item.hi1})"
                             textColor = Color.BLUE
                             labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
                         })
@@ -502,7 +493,7 @@ class GraphAdapter(
                                 R.color.orange,
                                 null
                             )
-                            label = item.hi2.toString()
+                            label = "2차(${item.hi2})"
                             textColor = InstrumentationApplication.mInstance.resources.getColor(
                                 R.color.orange,
                                 null
@@ -513,7 +504,7 @@ class GraphAdapter(
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
-                            label = item.hi3.toString()
+                            label = "3차(${item.hi3})"
                             textColor = Color.RED
                             labelPosition = LimitLine.LimitLabelPosition.RIGHT_BOTTOM
                         })
@@ -521,8 +512,9 @@ class GraphAdapter(
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.BLUE
-                            label = item.low1.toString()
+                            label = "1차(${item.low1})"
                             textColor = Color.BLUE
+
                         })
                         if (item.low2enable) addLimitLine(LimitLine(item.low2.toFloat()).apply {
                             lineWidth = 1f
@@ -531,7 +523,7 @@ class GraphAdapter(
                                 R.color.orange,
                                 null
                             )
-                            label = item.low2.toString()
+                            label = "2차(${item.low2})"
                             textColor = InstrumentationApplication.mInstance.resources.getColor(
                                 R.color.orange,
                                 null
@@ -541,7 +533,7 @@ class GraphAdapter(
                             lineWidth = 1f
                             enableDashedLine(10f, 10f, 10f)
                             lineColor = Color.RED
-                            label = item.low3.toString()
+                            label = "3차(${item.low3})"
                             textColor = Color.RED
                         })
 
@@ -564,7 +556,7 @@ class GraphAdapter(
 
                     axisRight.isEnabled = false
                     description.text = ""
-                    setExtraOffsets(0f, 10f, 40f, offset+10f)
+                    setExtraOffsets(0f, 16f, 40f, offset+20f)
                     setPinchZoom(false)
                     isDoubleTapToZoomEnabled = false
                     legend.isEnabled = false
@@ -667,7 +659,7 @@ class GraphAdapter(
 
                     axisRight.isEnabled = false
                     description.text = ""
-                    setExtraOffsets(0f, 0f, 0f, 0f)
+                    setExtraOffsets(16f, 0f, 16f, 0f)
                     setPinchZoom(false)
                     isDoubleTapToZoomEnabled = false
                     legend.isEnabled = false
@@ -757,7 +749,7 @@ class GraphAdapter(
 
                 binding.radarChart.apply {
                     description.text = ""
-
+                    setExtraOffsets(16f, 16f, 16f, 16f)
                     //setDrawWeb(false)
                     this.xAxis.apply {
                         position = XAxis.XAxisPosition.BOTTOM
@@ -782,21 +774,24 @@ class GraphAdapter(
                             directionList.add(
                                 Direction(
                                     String.format("%.1f", -(max - (range * i))),
-                                    if (i == 0) 0 else 1
+                                    if (i == 0) 0 else 1,
+                                    item.chartType
                                 )
                             )
                         }
                         directionList.add(
                             Direction(
                                 "0.0",
-                                1
+                                1,
+                                item.chartType
                             )
                         )
                         for (i in 3 downTo 0) {
                             directionList.add(
                                 Direction(
                                     String.format("%.1f", (max - (range * i))),
-                                    if (i == 0) 2 else 1
+                                    if (i == 0) 2 else 1,
+                                    item.chartType
                                 )
                             )
                         }

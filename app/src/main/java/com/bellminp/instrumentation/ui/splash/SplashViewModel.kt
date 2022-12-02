@@ -44,7 +44,10 @@ class SplashViewModel @Inject constructor(
 
                                     localUseCase.setAdmin(items.fieldList != null)
                                     if(items.fieldList == null) goMain(items.fieldNum?:0)
-                                    else showFieldList(items.fieldList)
+                                    else{
+                                        if(items.fieldList.size == 1) goMain(items.fieldList[0].num)
+                                        else showFieldList(items.fieldList)
+                                    }
                                 }
                             }else{
                                 showShortToast(InstrumentationApplication.mInstance.resources.getString(R.string.no_exist_user))

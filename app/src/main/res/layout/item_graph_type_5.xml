@@ -24,7 +24,6 @@
             android:id="@+id/radar_chart"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="10dp"
             app:layout_constraintDimensionRatio="H,1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,6 +43,19 @@
            android:overScrollMode="never"
            />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/recyclerview_direction"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/tv_x"
+            android:textSize="@dimen/dp_13"
+            android:textColor="@color/black"
+            android:text="@{item.name}"
+            android:visibility="@{item.chartType == 6 ? View.GONE : View.VISIBLE}"
+            android:layout_marginEnd="16dp"
+            />
+
         <View
             android:id="@+id/view"
             android:layout_width="0dp"
@@ -52,7 +64,6 @@
             app:layout_constraintEnd_toEndOf="@id/radar_chart"
             app:layout_constraintStart_toStartOf="@id/radar_chart"
             app:layout_constraintTop_toTopOf="@id/radar_chart"
-
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

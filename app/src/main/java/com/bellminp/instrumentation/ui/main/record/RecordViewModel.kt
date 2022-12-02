@@ -24,7 +24,6 @@ class RecordViewModel @Inject constructor(
 
     val toDay = MutableLiveData<String>().default("")
     val fromDay = MutableLiveData<String>().default("")
-    val days = MutableLiveData<String>().default("")
 
     var startUnixTime = 0L
     var endUnixTime = 0L
