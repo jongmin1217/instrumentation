@@ -454,7 +454,7 @@ class GraphAdapter(
                     val density = display.density
 
                     val offset = (width/density)
-                    val params = FrameLayout.LayoutParams(width * 2, width * 2)
+                    val params = FrameLayout.LayoutParams((width * 1.7).toInt(), (width * 1.7).toInt())
                     layoutParams = params
 
                     this.xAxis.apply {
@@ -557,7 +557,7 @@ class GraphAdapter(
 
                     axisRight.isEnabled = false
                     description.text = ""
-                    setExtraOffsets(0f, 16f, 40f, offset+20f)
+                    setExtraOffsets(0f, 16f, 40f, (offset*0.7).toFloat()+20f)
                     setPinchZoom(false)
                     isDoubleTapToZoomEnabled = false
                     legend.isEnabled = false
