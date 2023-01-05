@@ -50,7 +50,7 @@ class GraphFragment(
 
     fun settingGraphData(data: GaugesData?) {
         viewModel.gaugesData.value = data
-
+        binding.scrollView.scrollTo(0,0)
         when (data) {
             is GaugesDetail -> {
                 when (data.chartType) {
@@ -84,8 +84,6 @@ class GraphFragment(
     }
 
     private fun initAdapter() {
-
-
         binding.recyclerviewGraph.adapter = adapter
     }
 
