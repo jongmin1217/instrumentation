@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.marginEnd
 import androidx.core.view.marginStart
@@ -20,6 +21,8 @@ import com.bellminp.instrumentation.ui.base.BaseViewHolder
 import com.bellminp.instrumentation.ui.main.tree.TreeAdapter
 import com.bellminp.instrumentation.utils.*
 import com.bellminp.instrumentation.utils.ext.margin
+import com.ddd.androidutils.DoubleClick
+import com.ddd.androidutils.DoubleClickListener
 import com.github.mikephil.charting.components.*
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
@@ -36,6 +39,7 @@ import kotlin.collections.ArrayList
 import kotlin.math.roundToInt
 
 class GraphAdapter(
+    private val fragHeight : Int,
     private val onItemClick: ((item: GraphData) -> Unit)
 ) : BaseListAdapter<GraphData>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<GraphData> {
@@ -89,7 +93,8 @@ class GraphAdapter(
                         LayoutInflater.from(parent.context),
                         parent,
                         false
-                    )
+                    ),
+                    fragHeight
                 )
             }
 
@@ -135,10 +140,15 @@ class GraphAdapter(
             if (item is GraphType1) {
                 binding.item = item
                 binding.executePendingBindings()
+                binding.lineChart.fitScreen()
 
-                binding.lineChart.setOnClickListener {
-                    onItemClick(item)
-                }
+                binding.lineChart.setOnClickListener(DoubleClick(object : DoubleClickListener {
+                    override fun onSingleClickEvent(view: View?) {}
+
+                    override fun onDoubleClickEvent(view: View?) {
+                        onItemClick(item)
+                    }
+                }))
 
 
 
@@ -296,10 +306,15 @@ class GraphAdapter(
             if (item is GraphType2) {
                 binding.item = item
                 binding.executePendingBindings()
+                binding.lineChart.fitScreen()
 
-                binding.lineChart.setOnClickListener {
-                    onItemClick(item)
-                }
+                binding.lineChart.setOnClickListener(DoubleClick(object : DoubleClickListener {
+                    override fun onSingleClickEvent(view: View?) {}
+
+                    override fun onDoubleClickEvent(view: View?) {
+                        onItemClick(item)
+                    }
+                }))
 
 
 
@@ -444,6 +459,7 @@ class GraphAdapter(
             if (item is GraphType3) {
                 binding.item = item
                 binding.executePendingBindings()
+                binding.lineChart.fitScreen()
 
 
 
@@ -614,11 +630,17 @@ class GraphAdapter(
             if (item is GraphType4) {
                 binding.item = item
                 binding.executePendingBindings()
+                binding.lineChart.fitScreen()
 
-                binding.lineChart.setOnClickListener {
-                    onItemClick(item)
-                }
+                binding.lineChart.setOnClickListener(DoubleClick(object : DoubleClickListener {
+                    override fun onSingleClickEvent(view: View?) {}
 
+                    override fun onDoubleClickEvent(view: View?) {
+                        onItemClick(item)
+                    }
+                }))
+
+                binding.tvScale.text = String.format("변위값 scale = %d",SCALE)
 
                 val display = InstrumentationApplication.mInstance.resources.displayMetrics
                 val width = display.widthPixels
@@ -738,13 +760,19 @@ class GraphAdapter(
     }
 
     class Type5Holder(
-        private val binding: ItemGraphType5Binding
+        private val binding: ItemGraphType5Binding,
+        private val fragHeight : Int
     ) : BaseViewHolder<GraphData>(binding) {
 
         override fun bind(item: GraphData) {
             if (item is GraphType5) {
                 binding.item = item
                 binding.executePendingBindings()
+
+                val display = InstrumentationApplication.mInstance.resources.displayMetrics
+                val width = display.widthPixels
+
+
 
                 binding.view.setOnClickListener { }
 
@@ -836,6 +864,23 @@ class GraphAdapter(
 
                 }
 
+                if(fragHeight < width){
+                    val params = ConstraintLayout.LayoutParams(fragHeight - 400, fragHeight - 400)
+                    params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+                    params.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+                    binding.radarChart.layoutParams = params
+
+                    val params2 = ConstraintLayout.LayoutParams(fragHeight - 400, binding.recyclerviewDirection.height)
+                    params2.topToBottom = binding.radarChart.id
+                    params2.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+                    params2.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
+                    binding.recyclerviewDirection.layoutParams = params2
+
+                    val params3 = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,ConstraintLayout.LayoutParams.WRAP_CONTENT)
+                    params3.topToBottom = binding.recyclerviewDirection.id
+                    params3.endToEnd = binding.recyclerviewDirection.id
+                    binding.tvX.layoutParams = params3
+                }
 
             }
         }

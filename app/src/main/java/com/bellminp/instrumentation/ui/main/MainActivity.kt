@@ -84,7 +84,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         else {
             graphFragment = GraphFragment(
                 viewModel.selectData,
-                gaugesData
+                gaugesData,
+                binding.frameLayout.height
             ) { type, text, time -> editDateSelectData(type, text, time) }
             addFragment(graphFragment!!)
         }

@@ -10,7 +10,7 @@ import com.bellminp.instrumentation.ui.base.BaseListAdapter
 import com.bellminp.instrumentation.ui.base.BaseViewHolder
 
 class FieldListAdapter(
-    private val onItemClick : ((item : FieldList) -> Unit)
+    private val onItemClick: ((item: FieldList) -> Unit)
 ) : BaseListAdapter<FieldList>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<FieldList> {
@@ -21,7 +21,7 @@ class FieldListAdapter(
                 false
             )
         ).also {
-            it.itemView.setOnClickListener{_->
+            it.itemView.setOnClickListener { _ ->
                 val currentItem = currentList.getOrNull(it.adapterPosition)
                 currentItem?.let(onItemClick)
             }
@@ -29,8 +29,8 @@ class FieldListAdapter(
     }
 
     class FieldListHolder(
-        private val binding : ItemFieldListBinding
-    ) : BaseViewHolder<FieldList>(binding){
+        private val binding: ItemFieldListBinding
+    ) : BaseViewHolder<FieldList>(binding) {
 
         override fun bind(item: FieldList) {
             binding.item = item

@@ -18,16 +18,17 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class GraphFragment(
-    private val selectData : SelectData,
+    private val selectData: SelectData,
     private val gaugesData: GaugesData?,
-    private val selectedData : ((type: Int, text: String, time: Long) -> Unit)
-) : BaseFragment<FragmentGraphBinding,GraphViewModel>(R.layout.fragment_graph) {
+    private val fragHeight : Int,
+    private val selectedData: ((type: Int, text: String, time: Long) -> Unit)
+) : BaseFragment<FragmentGraphBinding, GraphViewModel>(R.layout.fragment_graph) {
     override val viewModel by activityViewModels<GraphViewModel>()
 
-    private val adapter = GraphAdapter{ data ->
-        activity?.let { activity->
-            Intent(activity,GraphDetailActivity::class.java).also {
-                it.putExtra(GRAPH_DATA,data)
+    private val adapter = GraphAdapter(fragHeight) { data ->
+        activity?.let { activity ->
+            Intent(activity, GraphDetailActivity::class.java).also {
+                it.putExtra(GRAPH_DATA, data)
                 startActivity(it)
             }
         }
@@ -43,22 +44,23 @@ class GraphFragment(
         initLayout()
         initListener()
         initAdapter()
+
         settingGraphData(gaugesData)
     }
 
-    fun settingGraphData(data : GaugesData?){
+    fun settingGraphData(data: GaugesData?) {
         viewModel.gaugesData.value = data
 
-        when(data){
+        when (data) {
             is GaugesDetail -> {
-                when(data.chartType){
-                    5,6 -> adapter.submitList(data.dataToGraph5())
+                when (data.chartType) {
+                    5, 6 -> adapter.submitList(data.dataToGraph5())
                     7 -> adapter.submitList(data.dataToGraph7())
                     else -> adapter.submitList(data.dataToGraph())
                 }
             }
             is GaugesGroupDetail -> {
-                when(data.chartType){
+                when (data.chartType) {
                     2 -> adapter.submitList(data.dataToGraph())
                     3 -> adapter.submitList(data.dataToGraph3())
                     4 -> adapter.submitList(data.dataToGraph4())
@@ -68,8 +70,8 @@ class GraphFragment(
 
     }
 
-    fun setSelectData(selectData : SelectData){
-        with(viewModel){
+    fun setSelectData(selectData: SelectData) {
+        with(viewModel) {
             fromDay.value = selectData.fromDay
             days.value = selectData.days
             toDay.value = selectData.toDay
@@ -81,35 +83,37 @@ class GraphFragment(
         }
     }
 
-    private fun initAdapter(){
+    private fun initAdapter() {
+
+
         binding.recyclerviewGraph.adapter = adapter
     }
 
-    private fun initLayout(){
+    private fun initLayout() {
         setSelectData(selectData)
     }
 
-    private fun initListener(){
+    private fun initListener() {
         binding.layoutFrom.setOnClickListener {
             selectDateShow(
                 null,
-                getUnixTime(viewModel.toDay.value?:""),
-                getUnixTime(viewModel.fromDay.value?:""),
+                getUnixTime(viewModel.toDay.value ?: ""),
+                getUnixTime(viewModel.fromDay.value ?: ""),
                 0
             )
         }
 
         binding.layoutTo.setOnClickListener {
             selectDateShow(
-                getUnixTime(viewModel.fromDay.value?:""),
+                getUnixTime(viewModel.fromDay.value ?: ""),
                 getUnixTime(),
-                getUnixTime(viewModel.toDay.value?:""),
+                getUnixTime(viewModel.toDay.value ?: ""),
                 1
             )
         }
     }
 
     override fun selectedDate(type: Int, text: String, time: Long) {
-        selectedData(type,text,time)
+        selectedData(type, text, time)
     }
 }

@@ -64,7 +64,9 @@ ext {
 
             flexbox : '2.0.1',
 
-            splashscreen : '1.0.0'
+            splashscreen : '1.0.0',
+
+            androidutilslibrary : '1.0.0'
     ]
 
     deps = [
@@ -108,7 +110,9 @@ ext {
 
             flexbox : "com.google.android:flexbox:$versions.flexbox",
 
-            splashscreen : "androidx.core:core-splashscreen:$versions.splashscreen-beta01"
+            splashscreen : "androidx.core:core-splashscreen:$versions.splashscreen-beta01",
+
+            androidutilslibrary : "com.gitlab.developerdeveloperdeveloper:$versions.androidutilslibrary"
 
     ]
 

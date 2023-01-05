@@ -723,13 +723,14 @@ fun GaugesGroupDetail.dataToGraph4(): List<GraphData> {
             val xyMax = Collections.max(xyList)
             val xyMin = Collections.min(xyList)
 
-            val tooMuchValue = xyMax > 150.0 || xyMin < -150.0
+            //SCALE이 scale입니다. 해당 변수 위치는 app > com > bellminp > instrumentation > utils > Constants.kt에 있습니다.
+            val tooMuchValue = xyMax > SCALE.toDouble() || xyMin < -SCALE.toDouble()
 
             for (j in it[i].list.indices) {
                 val standardX = this.constantList?.get(j)?.x ?: 0.0
                 val standardY = this.constantList?.get(j)?.y ?: 0.0
-                val x = (it[i].list[j].x ?: 0.0) * if(tooMuchValue)1 else 150
-                val y = (it[i].list[j].y ?: 0.0) * if(tooMuchValue)1 else 150
+                val x = (it[i].list[j].x ?: 0.0) * if(tooMuchValue)1 else SCALE
+                val y = (it[i].list[j].y ?: 0.0) * if(tooMuchValue)1 else SCALE
                 itemList.add(GraphPointType4(standardX + x, standardY + y,if(i == it.size -1) (it[i].list[j].x ?: 0.0) else null,if(i == it.size -1) (it[i].list[j].y ?: 0.0) else null))
             }
             itemsList.add(GraphGroupPointType4(it[i].time, itemList))
