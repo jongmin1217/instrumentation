@@ -15,4 +15,8 @@ data class Login(
 data class FieldList(
     val num : Int,
     val name : String
-)
+) : java.io.Serializable
+
+data class FieldData(
+    val data : List<FieldList>
+): java.io.Serializable

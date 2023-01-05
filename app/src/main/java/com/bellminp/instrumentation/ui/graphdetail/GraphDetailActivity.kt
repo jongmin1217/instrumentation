@@ -177,7 +177,7 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                     binding.recyclerviewLegend.adapter = LegendAdapter().apply {
                         val list = ArrayList<LegendData>()
                         for (i in graphData.list.indices) {
-                            list.add(LegendData(getGraphColor(i), graphData.list[i].name))
+                            list.add(LegendData(getGraphColor(i), text = graphData.list[i].name))
                         }
                         submitList(list)
                     }
@@ -326,7 +326,8 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                             list.add(
                                 LegendData(
                                     getGraphColor(i),
-                                    graphLegendValue(graphData.list[i].time)
+                                    graphData.list[i].time,
+                                    ""
                                 )
                             )
                         }
@@ -432,7 +433,8 @@ class GraphDetailActivity : BaseActivity<ActivityGraphDetailBinding,GraphDetailV
                             list.add(
                                 LegendData(
                                     getGraphColor(i),
-                                    graphLegendValue(graphData.list[i].time)
+                                    graphData.list[i].time,
+                                    ""
                                 )
                             )
                         }

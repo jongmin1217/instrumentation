@@ -1,5 +1,6 @@
 package com.bellminp.instrumentation.ui.main.tree
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
@@ -11,6 +12,7 @@ import com.bellminp.instrumentation.model.*
 import com.bellminp.instrumentation.ui.base.BaseFragment
 import com.bellminp.instrumentation.ui.dialog.fieldselect.FieldListAdapter
 import com.bellminp.instrumentation.ui.dialog.fieldselect.FieldSelectViewModel
+import com.bellminp.instrumentation.ui.main.MainViewModel
 import com.bellminp.instrumentation.utils.ONE_DAY
 import com.bellminp.instrumentation.utils.convertTimestampToDateTerm
 import com.bellminp.instrumentation.utils.convertTimestampToDateText
@@ -19,10 +21,11 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class TreeFragment(
-    private val fieldNum: Int,
+    var fieldNum: Int,
     private val gaugesClick: ((item: SelectData) -> Unit)
 ) : BaseFragment<FragmentTreeBinding, TreeViewModel>(R.layout.fragment_tree) {
     override val viewModel by activityViewModels<TreeViewModel>()
+    private val activityViewModel by activityViewModels<MainViewModel>()
 
     private val treeAdapter by lazy {
         TreeAdapter(
@@ -51,15 +54,16 @@ class TreeFragment(
         super.onViewCreated(view, savedInstanceState)
 
         initAdapter()
-        initListener()
         viewModel.initSearch(fieldNum)
     }
 
-    private fun initListener() {
-        binding.btnLogout.setOnClickListener {
-            viewModel.logout()
-        }
+    fun refresh(){
+        treeAdapter.selectNum = null
+        treeAdapter.submitList(null)
+        viewModel.initSearch(fieldNum)
     }
+
+
 
     private fun initAdapter() {
         binding.recyclerviewTree.adapter = treeAdapter
@@ -74,6 +78,7 @@ class TreeFragment(
 
         with(viewModel) {
             addField.observe(viewLifecycleOwner) {
+                activityViewModel.setHeader(it.name)
                 treeAdapter.submitList(listOf(it))
             }
 
@@ -138,6 +143,11 @@ class TreeFragment(
                 item.getGaugesType()
             )
         )
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun refreshTree(){
+        treeAdapter.notifyDataSetChanged()
     }
 
     private fun unSelectGauges() {

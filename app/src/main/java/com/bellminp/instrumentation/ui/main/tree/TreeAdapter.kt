@@ -19,7 +19,7 @@ class TreeAdapter(
     private val unSelectGauges: (() -> Unit)
 ) : BaseListAdapter<TreeModel>() {
 
-    private var selectNum: Int? = null
+    var selectNum: Int? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<TreeModel> {
         return when (viewType) {

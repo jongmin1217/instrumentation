@@ -5,6 +5,7 @@ import com.bellminp.data.remote.RemoteDataSource
 import com.bellminp.remote.api.Api
 import com.bellminp.remote.mapper.*
 import com.bellminp.remote.model.login.LoginResponse
+import com.bellminp.remote.utils.CONNECT_NAME
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.Response
@@ -23,7 +24,7 @@ class RemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun login(login: DataAutoLogin): Response<DataLogin> {
-        val response = api.login(login)
+        val response = api.login(login.apply { connectName = CONNECT_NAME })
         return when(getResponse(response)){
             SUCCESS -> Response.success(response.code(),response.body()?.loginToData())
             FAIL -> Response.error(response.code(), response.errorBody() ?: "error".toResponseBody(null))

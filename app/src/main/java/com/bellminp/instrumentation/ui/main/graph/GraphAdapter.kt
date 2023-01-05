@@ -260,7 +260,21 @@ class GraphAdapter(
                             axisDependency = YAxis.AxisDependency.LEFT
                             valueTextSize = 0f
                             lineWidth = 1.5f
-                            setDrawCircles(true)
+
+                            when(InstrumentationApplication.mInstance.graphPoint){
+                                0 -> {
+                                    setDrawCircles(true)
+                                    setDrawCircleHole(false)
+                                }
+                                1 -> {
+                                    setDrawCircles(true)
+                                    setDrawCircleHole(true)
+                                }
+                                2 -> {
+                                    setDrawCircles(false)
+                                }
+                            }
+
                             circleColors = listOf(getGraphColor(i))
                             fillAlpha = 0
                             isHighlightEnabled = false
@@ -284,7 +298,7 @@ class GraphAdapter(
                     binding.recyclerviewLegend.adapter = LegendAdapter().apply {
                         val list = ArrayList<LegendData>()
                         for (i in item.list.indices) {
-                            list.add(LegendData(getGraphColor(i), item.list[i].name))
+                            list.add(LegendData(getGraphColor(i), text = item.list[i].name))
                         }
                         submitList(list)
                     }
@@ -429,7 +443,19 @@ class GraphAdapter(
                             axisDependency = YAxis.AxisDependency.LEFT
                             valueTextSize = 0f
                             lineWidth = 1.5f
-                            setDrawCircles(true)
+                            when(InstrumentationApplication.mInstance.graphPoint){
+                                0 -> {
+                                    setDrawCircles(true)
+                                    setDrawCircleHole(false)
+                                }
+                                1 -> {
+                                    setDrawCircles(true)
+                                    setDrawCircleHole(true)
+                                }
+                                2 -> {
+                                    setDrawCircles(false)
+                                }
+                            }
                             circleColors = listOf(getGraphColor(i))
                             fillAlpha = 0
                             isHighlightEnabled = false
@@ -598,7 +624,19 @@ class GraphAdapter(
                             axisDependency = YAxis.AxisDependency.LEFT
                             valueTextSize = 0f
                             lineWidth = 1.5f
-                            setDrawCircles(true)
+                            when(InstrumentationApplication.mInstance.graphPoint){
+                                0 -> {
+                                    setDrawCircles(true)
+                                    setDrawCircleHole(false)
+                                }
+                                1 -> {
+                                    setDrawCircles(true)
+                                    setDrawCircleHole(true)
+                                }
+                                2 -> {
+                                    setDrawCircles(false)
+                                }
+                            }
                             circleColors = listOf(getGraphColor(i))
                             fillAlpha = 0
                             isHighlightEnabled = false
@@ -710,7 +748,19 @@ class GraphAdapter(
                             }
 
                             lineWidth = 1.5f
-                            setDrawCircles(true)
+                            when(InstrumentationApplication.mInstance.graphPoint){
+                                0 -> {
+                                    setDrawCircles(true)
+                                    setDrawCircleHole(false)
+                                }
+                                1 -> {
+                                    setDrawCircles(true)
+                                    setDrawCircleHole(true)
+                                }
+                                2 -> {
+                                    setDrawCircles(false)
+                                }
+                            }
                             circleColors = listOf(getGraphColor(i))
                             fillAlpha = 0
                             isHighlightEnabled = false

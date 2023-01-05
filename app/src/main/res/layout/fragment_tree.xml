@@ -13,53 +13,29 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
+        android:background="@drawable/shape_dialog"
         >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:id="@+id/line_top"
+            android:background="@color/black"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_margin="6dp"
-            android:background="@drawable/shape_dialog"
-            >
+            />
 
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_tree"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:overScrollMode="never"
-                android:paddingTop="16dp"
-                android:clipToPadding="false"
-                android:paddingBottom="16dp"
-                />
-
-            <TextView
-                android:id="@+id/btn_logout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:textSize="@dimen/dp_13"
-                tools:ignore="SpUsage"
-                android:background="@drawable/shape_table_title"
-                android:text="@string/logout"
-                android:padding="10dp"
-                android:textColor="@color/basic"
-                android:textStyle="bold"
-                />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_tree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/line_top"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:overScrollMode="never"
+            android:paddingTop="16dp"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp"
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

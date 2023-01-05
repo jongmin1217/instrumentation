@@ -14,6 +14,7 @@ data class Field(
     override fun getGroupNum() = num
     override fun noneItem() {}
     override fun getGaugesTime(): Long? = null
+
 }
 
 data class SitesList(

@@ -13,6 +13,7 @@ data class GraphLegend(
 
 data class LegendData(
     val color : Int,
+    val time: Long? = null,
     val text : String
 )
 

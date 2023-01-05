@@ -620,7 +620,8 @@ fun GaugesGroupDetail.dataToGraph(): List<GraphData> {
                 legendList.add(
                     LegendData(
                         getGraphColor(i),
-                        graphLegendValue(listData.list[i].time)
+                        listData.list[i].time,
+                        ""
                     )
                 )
             }
@@ -692,7 +693,8 @@ fun GaugesGroupDetail.dataToGraph3(): List<GraphData> {
                 legendList.add(
                     LegendData(
                         getGraphColor(i),
-                        graphLegendValue(listData.list[i].time)
+                        listData.list[i].time,
+                        ""
                     )
                 )
             }
@@ -868,7 +870,8 @@ fun GaugesGroupDetail.dataToGraph4(): List<GraphData> {
                 legendList.add(
                     LegendData(
                         getGraphColor(i),
-                        graphLegendValue(listData.list[i].time)
+                        listData.list[i].time,
+                        ""
                     )
                 )
             }
