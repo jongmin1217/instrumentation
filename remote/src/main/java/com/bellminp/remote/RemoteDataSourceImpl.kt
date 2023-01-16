@@ -119,6 +119,24 @@ class RemoteDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun getSetting(token : String,num: Int): Response<DataSetting> {
+        val response = api.getSetting(token,num)
+        return when(getResponse(response)){
+            SUCCESS -> Response.success(response.code(),response.body()?.settingToData())
+            FAIL -> Response.error(response.code(), response.errorBody() ?: "error".toResponseBody(null))
+            else -> Response.error(200, response.errorBody() ?: "error".toResponseBody(null))
+        }
+    }
+
+    override suspend fun setSetting(token : String,num: Int,tnfieldchkSMS:Int): Response<Pair<Int, String>> {
+        val response = api.setSetting(token,num,tnfieldchkSMS)
+        return when(getResponse(response)){
+            SUCCESS -> Response.success(response.code(),response.body()?.baseToPair())
+            FAIL -> Response.error(response.code(), response.errorBody() ?: "error".toResponseBody(null))
+            else -> Response.error(200, response.errorBody() ?: "error".toResponseBody(null))
+        }
+    }
+
     private fun <T> getResponse(response: Response<T>): Int {
         return try {
             if (response.isSuccessful) SUCCESS

@@ -18,7 +18,16 @@ object DataLoginMapper : DataMapper<DataLogin, DomainLogin> {
             from.token,
             from.fieldList?.map {
                 DomainFieldList(it.num,it.name)
-            }
+            },
+            from.apichk,
+            from.mobilenum,
+            from.recvsms,
+            from.appid,
+            from.nsmip,
+            from.nsmadminid,
+            from.nsmdbname,
+            from.nsmadminpw,
+            from.appversion
         )
     }
 
@@ -32,7 +41,16 @@ object DataLoginMapper : DataMapper<DataLogin, DomainLogin> {
             from.token,
             from.fieldList?.map {
                 DataFieldList(it.num,it.name)
-            }
+            },
+            from.apichk,
+            from.mobilenum,
+            from.recvsms,
+            from.appid,
+            from.nsmip,
+            from.nsmadminid,
+            from.nsmdbname,
+            from.nsmadminpw,
+            from.appversion
         )
     }
 }

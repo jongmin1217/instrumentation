@@ -24,6 +24,9 @@ class MainViewModel @Inject constructor(
     private val remoteUseCase: RemoteUseCase
 ) : BaseViewModel() {
 
+    val connectInfo = MutableLiveData<Connect>()
+    val settingInfo = MutableLiveData<Setting>()
+
     val showFieldSelect = MutableLiveData<Boolean>().default(false)
 
     private val _setHeader = SingleLiveEvent<String>()
@@ -184,6 +187,37 @@ class MainViewModel @Inject constructor(
                 } else {
                     _setGaugesData.value = null
                     showShortToast("서버 오류")
+                }
+            }
+        }
+    }
+
+    fun getSetting(num : Int){
+        viewModelScope.launch {
+            remoteUseCase.getSetting(
+                localUseCase.getToken(),num
+            ).collect {
+                if (it.status == ApiResult.Status.SUCCESS) {
+
+                    when (it.data?.code) {
+                        0 -> {
+                            it.data?.let { data ->
+                                settingInfo.value = data.mapToPresentation()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    fun setSetting(value : Boolean){
+        viewModelScope.launch {
+            remoteUseCase.setSetting(
+                localUseCase.getToken(),fieldNum,if(value) 1 else 0
+            ).collect {
+                if(it.status == ApiResult.Status.SUCCESS && it.data?.first != 0){
+                    showShortToast(it.data?.second?:"")
                 }
             }
         }

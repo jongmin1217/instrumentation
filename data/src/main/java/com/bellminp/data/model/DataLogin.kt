@@ -8,7 +8,16 @@ data class DataLogin(
     val fieldNum : Int?,
     val authorityNum : Int?,
     val token : String?,
-    val fieldList : List<DataFieldList>?
+    val fieldList : List<DataFieldList>?,
+    val apichk : Int,
+    val mobilenum : String,
+    val recvsms : Int,
+    val appid : Int,
+    val nsmip : String,
+    val nsmadminid : String,
+    val nsmdbname : String,
+    val nsmadminpw : String,
+    val appversion : String?
 )
 
 data class DataFieldList(

@@ -1,6 +1,7 @@
 package com.bellminp.instrumentation.utils
 
 const val TYPE = "TYPE"
+const val CONNECT_DATA = "CONNECT_DATA"
 const val NAME = "NAME"
 const val FIELD_DATA = "FIELD_DATA"
 const val ONE_DAY = 86400000L

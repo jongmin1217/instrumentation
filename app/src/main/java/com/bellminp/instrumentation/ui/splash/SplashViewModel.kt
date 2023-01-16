@@ -9,6 +9,7 @@ import com.bellminp.domain.usecase.RemoteUseCase
 import com.bellminp.instrumentation.InstrumentationApplication
 import com.bellminp.instrumentation.R
 import com.bellminp.instrumentation.mapper.mapToPresentation
+import com.bellminp.instrumentation.model.Connect
 import com.bellminp.instrumentation.ui.base.BaseViewModel
 import com.bellminp.instrumentation.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -43,10 +44,22 @@ class SplashViewModel @Inject constructor(
                                     val items = data.mapToPresentation()
 
                                     localUseCase.setAdmin(items.fieldList != null)
-                                    if(items.fieldList == null) goMain(items.fieldNum?:0)
+                                    val connect = Connect(
+                                        data.apichk,
+                                        data.mobilenum,
+                                        data.recvsms,
+                                        data.appid,
+                                        data.nsmip,
+                                        data.nsmadminid,
+                                        data.nsmdbname,
+                                        data.nsmadminpw,
+                                        data.appversion,
+                                        data.authorityNum
+                                    )
+                                    if(items.fieldList == null) goMain(items.fieldNum?:0,connect)
                                     else{
-                                        if(items.fieldList.size == 1) goMain(items.fieldList[0].num)
-                                        else showFieldList(items.fieldList)
+                                        if(items.fieldList.size == 1) goMain(items.fieldList[0].num,connect)
+                                        else showFieldList(items.fieldList,connect)
                                     }
                                 }
                             }else{

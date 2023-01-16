@@ -1,6 +1,7 @@
 package com.bellminp.instrumentation.mapper
 
 import com.bellminp.common.timberMsg
+import com.bellminp.data.mapper.mapToData
 import com.bellminp.data.model.*
 import com.bellminp.domain.model.*
 import com.bellminp.instrumentation.model.*
@@ -18,7 +19,16 @@ fun DomainLogin.mapToPresentation(): Login {
         this.token,
         this.fieldList?.map {
             FieldList(it.num, it.name)
-        }
+        },
+        this.apichk,
+        this.mobilenum,
+        this.recvsms,
+        this.appid,
+        this.nsmip,
+        this.nsmadminid,
+        this.nsmdbname,
+        this.nsmadminpw,
+        this.appversion
     )
 }
 
@@ -32,7 +42,16 @@ fun Login.mapToDomain(): DomainLogin {
         this.token,
         this.fieldList?.map {
             DomainFieldList(it.num, it.name)
-        }
+        },
+        this.apichk,
+        this.mobilenum,
+        this.recvsms,
+        this.appid,
+        this.nsmip,
+        this.nsmadminid,
+        this.nsmdbname,
+        this.nsmadminpw,
+        this.appversion
     )
 }
 
@@ -993,4 +1012,14 @@ fun GaugesDetail.dataToGraph7(): List<GraphData> {
     }
 
     return list
+}
+
+fun DomainSetting.mapToPresentation() : Setting{
+    return Setting(
+        this.code,
+        this.message,
+        this.tnfieldchkSMS,
+        this.lorachk,
+        this.apiDataYuji
+    )
 }

@@ -53,6 +53,23 @@
     <string name="graph_setting_point_2">빈원[○]</string>
     <string name="graph_setting_point_3">없음</string>
 
+    <string name="user_info">사용자 정보</string>
+    <string name="field_info">현장 설정 정보</string>
+    <string name="using_info">사용안내</string>
+    <string name="send_mail">의견 보내기</string>
+
+    <string name="field_info_num">현장고유번호:</string>
+    <string name="field_info_api_date">Api Data 기간:</string>
+    <string name="field_info_lora">Lora 지원:</string>
+    <string name="field_info_sms">SMS 설정:</string>
+    <string name="back_setting">&lt; 설정</string>
+
+    <string formatted="false" name="user_id">ID: %s</string>
+    <string formatted="false" name="user_name">이름: %s</string>
+    <string formatted="false" name="user_permission">권한: %s</string>
+    <string formatted="false" name="user_number">핸드폰: %s</string>
+    <string name="user_sms">SMS: ON/OFF</string>
+
     <string name="init_setting_title">모든 설정을 초기화 하시겠습니까?</string>
 
     <string name="double_tab">뒤로 버튼을 한번 더 누르면 종료합니다.</string>

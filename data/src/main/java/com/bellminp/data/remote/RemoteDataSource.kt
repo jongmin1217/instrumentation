@@ -23,4 +23,8 @@ interface RemoteDataSource {
     suspend fun getGaugesDetail(token : String, gaugeId: Int, startUnixTime: Long, endUnixTime: Long): Response<DataGaugesDetail>
 
     suspend fun getGaugesGroupDetail(token : String, gaugegroupId: Int, startUnixTime: Long, endUnixTime: Long): Response<DataGaugesGroupDetail>
+
+    suspend fun getSetting(token : String,num : Int) : Response<DataSetting>
+
+    suspend fun setSetting(token : String,num : Int,tnfieldchkSMS:Int) : Response<Pair<Int,String>>
 }

@@ -8,11 +8,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.bellminp.common.timberMsg
 import com.bellminp.instrumentation.R
+import com.bellminp.instrumentation.model.Connect
 import com.bellminp.instrumentation.model.FieldData
 import com.bellminp.instrumentation.model.FieldList
 import com.bellminp.instrumentation.ui.dialog.fieldselect.FieldSelectDialog
 import com.bellminp.instrumentation.ui.login.LoginActivity
 import com.bellminp.instrumentation.ui.main.MainActivity
+import com.bellminp.instrumentation.utils.CONNECT_DATA
 import com.bellminp.instrumentation.utils.FIELD_DATA
 import com.bellminp.instrumentation.utils.NAME
 import com.bellminp.instrumentation.utils.TYPE
@@ -44,7 +46,7 @@ abstract class BaseActivity<VDB : ViewDataBinding, VM : BaseViewModel>(
             }
 
             goMain.observe(this@BaseActivity){
-                moveMain(it)
+                moveMain(it.first, connect = it.second)
             }
 
             goLogin.observe(this@BaseActivity){
@@ -55,19 +57,20 @@ abstract class BaseActivity<VDB : ViewDataBinding, VM : BaseViewModel>(
             }
 
             showFieldList.observe(this@BaseActivity){
-                FieldSelectDialog(it) { item->
-                    moveMain(item.num,it)
+                FieldSelectDialog(it.first) { item->
+                    moveMain(item.num,it.first,it.second)
                 }.show(supportFragmentManager,"FieldSelectDialog")
             }
         }
     }
 
-    private fun moveMain(fieldNum : Int, field : List<FieldList>? = null){
+    private fun moveMain(fieldNum : Int, field : List<FieldList>? = null,connect: Connect){
         val intent = Intent(this@BaseActivity, MainActivity::class.java)
         intent.putExtra(TYPE,fieldNum)
         field?.let {
             intent.putExtra(FIELD_DATA,FieldData(it))
         }
+        intent.putExtra(CONNECT_DATA,connect)
         startActivity(intent)
         finish()
     }

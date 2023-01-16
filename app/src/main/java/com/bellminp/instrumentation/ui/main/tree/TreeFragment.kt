@@ -79,7 +79,6 @@ class TreeFragment(
         with(viewModel) {
             addField.observe(viewLifecycleOwner) {
                 activityViewModel.setHeader(it.name)
-                treeAdapter.submitList(listOf(it))
             }
 
             addSites.observe(viewLifecycleOwner) {

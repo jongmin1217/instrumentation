@@ -208,532 +208,488 @@
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/navigation_dots"
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="match_parent"
             android:layout_gravity="end"
             android:overScrollMode="never"
             >
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_setting"
+            <androidx.core.widget.NestedScrollView
+                android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white">
-
-                <TextView
-                    android:id="@+id/tv_logout"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center_vertical"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textSize="@dimen/dp_13"
-                    android:textStyle="bold"
-                    android:text="@string/logout"
-                    android:textColor="@color/basic"
-                    />
-
-                <TextView
-                    android:id="@+id/tv_rotate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    app:layout_constraintTop_toBottomOf="@id/tv_logout"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="16dp"
-                    android:textSize="@dimen/dp_13"
-                    android:textStyle="bold"
-                    android:text="@string/rotate"
-                    android:textColor="@color/basic"
-                    android:gravity="center_vertical"
-                    />
-
-                <com.suke.widget.SwitchButton
-                    android:id="@+id/switch_rotate"
-                    android:layout_width="55dp"
-                    android:layout_height="33dp"
-                    app:layout_constraintTop_toTopOf="@id/tv_rotate"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_rotate"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="16dp"
-                    app:sb_background="@color/gray"
-                    app:sb_border_width="2.5dp"
-                    app:sb_checked_color="@color/switch_color"
-                    app:sb_show_indicator="false"
-                    app:sb_uncheck_color="@color/gray" />
-
-                <TextView
-                    android:id="@+id/tv_tree_setting"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    app:layout_constraintTop_toBottomOf="@id/tv_rotate"
-                    android:gravity="center_vertical"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textSize="@dimen/dp_13"
-                    android:textStyle="bold"
-                    android:text="@string/tree_setting"
-                    android:textColor="@color/basic"
-                    />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="15dp"
-                    app:layout_constraintTop_toTopOf="@id/tv_tree_setting"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_tree_setting"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/arrow"
-                    />
-
-                <TextView
-                    android:id="@+id/tv_graph_setting"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    app:layout_constraintTop_toBottomOf="@id/tv_tree_setting"
-                    android:gravity="center_vertical"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textSize="@dimen/dp_13"
-                    android:textStyle="bold"
-                    android:text="@string/graph_setting"
-                    android:textColor="@color/basic"
-                    />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="15dp"
-                    app:layout_constraintTop_toTopOf="@id/tv_graph_setting"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_graph_setting"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/arrow"
-                    />
-
-                <TextView
-                    android:id="@+id/tv_init_setting"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    app:layout_constraintTop_toBottomOf="@id/tv_graph_setting"
-                    android:gravity="center_vertical"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textSize="@dimen/dp_13"
-                    android:textStyle="bold"
-                    android:text="@string/init_setting"
-                    android:textColor="@color/basic"
-                    />
+                android:layout_height="match_parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layout_tree_setting"
+                    android:id="@+id/layout_setting"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/tv_tree_setting"
-                    android:background="@drawable/shape_field_dialog"
-                    android:layout_margin="5dp"
-                    android:visibility="gone"
-                    >
+                    android:layout_height="match_parent"
+                    android:background="@color/white">
 
-                    <ImageView
-                        android:id="@+id/iv_tree_close"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                    <TextView
+                        android:id="@+id/tv_logout"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="@drawable/close"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:textSize="@dimen/dp_13"
+                        android:textStyle="bold"
+                        android:text="@string/logout"
+                        android:textColor="@color/basic"
                         />
 
                     <TextView
-                        android:id="@+id/tv_tree_setting_header"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:id="@+id/tv_rotate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_logout"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="16dp"
                         android:textSize="@dimen/dp_13"
                         android:textStyle="bold"
+                        android:text="@string/rotate"
                         android:textColor="@color/basic"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:gravity="center"
-                        app:layout_constraintTop_toBottomOf="@id/iv_tree_close"
-                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        />
+
+                    <com.suke.widget.SwitchButton
+                        android:id="@+id/switch_rotate"
+                        android:layout_width="55dp"
+                        android:layout_height="33dp"
+                        app:layout_constraintTop_toTopOf="@id/tv_rotate"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_rotate"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp"
+                        app:sb_background="@color/gray"
+                        app:sb_border_width="2.5dp"
+                        app:sb_checked_color="@color/switch_color"
+                        app:sb_show_indicator="false"
+                        app:sb_uncheck_color="@color/gray" />
+
+                    <TextView
+                        android:id="@+id/tv_tree_setting"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_rotate"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:textSize="@dimen/dp_13"
+                        android:textStyle="bold"
                         android:text="@string/tree_setting"
-                        android:background="@drawable/shape_setting_header"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_tree_setting_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/tv_tree_setting_header"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginStart="10dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:text="@string/tree_setting_title"
-                        android:textSize="@dimen/dp_13"
                         android:textColor="@color/basic"
                         />
-
-                    <TextView
-                        android:id="@+id/tv_tree_setting_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/tv_tree_setting_title"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginStart="10dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:text="@string/tree_setting_1"
-                        android:textSize="@dimen/dp_13"
-                        android:textColor="@color/basic"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_tree_setting_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/tv_tree_setting_1"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginStart="10dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:text="@string/tree_setting_2"
-                        android:textSize="@dimen/dp_13"
-                        android:textColor="@color/basic"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_tree_setting_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/tv_tree_setting_2"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginStart="10dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:text="@string/tree_setting_3"
-                        android:textSize="@dimen/dp_13"
-                        android:textColor="@color/basic"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_tree_setting_4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/tv_tree_setting_3"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginStart="10dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:text="@string/tree_setting_4"
-                        android:textSize="@dimen/dp_13"
-                        android:textColor="@color/basic"
-                        />
-
-                    <com.suke.widget.SwitchButton
-                        android:id="@+id/switch_1"
-                        android:layout_width="50dp"
-                        android:layout_height="30dp"
-                        app:layout_constraintTop_toTopOf="@id/tv_tree_setting_1"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_tree_setting_1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="10dp"
-                        app:sb_background="@color/gray"
-                        app:sb_border_width="2.5dp"
-                        app:sb_checked_color="@color/switch_color"
-                        app:sb_show_indicator="false"
-                        app:sb_uncheck_color="@color/gray" />
-
-                    <com.suke.widget.SwitchButton
-                        android:id="@+id/switch_2"
-                        android:layout_width="50dp"
-                        android:layout_height="30dp"
-                        app:layout_constraintTop_toTopOf="@id/tv_tree_setting_2"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_tree_setting_2"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="10dp"
-                        app:sb_background="@color/gray"
-                        app:sb_border_width="2.5dp"
-                        app:sb_checked_color="@color/switch_color"
-                        app:sb_show_indicator="false"
-                        app:sb_uncheck_color="@color/gray" />
-
-                    <com.suke.widget.SwitchButton
-                        android:id="@+id/switch_3"
-                        android:layout_width="50dp"
-                        android:layout_height="30dp"
-                        app:layout_constraintTop_toTopOf="@id/tv_tree_setting_3"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_tree_setting_3"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="10dp"
-                        app:sb_background="@color/gray"
-                        app:sb_border_width="2.5dp"
-                        app:sb_checked_color="@color/switch_color"
-                        app:sb_show_indicator="false"
-                        app:sb_uncheck_color="@color/gray" />
-
-                    <com.suke.widget.SwitchButton
-                        android:id="@+id/switch_4"
-                        android:layout_width="50dp"
-                        android:layout_height="30dp"
-                        app:layout_constraintTop_toTopOf="@id/tv_tree_setting_4"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_tree_setting_4"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="10dp"
-                        app:sb_background="@color/gray"
-                        app:sb_border_width="2.5dp"
-                        app:sb_checked_color="@color/switch_color"
-                        app:sb_show_indicator="false"
-                        app:sb_uncheck_color="@color/gray" />
-
-                    <TextView
-                        android:id="@+id/tv_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/switch_1"
-                        app:layout_constraintBottom_toBottomOf="@id/switch_1"
-                        app:layout_constraintEnd_toStartOf="@id/switch_1"
-                        android:layout_marginEnd="10dp"
-                        android:textSize="@dimen/dp_13"
-                        android:textColor="@color/basic"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/switch_2"
-                        app:layout_constraintBottom_toBottomOf="@id/switch_2"
-                        app:layout_constraintEnd_toStartOf="@id/switch_2"
-                        android:layout_marginEnd="10dp"
-                        android:textSize="@dimen/dp_13"
-                        android:textColor="@color/basic"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/switch_3"
-                        app:layout_constraintBottom_toBottomOf="@id/switch_3"
-                        app:layout_constraintEnd_toStartOf="@id/switch_3"
-                        android:layout_marginEnd="10dp"
-                        android:textSize="@dimen/dp_13"
-                        android:textColor="@color/basic"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/switch_4"
-                        app:layout_constraintBottom_toBottomOf="@id/switch_4"
-                        app:layout_constraintEnd_toStartOf="@id/switch_4"
-                        android:layout_marginEnd="10dp"
-                        android:textSize="@dimen/dp_13"
-                        android:textColor="@color/basic"
-                        />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        app:layout_constraintTop_toBottomOf="@id/tv_tree_setting_4"
-                        android:background="@android:color/transparent"
-                        android:layout_marginTop="16dp"
-                        />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layout_graph_setting"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/tv_graph_setting"
-                    android:background="@drawable/shape_field_dialog"
-                    android:layout_margin="5dp"
-                    android:visibility="gone"
-                    >
 
                     <ImageView
-                        android:id="@+id/iv_graph_close"
-                        android:layout_width="15dp"
+                        android:id="@+id/iv_tree_setting"
+                        android:layout_width="20dp"
                         android:layout_height="15dp"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tv_tree_setting"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_tree_setting"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="@drawable/close"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/arrow"
                         />
 
                     <TextView
-                        android:id="@+id/tv_graph_setting_header"
+                        android:id="@+id/tv_graph_setting"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="50dp"
+                        app:layout_constraintTop_toBottomOf="@id/layout_tree_setting"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
                         android:textSize="@dimen/dp_13"
                         android:textStyle="bold"
-                        android:textColor="@color/basic"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:gravity="center"
-                        app:layout_constraintTop_toBottomOf="@id/iv_graph_close"
-                        android:layout_marginTop="10dp"
                         android:text="@string/graph_setting"
-                        android:background="@drawable/shape_setting_header"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_graph_setting_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/tv_graph_setting_header"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginStart="10dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:text="@string/graph_setting_date"
-                        android:textSize="@dimen/dp_13"
                         android:textColor="@color/basic"
                         />
 
-                    <TextView
-                        android:id="@+id/tv_graph_setting_date_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/tv_graph_setting_date"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_graph_setting_date"
+                    <ImageView
+                        android:id="@+id/iv_graph_setting"
+                        android:layout_width="20dp"
+                        android:layout_height="15dp"
+                        app:layout_constraintTop_toTopOf="@id/tv_graph_setting"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_graph_setting"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="10dp"
-                        android:text="@string/graph_setting_date_1"
-                        android:textSize="@dimen/dp_13"
-                        android:textColor="@color/basic"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/arrow"
                         />
 
                     <TextView
-                        android:id="@+id/tv_graph_setting_date_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/tv_graph_setting_date_1"
-                        android:layout_marginTop="5dp"
-                        app:layout_constraintEnd_toEndOf="@id/tv_graph_setting_date_1"
-                        android:text="@string/graph_setting_date_2"
-                        android:textSize="@dimen/dp_13"
-                        android:textColor="@color/basic"
-                        />
-
-                    <CheckBox
-                        android:id="@+id/cb_date_1"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        app:layout_constraintTop_toTopOf="@id/tv_graph_setting_date_1"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_graph_setting_date_1"
-                        app:layout_constraintEnd_toStartOf="@id/tv_graph_setting_date_2"
-                        android:layout_marginEnd="15dp"
-                        android:background="@drawable/check_box"
-                        android:button="@null"
-                        />
-
-                    <CheckBox
-                        android:id="@+id/cb_date_2"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        app:layout_constraintTop_toTopOf="@id/tv_graph_setting_date_2"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_graph_setting_date_2"
-                        app:layout_constraintEnd_toStartOf="@id/tv_graph_setting_date_2"
-                        android:layout_marginEnd="15dp"
-                        android:background="@drawable/check_box"
-                        android:button="@null"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_graph_setting_point"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/cb_date_2"
-                        android:layout_marginTop="50dp"
-                        android:layout_marginStart="10dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:text="@string/graph_setting_point"
-                        android:textSize="@dimen/dp_13"
-                        android:textColor="@color/basic"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_graph_setting_point_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="@id/tv_graph_setting_point"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_graph_setting_point"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginEnd="10dp"
-                        android:text="@string/graph_setting_point_1"
-                        android:textSize="@dimen/dp_13"
-                        android:textColor="@color/basic"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_graph_setting_point_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/tv_graph_setting_point_1"
-                        android:layout_marginTop="5dp"
-                        app:layout_constraintEnd_toEndOf="@id/tv_graph_setting_point_1"
-                        android:text="@string/graph_setting_point_2"
-                        android:textSize="@dimen/dp_13"
-                        android:textColor="@color/basic"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_graph_setting_point_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/tv_graph_setting_point_2"
-                        android:layout_marginTop="5dp"
-                        app:layout_constraintEnd_toEndOf="@id/tv_graph_setting_point_1"
-                        android:text="@string/graph_setting_point_3"
-                        android:textSize="@dimen/dp_13"
-                        android:textColor="@color/basic"
-                        />
-
-                    <CheckBox
-                        android:id="@+id/cb_point_1"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        app:layout_constraintTop_toTopOf="@id/tv_graph_setting_point_1"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_graph_setting_point_1"
-                        app:layout_constraintEnd_toEndOf="@id/cb_date_1"
-                        android:background="@drawable/check_box"
-                        android:button="@null"
-                        />
-
-                    <CheckBox
-                        android:id="@+id/cb_point_2"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        app:layout_constraintTop_toTopOf="@id/tv_graph_setting_point_2"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_graph_setting_point_2"
-                        app:layout_constraintEnd_toEndOf="@id/cb_date_1"
-                        android:background="@drawable/check_box"
-                        android:button="@null"
-                        />
-
-                    <CheckBox
-                        android:id="@+id/cb_point_3"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        app:layout_constraintTop_toTopOf="@id/tv_graph_setting_point_3"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_graph_setting_point_3"
-                        app:layout_constraintEnd_toEndOf="@id/cb_date_1"
-                        android:background="@drawable/check_box"
-                        android:button="@null"
-                        />
-
-                    <View
+                        android:id="@+id/tv_init_setting"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        app:layout_constraintTop_toBottomOf="@id/cb_point_3"
-                        android:layout_marginTop="16dp"
-                        android:background="@android:color/transparent"
+                        android:layout_height="50dp"
+                        app:layout_constraintTop_toBottomOf="@id/layout_graph_setting"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:textSize="@dimen/dp_13"
+                        android:textStyle="bold"
+                        android:text="@string/init_setting"
+                        android:textColor="@color/basic"
                         />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_tree_setting"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tv_tree_setting"
+                        android:visibility="gone"
+                        >
+
+
+
+                        <TextView
+                            android:id="@+id/tv_tree_setting_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/tree_setting_title"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_tree_setting_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/tv_tree_setting_title"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/tree_setting_1"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_tree_setting_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/tv_tree_setting_1"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/tree_setting_2"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_tree_setting_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/tv_tree_setting_2"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/tree_setting_3"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_tree_setting_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/tv_tree_setting_3"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/tree_setting_4"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            />
+
+                        <com.suke.widget.SwitchButton
+                            android:id="@+id/switch_1"
+                            android:layout_width="50dp"
+                            android:layout_height="30dp"
+                            app:layout_constraintTop_toTopOf="@id/tv_tree_setting_1"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_tree_setting_1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginEnd="16dp"
+                            app:sb_background="@color/gray"
+                            app:sb_border_width="2.5dp"
+                            app:sb_checked_color="@color/switch_color"
+                            app:sb_show_indicator="false"
+                            app:sb_uncheck_color="@color/gray" />
+
+                        <com.suke.widget.SwitchButton
+                            android:id="@+id/switch_2"
+                            android:layout_width="50dp"
+                            android:layout_height="30dp"
+                            app:layout_constraintTop_toTopOf="@id/tv_tree_setting_2"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_tree_setting_2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginEnd="16dp"
+                            app:sb_background="@color/gray"
+                            app:sb_border_width="2.5dp"
+                            app:sb_checked_color="@color/switch_color"
+                            app:sb_show_indicator="false"
+                            app:sb_uncheck_color="@color/gray" />
+
+                        <com.suke.widget.SwitchButton
+                            android:id="@+id/switch_3"
+                            android:layout_width="50dp"
+                            android:layout_height="30dp"
+                            app:layout_constraintTop_toTopOf="@id/tv_tree_setting_3"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_tree_setting_3"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginEnd="16dp"
+                            app:sb_background="@color/gray"
+                            app:sb_border_width="2.5dp"
+                            app:sb_checked_color="@color/switch_color"
+                            app:sb_show_indicator="false"
+                            app:sb_uncheck_color="@color/gray" />
+
+                        <com.suke.widget.SwitchButton
+                            android:id="@+id/switch_4"
+                            android:layout_width="50dp"
+                            android:layout_height="30dp"
+                            app:layout_constraintTop_toTopOf="@id/tv_tree_setting_4"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_tree_setting_4"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginEnd="16dp"
+                            app:sb_background="@color/gray"
+                            app:sb_border_width="2.5dp"
+                            app:sb_checked_color="@color/switch_color"
+                            app:sb_show_indicator="false"
+                            app:sb_uncheck_color="@color/gray" />
+
+                        <TextView
+                            android:id="@+id/tv_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="@id/switch_1"
+                            app:layout_constraintBottom_toBottomOf="@id/switch_1"
+                            app:layout_constraintEnd_toStartOf="@id/switch_1"
+                            android:layout_marginEnd="10dp"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="@id/switch_2"
+                            app:layout_constraintBottom_toBottomOf="@id/switch_2"
+                            app:layout_constraintEnd_toStartOf="@id/switch_2"
+                            android:layout_marginEnd="10dp"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="@id/switch_3"
+                            app:layout_constraintBottom_toBottomOf="@id/switch_3"
+                            app:layout_constraintEnd_toStartOf="@id/switch_3"
+                            android:layout_marginEnd="10dp"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="@id/switch_4"
+                            app:layout_constraintBottom_toBottomOf="@id/switch_4"
+                            app:layout_constraintEnd_toStartOf="@id/switch_4"
+                            android:layout_marginEnd="10dp"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            app:layout_constraintTop_toBottomOf="@id/tv_tree_setting_4"
+                            android:background="@android:color/transparent"
+                            android:layout_marginTop="16dp"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_graph_setting"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tv_graph_setting"
+                        android:visibility="gone"
+                        >
+
+
+                        <TextView
+                            android:id="@+id/tv_graph_setting_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/graph_setting_date"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_graph_setting_date_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="@id/tv_graph_setting_date"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_graph_setting_date"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/graph_setting_date_1"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_graph_setting_date_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/tv_graph_setting_date_1"
+                            android:layout_marginTop="5dp"
+                            app:layout_constraintEnd_toEndOf="@id/tv_graph_setting_date_1"
+                            android:text="@string/graph_setting_date_2"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            />
+
+                        <CheckBox
+                            android:id="@+id/cb_date_1"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            app:layout_constraintTop_toTopOf="@id/tv_graph_setting_date_1"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_graph_setting_date_1"
+                            app:layout_constraintEnd_toStartOf="@id/tv_graph_setting_date_2"
+                            android:layout_marginEnd="15dp"
+                            android:background="@drawable/check_box"
+                            android:button="@null"
+                            />
+
+                        <CheckBox
+                            android:id="@+id/cb_date_2"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            app:layout_constraintTop_toTopOf="@id/tv_graph_setting_date_2"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_graph_setting_date_2"
+                            app:layout_constraintEnd_toStartOf="@id/tv_graph_setting_date_2"
+                            android:layout_marginEnd="15dp"
+                            android:background="@drawable/check_box"
+                            android:button="@null"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_graph_setting_point"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/cb_date_2"
+                            android:layout_marginTop="50dp"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/graph_setting_point"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_graph_setting_point_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="@id/tv_graph_setting_point"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_graph_setting_point"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginEnd="16dp"
+                            android:text="@string/graph_setting_point_1"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_graph_setting_point_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/tv_graph_setting_point_1"
+                            android:layout_marginTop="5dp"
+                            app:layout_constraintEnd_toEndOf="@id/tv_graph_setting_point_1"
+                            android:text="@string/graph_setting_point_2"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_graph_setting_point_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/tv_graph_setting_point_2"
+                            android:layout_marginTop="5dp"
+                            app:layout_constraintEnd_toEndOf="@id/tv_graph_setting_point_1"
+                            android:text="@string/graph_setting_point_3"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            />
+
+                        <CheckBox
+                            android:id="@+id/cb_point_1"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            app:layout_constraintTop_toTopOf="@id/tv_graph_setting_point_1"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_graph_setting_point_1"
+                            app:layout_constraintEnd_toEndOf="@id/cb_date_1"
+                            android:background="@drawable/check_box"
+                            android:button="@null"
+                            />
+
+                        <CheckBox
+                            android:id="@+id/cb_point_2"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            app:layout_constraintTop_toTopOf="@id/tv_graph_setting_point_2"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_graph_setting_point_2"
+                            app:layout_constraintEnd_toEndOf="@id/cb_date_1"
+                            android:background="@drawable/check_box"
+                            android:button="@null"
+                            />
+
+                        <CheckBox
+                            android:id="@+id/cb_point_3"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            app:layout_constraintTop_toTopOf="@id/tv_graph_setting_point_3"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_graph_setting_point_3"
+                            app:layout_constraintEnd_toEndOf="@id/cb_date_1"
+                            android:background="@drawable/check_box"
+                            android:button="@null"
+                            />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            app:layout_constraintTop_toBottomOf="@id/cb_point_3"
+                            android:layout_marginTop="16dp"
+                            android:background="@android:color/transparent"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
 
         </com.google.android.material.navigation.NavigationView>
 
@@ -745,14 +701,335 @@
             android:overScrollMode="never"
             >
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white">
+                android:background="@color/white"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white">
 
 
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintDimensionRatio="H,3:2"
+                        android:background="@drawable/smart_info"
+                        android:scaleType="centerCrop"
+                        />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/tv_user_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        app:layout_constraintTop_toBottomOf="@id/iv_main"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:textSize="@dimen/dp_13"
+                        android:textStyle="bold"
+                        android:text="@string/user_info"
+                        android:textColor="@color/basic"
+                        />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_user_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tv_user_info"
+                        >
+
+                        <TextView
+                            android:id="@+id/tv_user_id"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            android:text="@{@string/user_id(vm.connectInfo.nsmadminid)}"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_user_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/tv_user_id"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            android:layout_marginTop="5dp"
+                            android:text="@{@string/user_name(vm.connectInfo.nsmdbname)}"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_user_permission"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/tv_user_name"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            android:layout_marginTop="5dp"
+                            android:text="@{@string/user_permission(vm.connectInfo.getPermission())}"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_user_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/tv_user_permission"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            android:layout_marginTop="5dp"
+                            setPhoneNumber="@{vm.connectInfo.mobilenum}"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_user_sms"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/tv_user_number"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/user_sms"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/tv_field_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        app:layout_constraintTop_toBottomOf="@id/layout_user_info"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:textSize="@dimen/dp_13"
+                        android:textStyle="bold"
+                        android:text="@string/field_info"
+                        android:textColor="@color/basic"
+                        />
+
+                    <ImageView
+                        android:id="@+id/iv_field_info"
+                        android:layout_width="20dp"
+                        android:layout_height="15dp"
+                        app:layout_constraintTop_toTopOf="@id/tv_field_info"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_field_info"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/arrow"
+                        />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_field_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tv_field_info"
+                        android:visibility="gone"
+                        >
+
+                        <TextView
+                            android:id="@+id/tv_field_info_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="@id/tv_field_info_api_date"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            android:text="@string/field_info_num"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_field_info_api_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/tv_field_info_num"
+                            android:layout_marginTop="5dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="16dp"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            android:text="@string/field_info_api_date"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_field_info_lora"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/tv_field_info_api_date"
+                            android:layout_marginTop="5dp"
+                            app:layout_constraintEnd_toEndOf="@id/tv_field_info_api_date"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            android:text="@string/field_info_lora"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_field_info_sms"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/tv_field_info_lora"
+                            android:layout_marginTop="5dp"
+                            app:layout_constraintEnd_toEndOf="@id/tv_field_info_api_date"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            android:text="@string/field_info_sms"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_field_info_num_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="@id/tv_field_info_num"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_field_info_num"
+                            app:layout_constraintStart_toEndOf="@id/tv_field_info_num"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            android:textStyle="bold"
+                            android:layout_marginStart="5dp"
+                            android:text="@{Integer.toString(vm.fieldNum)}"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_field_info_api_date_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="@id/tv_field_info_api_date"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_field_info_api_date"
+                            app:layout_constraintStart_toEndOf="@id/tv_field_info_api_date"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            android:textStyle="bold"
+                            android:layout_marginStart="5dp"
+                            android:text="@{Integer.toString(vm.settingInfo.apiDataYuji)}"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_field_info_lora_value"
+                            android:layout_width="50dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/shape_setting_box"
+                            app:layout_constraintEnd_toStartOf="@id/switch_sms"
+                            app:layout_constraintTop_toTopOf="@id/tv_field_info_lora"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_field_info_lora"
+                            android:gravity="center"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            android:textStyle="bold"
+                            android:text="@{vm.settingInfo.loraText()}"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_field_info_sms_value"
+                            android:layout_width="50dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/shape_setting_box"
+                            app:layout_constraintEnd_toStartOf="@id/switch_sms"
+                            app:layout_constraintTop_toTopOf="@id/tv_field_info_sms"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_field_info_sms"
+                            android:gravity="center"
+                            android:textSize="@dimen/dp_13"
+                            android:textColor="@color/basic"
+                            android:textStyle="bold"
+                            android:text="@{vm.settingInfo.smsText()}"
+                            />
+
+
+                        <com.suke.widget.SwitchButton
+                            android:id="@+id/switch_sms"
+                            android:layout_width="50dp"
+                            android:layout_height="25dp"
+                            app:layout_constraintTop_toTopOf="@id/tv_field_info_sms"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_field_info_sms"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginEnd="16dp"
+                            app:sb_background="@color/gray"
+                            app:sb_border_width="2.5dp"
+                            app:sb_checked_color="@color/switch_color"
+                            app:sb_show_indicator="false"
+                            app:sb_uncheck_color="@color/gray"
+                            android:checked="@{vm.settingInfo.tnfieldchkSMS == 1 ? true : false}"
+                            />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            app:layout_constraintTop_toBottomOf="@id/switch_sms"
+                            android:layout_marginTop="10dp"
+                            android:background="@android:color/transparent"
+                            />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:id="@+id/tv_using_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        app:layout_constraintTop_toBottomOf="@id/layout_field_info"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:textSize="@dimen/dp_13"
+                        android:textStyle="bold"
+                        android:text="@string/using_info"
+                        android:textColor="@color/basic"
+                        />
+
+                    <ImageView
+                        android:id="@+id/iv_using_info"
+                        android:layout_width="20dp"
+                        android:layout_height="15dp"
+                        app:layout_constraintTop_toTopOf="@id/tv_using_info"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_using_info"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/arrow"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_send_mail"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_using_info"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:textSize="@dimen/dp_13"
+                        android:textStyle="bold"
+                        android:text="@string/send_mail"
+                        android:textColor="@color/basic"
+                        />
+
+                    <ImageView
+                        android:id="@+id/iv_send_mail"
+                        android:layout_width="20dp"
+                        android:layout_height="15dp"
+                        app:layout_constraintTop_toTopOf="@id/tv_send_mail"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_send_mail"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/arrow"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
+
+
 
         </com.google.android.material.navigation.NavigationView>
 

@@ -1,6 +1,8 @@
 package com.bellminp.instrumentation.ui.main
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -23,6 +25,8 @@ import com.bellminp.instrumentation.ui.main.record.RecordFragment
 import com.bellminp.instrumentation.ui.main.table.TableFragment
 import com.bellminp.instrumentation.ui.main.tree.TreeFragment
 import com.bellminp.instrumentation.ui.splash.SplashViewModel
+import com.bellminp.instrumentation.ui.usinginfo.UsingInfoActivity
+import com.bellminp.instrumentation.utils.CONNECT_DATA
 import com.bellminp.instrumentation.utils.FIELD_DATA
 import com.bellminp.instrumentation.utils.NAME
 import com.bellminp.instrumentation.utils.TYPE
@@ -89,6 +93,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         if(intent.hasExtra(FIELD_DATA)){
             fieldList = intent.getSerializableExtra(FIELD_DATA) as FieldData
         }
+        viewModel.connectInfo.value = intent.getSerializableExtra(CONNECT_DATA) as Connect
+        timberMsg(intent.getSerializableExtra(CONNECT_DATA) as Connect)
         initLayout(num)
         initAdapter()
         initListener()
@@ -96,6 +102,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         with(viewModel) {
             fieldNum = num
             getProcessLog()
+            getSetting(num)
         }
     }
 
@@ -107,6 +114,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
                 binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                 binding.layoutTreeSetting.visibility = View.GONE
                 binding.layoutGraphSetting.visibility = View.GONE
+                binding.layoutFieldInfo.visibility = View.GONE
+
+                binding.ivTreeSetting.visibility = View.VISIBLE
+                binding.ivGraphSetting.visibility = View.VISIBLE
+                binding.ivFieldInfo.visibility = View.VISIBLE
             }
             override fun onDrawerOpened(drawerView: View) {}
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
@@ -136,31 +148,43 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
         }
 
         binding.tvTreeSetting.setOnClickListener {
-            binding.layoutGraphSetting.visibility = View.GONE
-            if(binding.layoutTreeSetting.isVisible) binding.layoutTreeSetting.visibility = View.GONE
-            else binding.layoutTreeSetting.visibility = View.VISIBLE
+            if(binding.layoutTreeSetting.isVisible){
+                binding.layoutTreeSetting.visibility = View.GONE
+                binding.ivTreeSetting.visibility = View.VISIBLE
+            }
+            else{
+                binding.layoutTreeSetting.visibility = View.VISIBLE
+                binding.ivTreeSetting.visibility = View.GONE
+            }
         }
 
         binding.tvGraphSetting.setOnClickListener {
-            if(binding.layoutGraphSetting.isVisible) binding.layoutGraphSetting.visibility = View.GONE
-            else binding.layoutGraphSetting.visibility = View.VISIBLE
+            if(binding.layoutGraphSetting.isVisible){
+                binding.layoutGraphSetting.visibility = View.GONE
+                binding.ivGraphSetting.visibility = View.VISIBLE
+            }
+            else{
+                binding.layoutGraphSetting.visibility = View.VISIBLE
+                binding.ivGraphSetting.visibility = View.GONE
+            }
         }
 
-        binding.ivTreeClose.setOnClickListener {
-            binding.layoutTreeSetting.visibility = View.GONE
+        binding.tvFieldInfo.setOnClickListener {
+            if(binding.layoutFieldInfo.isVisible){
+                binding.layoutFieldInfo.visibility = View.GONE
+                binding.ivFieldInfo.visibility = View.VISIBLE
+            }
+            else{
+                binding.layoutFieldInfo.visibility = View.VISIBLE
+                binding.ivFieldInfo.visibility = View.GONE
+            }
         }
 
-        binding.ivGraphClose.setOnClickListener {
-            binding.layoutGraphSetting.visibility = View.GONE
+        binding.switchSms.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.setSetting(isChecked)
+            binding.tvFieldInfoSmsValue.text = if(isChecked) "ON" else "OFF"
         }
 
-        binding.layoutSetting.setOnClickListener {
-            binding.layoutGraphSetting.visibility = View.GONE
-            binding.layoutTreeSetting.visibility = View.GONE
-        }
-
-        binding.layoutTreeSetting.setOnClickListener {  }
-        binding.layoutGraphSetting.setOnClickListener {  }
 
         binding.switchRotate.setOnCheckedChangeListener { _, isChecked ->
             viewModel.setLocalData(rotate = isChecked)
@@ -261,6 +285,30 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
                 treeFragment.refreshTree()
                 graphFragment?.refreshGraph()
             }.show(supportFragmentManager,"InitSettingDialog")
+        }
+
+        binding.tvSendMail.setOnClickListener {
+            sendMain()
+        }
+
+        binding.tvUsingInfo.setOnClickListener {
+            startActivity(Intent(this@MainActivity,UsingInfoActivity::class.java))
+        }
+    }
+
+    @SuppressLint("QueryPermissionsNeeded")
+    private fun sendMain(){
+        val emailAddress = "arado77@hanmail.net"
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            type = "text/plain"
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(emailAddress))
+        }
+
+        try {
+            startActivity(intent)
+        }catch (e: Exception){
+            showToast("메일을 전송할 수 없습니다.")
         }
     }
 
