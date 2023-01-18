@@ -54,7 +54,9 @@ class SplashViewModel @Inject constructor(
                                         data.nsmdbname,
                                         data.nsmadminpw,
                                         data.appversion,
-                                        data.authorityNum
+                                        data.authorityNum,
+                                        data.username?:"",
+                                        data.userId?:""
                                     )
                                     if(items.fieldList == null) goMain(items.fieldNum?:0,connect)
                                     else{

@@ -5,6 +5,7 @@ data class LoginResponse(
     val code : Int,
     val message : String,
     val username : String?,
+    val userId : String?,
     val fieldNum : Int?,
     val authorityNum : Int?,
     val token : String?,

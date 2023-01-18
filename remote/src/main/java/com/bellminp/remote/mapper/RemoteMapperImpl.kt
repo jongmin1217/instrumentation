@@ -17,6 +17,7 @@ fun LoginResponse.loginToData(): DataLogin {
         this.code,
         this.message,
         this.username,
+        this.userId,
         this.fieldNum,
         this.authorityNum,
         this.token,
