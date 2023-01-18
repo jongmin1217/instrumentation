@@ -1,5 +1,6 @@
 package com.bellminp.instrumentation.utils.bindingadapter
 
+import android.annotation.SuppressLint
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bellminp.instrumentation.InstrumentationApplication
@@ -12,4 +13,14 @@ fun setPhoneNumber(tv: TextView, item: String) {
     val dec = DecimalFormat("###,####,####")
 
     tv.text = if(item.isNotEmpty()) "핸드폰: 0"+dec.format(item.toInt()).replace(",","-") else "핸드폰:"
+}
+
+@SuppressLint("SetTextI18n")
+@BindingAdapter("setVersion")
+fun setVersion(tv: TextView, item: String?) {
+    if(item == null){
+        tv.text = "Ver. 1.0.0"
+    }else{
+        tv.text = "Ver. $item"
+    }
 }
