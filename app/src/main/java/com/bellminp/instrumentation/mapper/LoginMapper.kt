@@ -29,7 +29,8 @@ object LoginMapper : PresentationMapper<DomainLogin, Login>{
             from.nsmadminid,
             from.nsmdbname,
             from.nsmadminpw,
-            from.appversion
+            from.appversion,
+            from.smson
         )
     }
 
@@ -53,7 +54,8 @@ object LoginMapper : PresentationMapper<DomainLogin, Login>{
             from.nsmadminid,
             from.nsmdbname,
             from.nsmadminpw,
-            from.appversion
+            from.appversion,
+            from.smson
         )
     }
 }

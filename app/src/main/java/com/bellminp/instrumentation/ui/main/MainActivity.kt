@@ -30,6 +30,7 @@ import com.bellminp.instrumentation.utils.CONNECT_DATA
 import com.bellminp.instrumentation.utils.FIELD_DATA
 import com.bellminp.instrumentation.utils.NAME
 import com.bellminp.instrumentation.utils.TYPE
+import com.bellminp.remote.utils.CONNECT_NAME
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.system.exitProcess
 
@@ -303,6 +304,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
             type = "text/plain"
             data = Uri.parse("mailto:")
             putExtra(Intent.EXTRA_EMAIL, arrayOf(emailAddress))
+            putExtra(Intent.EXTRA_SUBJECT, "NSRMS_${CONNECT_NAME}_${binding.tvSite.text}_사용자의견")
         }
 
         try {

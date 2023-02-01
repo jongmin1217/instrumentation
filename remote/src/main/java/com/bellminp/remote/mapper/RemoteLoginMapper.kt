@@ -28,7 +28,8 @@ object RemoteLoginMapper : RemoteMapper<LoginResponse,DataLogin> {
             from.connect.nsmadminid,
             from.connect.nsmdbname,
             from.connect.nsmadminpw,
-            from.connect.appversion
+            from.connect.appversion,
+            from.connect.smson
         )
     }
 
@@ -53,7 +54,8 @@ object RemoteLoginMapper : RemoteMapper<LoginResponse,DataLogin> {
                 from.nsmadminid,
                 from.nsmdbname,
                 from.nsmadminpw,
-                from.appversion
+                from.appversion,
+                from.smson
             )
         )
     }

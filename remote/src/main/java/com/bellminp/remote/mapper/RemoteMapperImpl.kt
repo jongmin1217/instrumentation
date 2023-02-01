@@ -32,7 +32,8 @@ fun LoginResponse.loginToData(): DataLogin {
         this.connect.nsmadminid,
         this.connect.nsmdbname,
         this.connect.nsmadminpw,
-        this.connect.appversion
+        this.connect.appversion,
+        this.connect.smson
     )
 }
 

@@ -68,7 +68,9 @@
     <string formatted="false" name="user_name">이름: %s</string>
     <string formatted="false" name="user_permission">권한: %s</string>
     <string formatted="false" name="user_number">핸드폰: %s</string>
-    <string name="user_sms">SMS: ON/OFF</string>
+    <string name="user_sms">SMS:</string>
+    <string name="user_sms_on">SMS: ON</string>
+    <string name="user_sms_off">SMS: OFF</string>
 
     <string name="init_setting_title">모든 설정을 초기화 하시겠습니까?</string>
 

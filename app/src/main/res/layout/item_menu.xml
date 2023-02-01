@@ -8,12 +8,14 @@
             name="item"
             type="com.bellminp.instrumentation.model.MenuData" />
 
+        <import type="android.view.View"/>
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@{item.checked ? @color/gray : @color/white}"
+        android:background="@{item.checked ? @drawable/shape_main_select : @drawable/shape_main_unselect}"
         >
 
         <ImageView
@@ -26,6 +28,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="4dp"
             setImageResource="@{item.imgResource}"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/basic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="@{item.checked ? View.GONE : View.VISIBLE}"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

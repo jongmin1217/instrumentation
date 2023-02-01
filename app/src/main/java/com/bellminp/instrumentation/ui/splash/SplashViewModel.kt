@@ -56,7 +56,8 @@ class SplashViewModel @Inject constructor(
                                         data.appversion,
                                         data.authorityNum,
                                         data.username?:"",
-                                        data.userId?:""
+                                        data.userId?:"",
+                                        data.smson
                                     )
                                     if(items.fieldList == null) goMain(items.fieldNum?:0,connect)
                                     else{

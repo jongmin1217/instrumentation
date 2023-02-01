@@ -20,7 +20,8 @@ data class Login(
     val nsmadminid : String,
     val nsmdbname : String,
     val nsmadminpw : String,
-    val appversion : String?
+    val appversion : String?,
+    val smson: Int
 )
 
 data class Connect(
@@ -35,7 +36,8 @@ data class Connect(
     val appversion : String?,
     val authorityNum : Int?,
     val username: String,
-    val userId: String
+    val userId: String,
+    val smson : Int
 ) : java.io.Serializable{
     fun getPermission() = when(authorityNum){
         1 -> "총괄관리자"

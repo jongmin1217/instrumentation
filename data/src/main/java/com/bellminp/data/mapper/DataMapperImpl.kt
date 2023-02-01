@@ -31,7 +31,8 @@ fun DomainLogin.mapToData() : DataLogin{
         this.nsmadminid,
         this.nsmdbname,
         this.nsmadminpw,
-        this.appversion
+        this.appversion,
+        this.smson
     )
 }
 
@@ -55,7 +56,8 @@ fun DataLogin.mapToDomain() : DomainLogin{
         this.nsmadminid,
         this.nsmdbname,
         this.nsmadminpw,
-        this.appversion
+        this.appversion,
+        this.smson
     )
 }
 

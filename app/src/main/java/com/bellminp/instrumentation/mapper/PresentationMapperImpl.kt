@@ -29,7 +29,8 @@ fun DomainLogin.mapToPresentation(): Login {
         this.nsmadminid,
         this.nsmdbname,
         this.nsmadminpw,
-        this.appversion
+        this.appversion,
+        this.smson
     )
 }
 
@@ -53,7 +54,8 @@ fun Login.mapToDomain(): DomainLogin {
         this.nsmadminid,
         this.nsmdbname,
         this.nsmadminpw,
-        this.appversion
+        this.appversion,
+        this.smson
     )
 }
 

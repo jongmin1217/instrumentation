@@ -17,7 +17,8 @@ data class DomainLogin(
     val nsmadminid : String,
     val nsmdbname : String,
     val nsmadminpw : String,
-    val appversion : String?
+    val appversion : String?,
+    val smson : Int
 )
 
 data class DomainFieldList(

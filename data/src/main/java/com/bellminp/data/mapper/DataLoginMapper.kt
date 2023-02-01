@@ -28,7 +28,8 @@ object DataLoginMapper : DataMapper<DataLogin, DomainLogin> {
             from.nsmadminid,
             from.nsmdbname,
             from.nsmadminpw,
-            from.appversion
+            from.appversion,
+            from.smson
         )
     }
 
@@ -52,7 +53,8 @@ object DataLoginMapper : DataMapper<DataLogin, DomainLogin> {
             from.nsmadminid,
             from.nsmdbname,
             from.nsmadminpw,
-            from.appversion
+            from.appversion,
+            from.smson
         )
     }
 }
