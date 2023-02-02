@@ -488,53 +488,7 @@
                             app:sb_show_indicator="false"
                             app:sb_uncheck_color="@color/gray" />
 
-                        <TextView
-                            android:id="@+id/tv_1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintTop_toTopOf="@id/switch_1"
-                            app:layout_constraintBottom_toBottomOf="@id/switch_1"
-                            app:layout_constraintEnd_toStartOf="@id/switch_1"
-                            android:layout_marginEnd="10dp"
-                            android:textSize="@dimen/dp_13"
-                            android:textColor="@color/basic"
-                            />
 
-                        <TextView
-                            android:id="@+id/tv_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintTop_toTopOf="@id/switch_2"
-                            app:layout_constraintBottom_toBottomOf="@id/switch_2"
-                            app:layout_constraintEnd_toStartOf="@id/switch_2"
-                            android:layout_marginEnd="10dp"
-                            android:textSize="@dimen/dp_13"
-                            android:textColor="@color/basic"
-                            />
-
-                        <TextView
-                            android:id="@+id/tv_3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintTop_toTopOf="@id/switch_3"
-                            app:layout_constraintBottom_toBottomOf="@id/switch_3"
-                            app:layout_constraintEnd_toStartOf="@id/switch_3"
-                            android:layout_marginEnd="10dp"
-                            android:textSize="@dimen/dp_13"
-                            android:textColor="@color/basic"
-                            />
-
-                        <TextView
-                            android:id="@+id/tv_4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintTop_toTopOf="@id/switch_4"
-                            app:layout_constraintBottom_toBottomOf="@id/switch_4"
-                            app:layout_constraintEnd_toStartOf="@id/switch_4"
-                            android:layout_marginEnd="10dp"
-                            android:textSize="@dimen/dp_13"
-                            android:textColor="@color/basic"
-                            />
 
                         <View
                             android:layout_width="match_parent"
@@ -780,10 +734,22 @@
                                 android:layout_height="wrap_content"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                android:layout_marginStart="75dp"
                                 android:textSize="@dimen/dp_13"
                                 android:textColor="@color/basic"
-                                android:text="@{@string/user_id(vm.connectInfo.userId)}"
+                                android:text="@string/user_id"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_user_id_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_user_id"
+                                android:layout_marginStart="5dp"
+                                android:textSize="@dimen/dp_13"
+                                android:textColor="@color/basic"
+                                android:text="@{vm.connectInfo.userId}"
                                 />
 
                             <TextView
@@ -791,12 +757,24 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:layout_constraintTop_toBottomOf="@id/tv_user_id"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintEnd_toEndOf="@id/tv_user_id"
                                 android:textSize="@dimen/dp_13"
                                 android:textColor="@color/basic"
                                 android:layout_marginTop="5dp"
-                                android:text="@{@string/user_name(vm.connectInfo.username)}"
+                                android:text="@string/user_name"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_user_name_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintTop_toBottomOf="@id/tv_user_id"
+                                app:layout_constraintStart_toEndOf="@id/tv_user_name"
+                                android:layout_marginStart="5dp"
+                                android:textSize="@dimen/dp_13"
+                                android:textColor="@color/basic"
+                                android:layout_marginTop="5dp"
+                                android:text="@{vm.connectInfo.username}"
                                 />
 
                             <TextView
@@ -804,12 +782,24 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:layout_constraintTop_toBottomOf="@id/tv_user_name"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintEnd_toEndOf="@id/tv_user_id"
                                 android:textSize="@dimen/dp_13"
                                 android:textColor="@color/basic"
                                 android:layout_marginTop="5dp"
-                                android:text="@{@string/user_permission(vm.connectInfo.getPermission())}"
+                                android:text="@string/user_permission"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_user_permission_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintTop_toBottomOf="@id/tv_user_name"
+                                app:layout_constraintStart_toEndOf="@id/tv_user_permission"
+                                android:layout_marginStart="5dp"
+                                android:textSize="@dimen/dp_13"
+                                android:textColor="@color/basic"
+                                android:layout_marginTop="5dp"
+                                android:text="@{vm.connectInfo.getPermission()}"
                                 />
 
                             <TextView
@@ -817,8 +807,20 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:layout_constraintTop_toBottomOf="@id/tv_user_permission"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintEnd_toEndOf="@id/tv_user_id"
+                                android:textSize="@dimen/dp_13"
+                                android:textColor="@color/basic"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/user_number"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_user_number_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintTop_toBottomOf="@id/tv_user_permission"
+                                app:layout_constraintStart_toEndOf="@id/tv_user_number"
+                                android:layout_marginStart="5dp"
                                 android:textSize="@dimen/dp_13"
                                 android:textColor="@color/basic"
                                 android:layout_marginTop="5dp"
@@ -830,13 +832,26 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 app:layout_constraintTop_toBottomOf="@id/tv_user_number"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintEnd_toEndOf="@id/tv_user_id"
                                 android:textSize="@dimen/dp_13"
                                 android:textColor="@color/basic"
                                 android:layout_marginTop="5dp"
-                                android:visibility="@{vm.connectInfo.smson == 0 || vm.connectInfo.authorityNum == 3 ? View.GONE : View.VISIBLE}"
-                                android:text="@{vm.settingInfo.tnfieldchkSMS == 0 ? @string/user_sms : vm.connectInfo.recvsms == 1 ? @string/user_sms_on : @string/user_sms_off}"
+                                android:visibility="@{vm.connectInfo.smson == 0 || vm.connectInfo.authorityNum == 3 || vm.settingInfo.tnfieldchkSMS == 0 ? View.GONE : View.VISIBLE}"
+                                android:text="@string/user_sms"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_user_sms_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintTop_toBottomOf="@id/tv_user_number"
+                                app:layout_constraintStart_toEndOf="@id/tv_user_sms"
+                                android:layout_marginStart="5dp"
+                                android:textSize="@dimen/dp_13"
+                                android:textColor="@color/basic"
+                                android:layout_marginTop="5dp"
+                                android:visibility="@{vm.connectInfo.smson == 0 || vm.connectInfo.authorityNum == 3 || vm.settingInfo.tnfieldchkSMS == 0 ? View.GONE : View.VISIBLE}"
+                                android:text="@{vm.connectInfo.recvsms == 1 ? @string/on : @string/off}"
                                 />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -954,33 +969,18 @@
 
                             <TextView
                                 android:id="@+id/tv_field_info_lora_value"
-                                android:layout_width="50dp"
-                                android:layout_height="20dp"
-                                app:layout_constraintEnd_toStartOf="@id/switch_sms"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 app:layout_constraintTop_toTopOf="@id/tv_field_info_lora"
                                 app:layout_constraintBottom_toBottomOf="@id/tv_field_info_lora"
-                                android:gravity="center"
+                                app:layout_constraintStart_toEndOf="@id/tv_field_info_lora"
+                                android:layout_marginStart="5dp"
                                 android:textSize="@dimen/dp_13"
                                 android:textColor="@color/basic"
                                 android:textStyle="bold"
                                 android:text="@{vm.settingInfo.loraText()}"
                                 />
 
-                            <TextView
-                                android:id="@+id/tv_field_info_sms_value"
-                                android:layout_width="50dp"
-                                android:layout_height="20dp"
-                                android:background="@drawable/shape_setting_box"
-                                app:layout_constraintEnd_toStartOf="@id/switch_sms"
-                                app:layout_constraintTop_toTopOf="@id/tv_field_info_sms"
-                                app:layout_constraintBottom_toBottomOf="@id/tv_field_info_sms"
-                                android:gravity="center"
-                                android:textSize="@dimen/dp_13"
-                                android:textColor="@color/basic"
-                                android:textStyle="bold"
-                                android:text="@{vm.settingInfo.smsText()}"
-                                android:visibility="@{vm.connectInfo.smson == 0 || vm.connectInfo.authorityNum == 3 ? View.GONE : View.VISIBLE}"
-                                />
 
 
                             <com.suke.widget.SwitchButton

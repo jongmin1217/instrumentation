@@ -183,7 +183,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
 
         binding.switchSms.setOnCheckedChangeListener { _, isChecked ->
             viewModel.setSetting(isChecked)
-            binding.tvFieldInfoSmsValue.text = if(isChecked) "ON" else "OFF"
+            binding.tvUserSms.visibility = if(isChecked) View.VISIBLE else View.GONE
+            binding.tvUserSmsValue.visibility = if(isChecked) View.VISIBLE else View.GONE
         }
 
 
@@ -193,28 +194,24 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
 
         binding.switch1.setOnCheckedChangeListener { _, isChecked ->
             viewModel.setLocalData(treeSite = isChecked)
-            binding.tv1.text = if(isChecked) "ON" else "OFF"
             InstrumentationApplication.mInstance.treeSite = isChecked
             refreshTree()
         }
 
         binding.switch2.setOnCheckedChangeListener { _, isChecked ->
             viewModel.setLocalData(treeSection = isChecked)
-            binding.tv2.text = if(isChecked) "ON" else "OFF"
             InstrumentationApplication.mInstance.treeSection = isChecked
             refreshTree()
         }
 
         binding.switch3.setOnCheckedChangeListener { _, isChecked ->
             viewModel.setLocalData(treeGroup = isChecked)
-            binding.tv3.text = if(isChecked) "ON" else "OFF"
             InstrumentationApplication.mInstance.treeGroup = isChecked
             refreshTree()
         }
 
         binding.switch4.setOnCheckedChangeListener { _, isChecked ->
             viewModel.setLocalData(treeGauges = isChecked)
-            binding.tv4.text = if(isChecked) "ON" else "OFF"
             InstrumentationApplication.mInstance.treeGauges = isChecked
             refreshTree()
         }
@@ -395,10 +392,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
                 binding.switch3.isChecked = it[3]
                 binding.switch4.isChecked = it[4]
 
-                binding.tv1.text = if(it[1]) "ON" else "OFF"
-                binding.tv2.text = if(it[2]) "ON" else "OFF"
-                binding.tv3.text = if(it[3]) "ON" else "OFF"
-                binding.tv4.text = if(it[4]) "ON" else "OFF"
             }
 
             initGraphSetting.observe(this@MainActivity){

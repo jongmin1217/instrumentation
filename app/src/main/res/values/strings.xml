@@ -64,13 +64,13 @@
     <string name="field_info_sms">SMS 설정:</string>
     <string name="back_setting">&lt; 설정</string>
 
-    <string formatted="false" name="user_id">ID: %s</string>
-    <string formatted="false" name="user_name">이름: %s</string>
-    <string formatted="false" name="user_permission">권한: %s</string>
-    <string formatted="false" name="user_number">핸드폰: %s</string>
+    <string name="user_id">ID:</string>
+    <string name="user_name">이름:</string>
+    <string name="user_permission">권한:</string>
+    <string name="user_number">핸드폰:</string>
     <string name="user_sms">SMS:</string>
-    <string name="user_sms_on">SMS: ON</string>
-    <string name="user_sms_off">SMS: OFF</string>
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
 
     <string name="init_setting_title">모든 설정을 초기화 하시겠습니까?</string>
 

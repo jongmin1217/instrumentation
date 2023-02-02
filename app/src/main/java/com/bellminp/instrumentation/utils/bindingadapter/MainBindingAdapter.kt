@@ -12,7 +12,7 @@ import java.text.DecimalFormat
 fun setPhoneNumber(tv: TextView, item: String) {
     val dec = DecimalFormat("###,####,####")
 
-    tv.text = if(item.isNotEmpty()) "핸드폰: 0"+dec.format(item.toInt()).replace(",","-") else "핸드폰:"
+    tv.text = if(item.isNotEmpty()) "0"+dec.format(item.toInt()).replace(",","-") else ""
 }
 
 @SuppressLint("SetTextI18n")
