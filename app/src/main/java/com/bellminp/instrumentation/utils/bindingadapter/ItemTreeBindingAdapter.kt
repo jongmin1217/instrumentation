@@ -42,8 +42,11 @@ fun setGaugesName(tv: TextView, item: GaugesList) {
 
 @BindingAdapter("setGaugesGroupName")
 fun setGaugesGroupName(tv: TextView, item: GaugesGroupList) {
-    val managenum = if(item.managenum.isNotEmpty()) "[${item.managenum}]" else String()
-    val text = if(InstrumentationApplication.mInstance.treeGauges) "${item.name} $managenum" else item.name
+    val managenum = when(item.gaugetypeNum){
+        29,30,31,32 -> "[${item.measurepos}]"
+        else -> "[${item.vpos}0M]"
+    }
+    val text = if(InstrumentationApplication.mInstance.treeGroup) "${item.name} $managenum" else item.name
     tv.text = text
 }
 
