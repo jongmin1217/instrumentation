@@ -441,6 +441,7 @@ class GraphAdapter(
                     }
 
                     data = chartData
+
                     invalidate()
                 }
 
@@ -898,6 +899,11 @@ class GraphAdapter(
                 binding.item = item
                 binding.executePendingBindings()
 
+                val itemCount = item.list.size
+                val itemHeight = InstrumentationApplication.mInstance.resources.getDimension(R.dimen.dp_8)
+                val recyclerViewHeight = itemHeight * itemCount
+                binding.recyclerviewLegend.layoutParams.height = recyclerViewHeight.toInt()
+
                 FlexboxLayoutManager(binding.recyclerviewLegend.context).apply {
                     flexWrap = FlexWrap.WRAP
                     flexDirection = FlexDirection.ROW
@@ -908,6 +914,7 @@ class GraphAdapter(
                         submitList(item.list)
                     }
                 }
+
             }
         }
 

@@ -130,7 +130,12 @@ fun getColorType(value: Double?, gaugesDetailList: GaugesGroupDetailList) : Int 
 }
 
 fun getGraphColor(index : Int) : Int {
-    return InstrumentationApplication.mInstance.resources.getIntArray(R.array.color)[index]
+    val hsv = floatArrayOf(
+        index.toFloat() * 36 % 360,
+        0.8f,
+        0.8f
+    )
+    return Color.HSVToColor(hsv)
 }
 
 fun roundOff(value : Double) = (value * 1000).roundToInt().toDouble()/1000

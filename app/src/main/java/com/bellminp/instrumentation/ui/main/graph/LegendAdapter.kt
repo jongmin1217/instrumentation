@@ -2,6 +2,7 @@ package com.bellminp.instrumentation.ui.main.graph
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.bellminp.common.timberMsg
 import com.bellminp.instrumentation.databinding.ItemFieldListBinding
 import com.bellminp.instrumentation.databinding.ItemLegendBinding
 import com.bellminp.instrumentation.model.FieldList
@@ -26,6 +27,7 @@ class LegendAdapter: BaseListAdapter<LegendData>() {
     ) : BaseViewHolder<LegendData>(binding){
 
         override fun bind(item: LegendData) {
+            timberMsg(item.text)
             binding.item = item
             binding.executePendingBindings()
         }
