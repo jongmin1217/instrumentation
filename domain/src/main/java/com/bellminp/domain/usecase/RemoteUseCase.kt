@@ -91,4 +91,25 @@ class RemoteUseCase @Inject constructor(private val remoteRepository: RemoteRepo
             emit(result)
         }
     }
+
+    suspend fun getSetting(
+        token: String,
+        num : Int
+    ): Flow<ApiResult<DomainSetting>> {
+        return flow {
+            val result = getResponse(remoteRepository.getSetting(token,num))
+            emit(result)
+        }
+    }
+
+    suspend fun setSetting(
+        token: String,
+        num : Int,
+        tnfieldchkSMS : Int
+    ): Flow<ApiResult<Pair<Int,String>>> {
+        return flow {
+            val result = getResponse(remoteRepository.setSetting(token,num,tnfieldchkSMS))
+            emit(result)
+        }
+    }
 }

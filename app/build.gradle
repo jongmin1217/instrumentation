@@ -80,6 +80,7 @@ dependencies {
     annotationProcessor deps.glide.annotation
 
     implementation 'com.gitlab.developerdeveloperdeveloper:androidutilslibrary:1.0.0'
+    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
 
     api deps.MPAndroidChart
     api deps.flexbox

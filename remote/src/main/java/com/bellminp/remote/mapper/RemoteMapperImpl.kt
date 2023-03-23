@@ -2,10 +2,12 @@ package com.bellminp.remote.mapper
 
 import com.bellminp.data.mapper.mapToData
 import com.bellminp.data.model.*
+import com.bellminp.remote.model.BaseResponse
 import com.bellminp.remote.model.detail.GaugesDetailResponse
 import com.bellminp.remote.model.detail.GaugesGroupDetailResponse
 import com.bellminp.remote.model.login.LoginResponse
 import com.bellminp.remote.model.record.RecordResponse
+import com.bellminp.remote.model.setting.SettingResponse
 import com.bellminp.remote.model.tree.*
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -15,12 +17,23 @@ fun LoginResponse.loginToData(): DataLogin {
         this.code,
         this.message,
         this.username,
+        this.userId,
         this.fieldNum,
         this.authorityNum,
         this.token,
         this.fieldList?.map {
             DataFieldList(it.num, it.name)
-        }
+        },
+        this.apichk,
+        this.mobilenum,
+        this.recvsms,
+        this.connect.appid,
+        this.connect.nsmip,
+        this.connect.nsmadminid,
+        this.connect.nsmdbname,
+        this.connect.nsmadminpw,
+        this.connect.appversion,
+        this.connect.smson
     )
 }
 
@@ -232,4 +245,18 @@ fun GaugesGroupDetailResponse.gaugesGroupDetailToData() : DataGaugesGroupDetail{
         },
         this.vposList
     )
+}
+
+fun SettingResponse.settingToData() : DataSetting{
+    return DataSetting(
+        this.code,
+        this.message,
+        this.tnfieldchkSMS,
+        this.lorachk,
+        this.apiDataYuji
+    )
+}
+
+fun BaseResponse.baseToPair() : Pair<Int,String>{
+    return this.code to this.message
 }

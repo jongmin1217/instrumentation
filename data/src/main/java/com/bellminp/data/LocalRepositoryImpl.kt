@@ -35,6 +35,52 @@ class LocalRepositoryImpl@Inject constructor(
 
     override fun getAdmin() = localDataSource.getAdmin()
 
+    override fun getRotate() = localDataSource.getRotate()
+
+    override fun setRotate(value: Boolean) {
+        localDataSource.setRotate(value)
+    }
+
+    override fun getTreeSite() = localDataSource.getTreeSite()
+
+    override fun setTreeSite(value: Boolean) {
+        localDataSource.setTreeSite(value)
+    }
+
+    override fun getTreeSection() = localDataSource.getTreeSection()
+
+    override fun setTreeSection(value: Boolean) {
+        localDataSource.setTreeSection(value)
+    }
+
+    override fun getTreeGroup() = localDataSource.getTreeGroup()
+
+    override fun setTreeGroup(value: Boolean) {
+        localDataSource.setTreeGroup(value)
+    }
+
+    override fun getTreeGauges() = localDataSource.getTreeGauges()
+
+    override fun setTreeGauges(value: Boolean) {
+        localDataSource.setTreeGauges(value)
+    }
+
+    override fun getGraphDate() = localDataSource.getGraphDate()
+
+    override fun setGraphDate(value: Int) {
+        localDataSource.setGraphDate(value)
+    }
+
+    override fun getGraphPoint() = localDataSource.getGraphPoint()
+
+    override fun setGraphPoint(value: Int) {
+        localDataSource.setGraphPoint(value)
+    }
+
+    override fun initSetting() {
+        localDataSource.initSetting()
+    }
+
     override fun setDataAllGauges(dataAllGauges: DomainAllGauges) {
         localDataSource.setDataAllGauges(dataAllGauges.mapToData())
     }

@@ -24,4 +24,8 @@ interface RemoteRepository {
     suspend fun getGaugesDetail(token : String, gaugeId: Int, startUnixTime: Long, endUnixTime: Long): Response<DomainGaugesDetail>
 
     suspend fun getGaugesGroupDetail(token : String, gaugegroupId: Int, startUnixTime: Long, endUnixTime: Long): Response<DomainGaugesGroupDetail>
+
+    suspend fun getSetting(token : String,num : Int) : Response<DomainSetting>
+
+    suspend fun setSetting(token : String,num : Int,tnfieldchkSMS:Int) : Response<Pair<Int,String>>
 }

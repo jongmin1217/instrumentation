@@ -4,6 +4,8 @@ import android.graphics.Typeface
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.bellminp.common.timberMsg
+import com.bellminp.instrumentation.InstrumentationApplication
 import com.bellminp.instrumentation.R
 import com.bellminp.instrumentation.model.*
 
@@ -15,29 +17,36 @@ fun setFieldName(tv: TextView, item: Field) {
 @BindingAdapter("setSitesName")
 fun setSitesName(tv: TextView, item: SitesList) {
     val managenum = if(item.managenum.isNotEmpty()) "[${item.managenum}]" else String()
-    val text = "${item.name} $managenum"
+    val text = if(InstrumentationApplication.mInstance.treeSite) "${item.name} $managenum" else item.name
     tv.text = text
 }
 
 @BindingAdapter("setSectionsName")
 fun setSectionsName(tv: TextView, item: SectionsList) {
     val managenum = if(item.managenum.isNotEmpty()) "[${item.managenum}]" else String()
-    val text = "${item.name} $managenum"
+    val text = if(InstrumentationApplication.mInstance.treeSection) "${item.name} $managenum" else item.name
     tv.text = text
 }
 
 @BindingAdapter("setGaugesName")
 fun setGaugesName(tv: TextView, item: GaugesList) {
     val managenum = if(item.managenum.isNotEmpty()) "[${item.managenum}]" else String()
-    val text = "${item.name} $managenum"
+    val text = if(item.getGroup()){
+        if(InstrumentationApplication.mInstance.treeGroup) "${item.name} $managenum" else item.name
+    }else{
+        if(InstrumentationApplication.mInstance.treeGauges) "${item.name} $managenum" else item.name
+    }
     tv.text = text
 
 }
 
 @BindingAdapter("setGaugesGroupName")
 fun setGaugesGroupName(tv: TextView, item: GaugesGroupList) {
-    val managenum = if(item.managenum.isNotEmpty()) "[${item.managenum}]" else String()
-    val text = "${item.name} $managenum"
+    val managenum = when(item.gaugetypeNum){
+        29,30,31,32 -> "[${item.measurepos}]"
+        else -> "[${item.vpos}0M]"
+    }
+    val text = if(InstrumentationApplication.mInstance.treeGroup) "${item.name} $managenum" else item.name
     tv.text = text
 }
 

@@ -16,12 +16,23 @@ fun DomainLogin.mapToData() : DataLogin{
         this.code,
         this.message,
         this.username,
+        this.userId,
         this.fieldNum,
         this.authorityNum,
         this.token,
         this.fieldList?.map {
             DataFieldList(it.num,it.name)
-        }
+        },
+        this.apichk,
+        this.mobilenum,
+        this.recvsms,
+        this.appid,
+        this.nsmip,
+        this.nsmadminid,
+        this.nsmdbname,
+        this.nsmadminpw,
+        this.appversion,
+        this.smson
     )
 }
 
@@ -30,12 +41,23 @@ fun DataLogin.mapToDomain() : DomainLogin{
         this.code,
         this.message,
         this.username,
+        this.userId,
         this.fieldNum,
         this.authorityNum,
         this.token,
         this.fieldList?.map {
             DomainFieldList(it.num,it.name)
-        }
+        },
+        this.apichk,
+        this.mobilenum,
+        this.recvsms,
+        this.appid,
+        this.nsmip,
+        this.nsmadminid,
+        this.nsmdbname,
+        this.nsmadminpw,
+        this.appversion,
+        this.smson
     )
 }
 
@@ -467,5 +489,15 @@ fun DomainAllGauges.mapToData() : DataAllGauges{
 
 fun DataAllGauges.mapToDomain() : DomainAllGauges{
     return DomainAllGauges(this.num,this.name)
+}
+
+fun DataSetting.mapToDomain() : DomainSetting{
+    return DomainSetting(
+        this.code,
+        this.message,
+        this.tnfieldchkSMS,
+        this.lorachk,
+        this.apiDataYuji
+    )
 }
 

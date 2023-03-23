@@ -19,7 +19,7 @@ class TreeAdapter(
     private val unSelectGauges: (() -> Unit)
 ) : BaseListAdapter<TreeModel>() {
 
-    private var selectNum: Int? = null
+    var selectNum: Int? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<TreeModel> {
         return when (viewType) {
@@ -234,10 +234,13 @@ class TreeAdapter(
     }
 
     fun addSites(items: List<SitesList>) {
-        val index = currentList.indexOfFirst { it is Field }
-        if (index != -1) addAll(
-            index + 1,
-            items.apply { items[items.size - 1].bottomViewVisible = false })
+        addAll(
+            0,
+            items.apply {
+                items[0].topViewVisible = false
+                items[items.size - 1].bottomViewVisible = false
+            }
+        )
     }
 
     fun addSections(items: List<SectionsList>) {

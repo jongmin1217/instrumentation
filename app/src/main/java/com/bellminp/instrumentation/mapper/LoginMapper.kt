@@ -14,12 +14,23 @@ object LoginMapper : PresentationMapper<DomainLogin, Login>{
             from.code,
             from.message,
             from.username,
+            from.userId,
             from.fieldNum,
             from.authorityNum,
             from.token,
             from.fieldList?.map {
                 DomainFieldList(it.num,it.name)
-            }
+            },
+            from.apichk,
+            from.mobilenum,
+            from.recvsms,
+            from.appid,
+            from.nsmip,
+            from.nsmadminid,
+            from.nsmdbname,
+            from.nsmadminpw,
+            from.appversion,
+            from.smson
         )
     }
 
@@ -28,12 +39,23 @@ object LoginMapper : PresentationMapper<DomainLogin, Login>{
             from.code,
             from.message,
             from.username,
+            from.userId,
             from.fieldNum,
             from.authorityNum,
             from.token,
             from.fieldList?.map {
                 FieldList(it.num,it.name)
-            }
+            },
+            from.apichk,
+            from.mobilenum,
+            from.recvsms,
+            from.appid,
+            from.nsmip,
+            from.nsmadminid,
+            from.nsmdbname,
+            from.nsmadminpw,
+            from.appversion,
+            from.smson
         )
     }
 }

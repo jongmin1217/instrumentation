@@ -41,6 +41,68 @@ class PrefsHelperImpl @Inject constructor(applicationContext: Context) : PrefsHe
             }
         }
 
+    override var rotate: Boolean
+        get() = prefs.getBoolean(ROTATE, true)
+        set(value) {
+            prefs.edit {
+                putBoolean(ROTATE, value)
+            }
+        }
+    override var treeSite: Boolean
+        get() = prefs.getBoolean(TREE_SITE, true)
+        set(value) {
+            prefs.edit {
+                putBoolean(TREE_SITE, value)
+            }
+        }
+    override var treeSection: Boolean
+        get() = prefs.getBoolean(TREE_SECTION, true)
+        set(value) {
+            prefs.edit {
+                putBoolean(TREE_SECTION, value)
+            }
+        }
+    override var treeGroup: Boolean
+        get() = prefs.getBoolean(TREE_GROUP, true)
+        set(value) {
+            prefs.edit {
+                putBoolean(TREE_GROUP, value)
+            }
+        }
+    override var treeGauges: Boolean
+        get() = prefs.getBoolean(TREE_GAUGES, true)
+        set(value) {
+            prefs.edit {
+                putBoolean(TREE_GAUGES, value)
+            }
+        }
+    override var graphDate: Int
+        get() = prefs.getInt(GRAPH_DATE, 0)
+        set(value) {
+            prefs.edit {
+                putInt(GRAPH_DATE, value)
+            }
+        }
+    override var graphPoint: Int
+        get() = prefs.getInt(GRAPH_POINT, 0)
+        set(value) {
+            prefs.edit {
+                putInt(GRAPH_POINT, value)
+            }
+        }
+
+    override fun initSetting() {
+        prefs.edit {
+            putBoolean(ROTATE,true)
+            putBoolean(TREE_SITE,true)
+            putBoolean(TREE_SECTION,true)
+            putBoolean(TREE_GROUP,true)
+            putBoolean(TREE_GAUGES,true)
+            putInt(GRAPH_DATE,0)
+            putInt(GRAPH_POINT, 0)
+        }
+    }
+
     override fun getAllGauges(num: Int) = prefs.getString(num.toString(),null)?:""
 
     override fun setAllGauges(data: DataAllGauges) {
