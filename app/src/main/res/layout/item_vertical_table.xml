@@ -15,7 +15,7 @@
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@{item.title ? @drawable/shape_table_title : @drawable/shape_table}"
+        android:background="@drawable/shape_table"
         >
 
         <TextView

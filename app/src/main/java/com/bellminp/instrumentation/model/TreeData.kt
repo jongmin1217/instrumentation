@@ -14,6 +14,7 @@ data class Field(
     override fun getGroupNum() = num
     override fun noneItem() {}
     override fun getGaugesTime(): Long? = null
+
 }
 
 data class SitesList(
@@ -24,7 +25,8 @@ data class SitesList(
     val managenum : String,
     var checked : Boolean,
     var bottomViewVisible : Boolean = true,
-    var textGray : Boolean = false
+    var textGray : Boolean = false,
+    var topViewVisible : Boolean = true
 ) : TreeModel{
     override fun getSectionsNum() = 0
     override fun getGaugesName() = ""

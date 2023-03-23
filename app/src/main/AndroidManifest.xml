@@ -46,6 +46,12 @@
             android:screenOrientation="landscape"
             android:theme="@style/Theme.noStatusBar" />
 
+        <activity
+            android:name=".ui.usinginfo.UsingInfoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Instrumentation" />
+
     </application>
 
 </manifest>

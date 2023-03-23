@@ -112,4 +112,22 @@ class RemoteRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getSetting(token: String, num: Int): Response<DomainSetting> {
+        val response = remoteDataSource.getSetting(token,num)
+        return if(response.isSuccessful){
+            Response.success(response.code(),response.body()?.mapToDomain())
+        }else{
+            Response.error(response.code(), response.errorBody() ?: ResponseBody.create(null,"error"))
+        }
+    }
+
+    override suspend fun setSetting(token: String, num: Int,tnfieldchkSMS:Int): Response<Pair<Int, String>> {
+        val response = remoteDataSource.setSetting(token,num,tnfieldchkSMS)
+        return if(response.isSuccessful){
+            Response.success(response.code(),response.body())
+        }else{
+            Response.error(response.code(), response.errorBody() ?: ResponseBody.create(null,"error"))
+        }
+    }
+
 }

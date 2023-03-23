@@ -22,7 +22,7 @@
             android:id="@+id/line_sites"
             android:layout_width="1dp"
             android:layout_height="0dp"
-            android:layout_marginStart="48.5dp"
+            android:layout_marginStart="23dp"
             android:background="@color/unselect_menu"
             android:visibility="@{item.sitesLineVisible ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -24,15 +24,46 @@ class MainViewModel @Inject constructor(
     private val remoteUseCase: RemoteUseCase
 ) : BaseViewModel() {
 
+    val connectInfo = MutableLiveData<Connect>()
+    val settingInfo = MutableLiveData<Setting>()
+
+    val showFieldSelect = MutableLiveData<Boolean>().default(false)
+
+    private val _setHeader = SingleLiveEvent<String>()
+    val setHeader: LiveData<String> get() = _setHeader
+
     private val _setRecordList = SingleLiveEvent<List<RecordData>?>()
     val setRecordList: LiveData<List<RecordData>?> get() = _setRecordList
 
     private val _setGaugesData = SingleLiveEvent<GaugesData?>()
     val setGaugesData: LiveData<GaugesData?> get() = _setGaugesData
 
+    private val _initTreeSetting = SingleLiveEvent<List<Boolean>>()
+    val initTreeSetting: LiveData<List<Boolean>> get() = _initTreeSetting
+
+    private val _initGraphSetting = SingleLiveEvent<List<Int>>()
+    val initGraphSetting: LiveData<List<Int>> get() = _initGraphSetting
+
     var fieldNum = 0
     var selectData = SelectData()
     var recordSelectData = RecordSelectData()
+
+    init {
+        with(localUseCase) {
+            _initTreeSetting.value = listOf(
+                getRotate(),
+                getTreeSite(),
+                getTreeSection(),
+                getTreeGroup(),
+                getTreeGauges()
+            )
+            _initGraphSetting.value = listOf(getGraphDate(), getGraphPoint())
+        }
+    }
+
+    fun setHeader(text: String) {
+        _setHeader.value = text
+    }
 
     fun getProcessLog() {
         viewModelScope.launch {
@@ -46,7 +77,7 @@ class MainViewModel @Inject constructor(
                     when (it.data?.code) {
                         0 -> {
                             it.data?.list?.let { list ->
-                                if(recordSelectData.startUnixTime == 0L){
+                                if (recordSelectData.startUnixTime == 0L) {
                                     val maxTime = Collections.max(list.map { data -> data.time })
                                     recordSelectData.fromDay = convertTimestampToDateText(
                                         getUnixTime(
@@ -63,15 +94,15 @@ class MainViewModel @Inject constructor(
                                     recordSelectData.startUnixTime = getUnixTime(
                                         convertTimestampToDateTerm(maxTime - (ONE_DAY * 3)),
                                         true
-                                    )/1000
+                                    ) / 1000
                                     recordSelectData.endUnixTime = getUnixTime(
                                         convertTimestampToDateTerm(maxTime),
                                         false
-                                    )/1000
+                                    ) / 1000
 
                                     getProcessLog()
-                                }
-                                else _setRecordList.value = list.mapToPresentation(localUseCase.getAdmin())
+                                } else _setRecordList.value =
+                                    list.mapToPresentation(localUseCase.getAdmin())
                             }
                         }
 
@@ -85,15 +116,15 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun getGaugesData(){
-        when(selectData.type){
+    fun getGaugesData() {
+        when (selectData.type) {
             "group" -> getGaugesGroupDetail()
             "gauges" -> getGaugesDetail()
             else -> _setGaugesData.value = null
         }
     }
 
-    private fun getGaugesDetail(){
+    private fun getGaugesDetail() {
         viewModelScope.launch {
             remoteUseCase.getGaugesDetail(
                 localUseCase.getToken(),
@@ -101,24 +132,24 @@ class MainViewModel @Inject constructor(
                 selectData.startUnixTime,
                 selectData.endUnixTime
             ).collect {
-                if (it.status == ApiResult.Status.SUCCESS){
-                    when (it.data?.code){
+                if (it.status == ApiResult.Status.SUCCESS) {
+                    when (it.data?.code) {
                         0 -> {
-                            it.data?.let{ data ->
+                            it.data?.let { data ->
                                 _setGaugesData.value = data.mapToPresentation()
                             }
                         }
 
-                        -2 ->{
+                        -2 -> {
                             _setGaugesData.value = null
                         }
 
                         else -> {
                             _setGaugesData.value = null
-                            showShortToast(it.data?.message?:"")
+                            showShortToast(it.data?.message ?: "")
                         }
                     }
-                }else{
+                } else {
                     _setGaugesData.value = null
                     showShortToast("서버 오류")
                 }
@@ -126,7 +157,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun getGaugesGroupDetail(){
+    private fun getGaugesGroupDetail() {
         viewModelScope.launch {
             remoteUseCase.getGaugesGroupDetail(
                 localUseCase.getToken(),
@@ -135,29 +166,97 @@ class MainViewModel @Inject constructor(
                 selectData.endUnixTime
             ).collect {
 
-                if (it.status == ApiResult.Status.SUCCESS){
+                if (it.status == ApiResult.Status.SUCCESS) {
 
-                    when (it.data?.code){
+                    when (it.data?.code) {
                         0 -> {
-                            it.data?.let{ data ->
+                            it.data?.let { data ->
                                 _setGaugesData.value = data.mapToPresentation()
                             }
                         }
 
-                        -2 ->{
+                        -2 -> {
                             _setGaugesData.value = null
                         }
 
                         else -> {
                             _setGaugesData.value = null
-                            showShortToast(it.data?.message?:"")
+                            showShortToast(it.data?.message ?: "")
                         }
                     }
-                }else{
+                } else {
                     _setGaugesData.value = null
                     showShortToast("서버 오류")
                 }
             }
         }
+    }
+
+    fun getSetting(num : Int){
+        viewModelScope.launch {
+            remoteUseCase.getSetting(
+                localUseCase.getToken(),num
+            ).collect {
+                if (it.status == ApiResult.Status.SUCCESS) {
+
+                    when (it.data?.code) {
+                        0 -> {
+                            it.data?.let { data ->
+                                settingInfo.value = data.mapToPresentation()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    fun setSetting(value : Boolean){
+        viewModelScope.launch {
+            remoteUseCase.setSetting(
+                localUseCase.getToken(),fieldNum,if(value) 1 else 0
+            ).collect {
+                if(it.status == ApiResult.Status.SUCCESS && it.data?.first != 0){
+                    showShortToast(it.data?.second?:"")
+                }
+            }
+        }
+    }
+
+    fun setLocalData(
+        rotate : Boolean? = null,
+        treeSite : Boolean? = null,
+        treeSection : Boolean? = null,
+        treeGroup : Boolean? = null,
+        treeGauges : Boolean? = null,
+        graphDate : Int? = null,
+        graphPoint : Int? = null
+    ){
+        rotate?.let {
+            localUseCase.setRotate(it)
+        }
+        treeSite?.let {
+            localUseCase.setTreeSite(it)
+        }
+        treeSection?.let {
+            localUseCase.setTreeSection(it)
+        }
+        treeGroup?.let {
+            localUseCase.setTreeGroup(it)
+        }
+        treeGauges?.let {
+            localUseCase.setTreeGauges(it)
+        }
+        graphDate?.let {
+            localUseCase.setGraphDate(it)
+        }
+        graphPoint?.let {
+            localUseCase.setGraphPoint(it)
+        }
+    }
+
+    fun logout() {
+        localUseCase.clear()
+        goLogin()
     }
 }

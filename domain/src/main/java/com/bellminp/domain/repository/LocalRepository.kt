@@ -21,5 +21,28 @@ interface LocalRepository {
 
     fun getDataAllGauges(num : Int) : String
 
+    fun getRotate() : Boolean
+    fun setRotate(value : Boolean)
+
+    fun getTreeSite() : Boolean
+    fun setTreeSite(value : Boolean)
+
+    fun getTreeSection() : Boolean
+    fun setTreeSection(value : Boolean)
+
+    fun getTreeGroup() : Boolean
+    fun setTreeGroup(value : Boolean)
+
+    fun getTreeGauges() : Boolean
+    fun setTreeGauges(value : Boolean)
+
+    fun getGraphDate() : Int
+    fun setGraphDate(value : Int)
+
+    fun getGraphPoint() : Int
+    fun setGraphPoint(value : Int)
+
+    fun initSetting()
+
     fun clear()
 }

@@ -1,6 +1,7 @@
 package com.bellminp.instrumentation.mapper
 
 import com.bellminp.common.timberMsg
+import com.bellminp.data.mapper.mapToData
 import com.bellminp.data.model.*
 import com.bellminp.domain.model.*
 import com.bellminp.instrumentation.model.*
@@ -13,12 +14,23 @@ fun DomainLogin.mapToPresentation(): Login {
         this.code,
         this.message,
         this.username,
+        this.userId,
         this.fieldNum,
         this.authorityNum,
         this.token,
         this.fieldList?.map {
             FieldList(it.num, it.name)
-        }
+        },
+        this.apichk,
+        this.mobilenum,
+        this.recvsms,
+        this.appid,
+        this.nsmip,
+        this.nsmadminid,
+        this.nsmdbname,
+        this.nsmadminpw,
+        this.appversion,
+        this.smson
     )
 }
 
@@ -27,12 +39,23 @@ fun Login.mapToDomain(): DomainLogin {
         this.code,
         this.message,
         this.username,
+        this.userId,
         this.fieldNum,
         this.authorityNum,
         this.token,
         this.fieldList?.map {
             DomainFieldList(it.num, it.name)
-        }
+        },
+        this.apichk,
+        this.mobilenum,
+        this.recvsms,
+        this.appid,
+        this.nsmip,
+        this.nsmadminid,
+        this.nsmdbname,
+        this.nsmadminpw,
+        this.appversion,
+        this.smson
     )
 }
 
@@ -620,7 +643,8 @@ fun GaugesGroupDetail.dataToGraph(): List<GraphData> {
                 legendList.add(
                     LegendData(
                         getGraphColor(i),
-                        graphLegendValue(listData.list[i].time)
+                        listData.list[i].time,
+                        ""
                     )
                 )
             }
@@ -692,7 +716,8 @@ fun GaugesGroupDetail.dataToGraph3(): List<GraphData> {
                 legendList.add(
                     LegendData(
                         getGraphColor(i),
-                        graphLegendValue(listData.list[i].time)
+                        listData.list[i].time,
+                        ""
                     )
                 )
             }
@@ -868,7 +893,8 @@ fun GaugesGroupDetail.dataToGraph4(): List<GraphData> {
                 legendList.add(
                     LegendData(
                         getGraphColor(i),
-                        graphLegendValue(listData.list[i].time)
+                        listData.list[i].time,
+                        ""
                     )
                 )
             }
@@ -990,4 +1016,14 @@ fun GaugesDetail.dataToGraph7(): List<GraphData> {
     }
 
     return list
+}
+
+fun DomainSetting.mapToPresentation() : Setting{
+    return Setting(
+        this.code,
+        this.message,
+        this.tnfieldchkSMS,
+        this.lorachk,
+        this.apiDataYuji
+    )
 }

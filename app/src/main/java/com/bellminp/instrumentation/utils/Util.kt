@@ -71,6 +71,11 @@ fun graphLegendValue(value: Long): String {
     return SimpleDateFormat("MM/dd HH:mm").format(value)
 }
 
+@SuppressLint("SimpleDateFormat")
+fun graphLegendValue2(value: Long): String {
+    return SimpleDateFormat("yy/MM/dd HH:mm").format(value)
+}
+
 fun getColorType(value: Double?, gaugesDetailList: GaugesDetailList) : Int {
     if(value == null) return 0
     else{

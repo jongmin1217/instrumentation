@@ -181,8 +181,5 @@ class TreeViewModel @Inject constructor(
         }
     }
 
-    fun logout() {
-        localUseCase.clear()
-        goLogin()
-    }
+
 }

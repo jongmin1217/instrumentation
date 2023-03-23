@@ -22,16 +22,8 @@
             android:id="@+id/layout_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/select_menu"
             app:layout_constraintTop_toTopOf="parent">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:id="@+id/line_top"
-                android:background="@color/black"
-                app:layout_constraintTop_toTopOf="parent"
-                />
 
             <TextView
                 android:id="@+id/tv_date_center"
@@ -43,7 +35,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/date_center"
                 android:textColor="@color/black"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -52,39 +44,33 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toStartOf="@id/tv_date_center"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/line_top">
+                app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/tv_start_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="16dp"
-                    android:text="@string/start_date"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dp_13"
-                    android:textStyle="bold"
-                    />
+
 
                 <TextView
                     android:id="@+id/tv_start_date_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/tv_start_date"
-                    app:layout_constraintStart_toStartOf="@id/tv_start_date"
-                    android:layout_marginTop="2dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="5dp"
                     android:text="@{vm.fromDay}"
-                    android:textColor="@color/black"
+                    android:textColor="@color/unselect_menu"
                     android:textStyle="bold"
                     android:textSize="@dimen/dp_13"
+                    android:background="@drawable/shape_date_btn"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="30dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
                     />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:background="@android:color/transparent"
                     app:layout_constraintTop_toBottomOf="@id/tv_start_date_value" />
 
@@ -98,39 +84,32 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_date_center"
-                app:layout_constraintTop_toBottomOf="@id/line_top">
+                app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/tv_end_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="@string/end_date"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/dp_13"
-                    android:textStyle="bold"
-                    />
 
                 <TextView
                     android:id="@+id/tv_end_date_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/tv_end_date"
-                    app:layout_constraintEnd_toEndOf="@id/tv_end_date"
-                    android:layout_marginTop="2dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="5dp"
                     android:text="@{vm.toDay}"
-                    android:textColor="@color/black"
+                    android:textColor="@color/unselect_menu"
                     android:textStyle="bold"
                     android:textSize="@dimen/dp_13"
+                    android:background="@drawable/shape_date_btn"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="30dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
                     />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:background="@android:color/transparent"
                     app:layout_constraintTop_toBottomOf="@id/tv_end_date_value" />
 
@@ -139,7 +118,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="1dp"
                 android:id="@+id/line_bottom"
                 android:background="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/layout_from"

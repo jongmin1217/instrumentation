@@ -14,6 +14,13 @@ import kotlin.random.Random
 @HiltAndroidApp
 class InstrumentationApplication : Application(){
 
+    var treeSite = false
+    var treeSection = false
+    var treeGroup = false
+    var treeGauges = false
+    var graphDate = 0
+    var graphPoint = 0
+
     companion object {
         lateinit var mInstance: InstrumentationApplication
         fun get(): InstrumentationApplication {

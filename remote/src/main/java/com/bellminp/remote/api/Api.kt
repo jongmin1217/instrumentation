@@ -1,10 +1,12 @@
 package com.bellminp.remote.api
 
 import com.bellminp.data.model.DataAutoLogin
+import com.bellminp.remote.model.BaseResponse
 import com.bellminp.remote.model.detail.GaugesDetailResponse
 import com.bellminp.remote.model.detail.GaugesGroupDetailResponse
 import com.bellminp.remote.model.login.LoginResponse
 import com.bellminp.remote.model.record.RecordResponse
+import com.bellminp.remote.model.setting.SettingResponse
 import com.bellminp.remote.model.tree.*
 import io.reactivex.Single
 import retrofit2.Response
@@ -70,4 +72,17 @@ interface Api {
         @Query("startUnixTime") startUnixTime: Long,
         @Query("endUnixTime") endUnixTime: Long
     ): Response<GaugesGroupDetailResponse>
+
+    @GET("/fields/setting/{num}")
+    suspend fun getSetting(
+        @Header("Authorization") Authorization: String,
+        @Path("num") num: Int
+    ): Response<SettingResponse>
+
+    @PATCH("/fields/sms/{num}")
+    suspend fun setSetting(
+        @Header("Authorization") Authorization: String,
+        @Path("num") num: Int,
+        @Query("tnfieldchkSMS") tnfieldchkSMS: Int
+    ): Response<BaseResponse>
 }

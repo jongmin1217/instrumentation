@@ -1,5 +1,6 @@
 package com.bellminp.instrumentation.ui.main.graph
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -27,9 +28,11 @@ class GraphFragment(
 
     private val adapter = GraphAdapter(fragHeight) { data ->
         activity?.let { activity ->
-            Intent(activity, GraphDetailActivity::class.java).also {
-                it.putExtra(GRAPH_DATA, data)
-                startActivity(it)
+            if(viewModel.localUseCase.getRotate()){
+                Intent(activity, GraphDetailActivity::class.java).also {
+                    it.putExtra(GRAPH_DATA, data)
+                    startActivity(it)
+                }
             }
         }
     }
@@ -109,6 +112,11 @@ class GraphFragment(
                 1
             )
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun refreshGraph(){
+        adapter.notifyDataSetChanged()
     }
 
     override fun selectedDate(type: Int, text: String, time: Long) {
